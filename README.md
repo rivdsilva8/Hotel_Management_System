@@ -39,4 +39,3 @@ Extra Features:
 •	Include a section showcasing local attractions, restaurants, and activities near the hotel.
 5.	Notifications and Reminders:
 •	Send email or SMS notifications to guests for booking confirmations, reminders for upcoming reservations, and thank you messages after check-out.
-![image](https://github.com/mahesh349/CS546_Group14_Final_Project/assets/67485594/fa169cd6-9c23-4e99-974a-579679ffcaf5)
