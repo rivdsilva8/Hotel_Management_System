@@ -1,4 +1,5 @@
-# Blogger-Website
+Hotel Management Website
+
 Team Members:
 •	Mahesh Pisharody
 •	Rivaldo D Silva
@@ -8,8 +9,34 @@ Team Members:
 
 Introduction:
 
-With this application, we reimagine the fundamentals of storytelling and invite users to create narratives that hit home with an audience that is screaming for real voices. Here, customization is an experience rather than just a feature. 'Blogger' promises a community and offers more than just a blogging platform, with personalized profiles and meaningful discussions. The 'Explore' area on our website acts as a gateway, offering a variety of voices and viewpoints that engage, challenge, and inspire. Every entry on 'Blogger' is more than simply a story; it's also an invitation to a journey that promises discovery, connection, and revelation.
+Welcome to our Hotel Management System, your portal to effortless and streamlined hospitality management. With just a few clicks, manage rooms seamlessly add, update, or remove them with detailed information at your fingertips. Guests experience a swift and intuitive booking process, finding their perfect room based on preferences. Our Admin Dashboard offers real-time insights, ensuring efficient operations. Simplify check-ins and check-outs with digital forms and detailed invoices. Explore our Hotel Photo Gallery, read guest feedback, and immerse yourself in local recommendations. Join vibrant discussions within our secure platform and stay updated with automated notifications. Here, every feature is meticulously crafted for an exceptional guest experience. Welcome to a world where technology elevates hospitality, one click at a time.
 
-Motivation:
+Core Features:
 
-Through this initiative, we aim to foster personal expression and communal engagement using customizable profiles, adaptable privacy settings, and an advanced commenting framework. Dive into a world where each byte-sized message contains a universe of ideas eager to resound and inspire
+1.	Room Management:
+•	Add, update, and delete rooms with details such as room number, type, price, and availability. Implement a room availability list type calendar for staff to manage bookings effectively.
+2.	Booking System:
+•	Allow guest to search for available rooms based on check-out dates. Implement a booking from where administrators can view booking statistics, occupancy rates, and revenue summaries. Generate reports for various periods to analyze hotel performance.
+3.	Admin Dashboard and Reporting:
+•	Create an admin dashboard where administrators can view booking statistics, occupancy rates, and revenue summaries. Generate reports for various periods to analyze hotel performance.
+4.	Check-in and Check-out:
+•	Implement digital check-in forms for guests. Staff should be able to verify check-in details and process check-outs, marking rooms as cleaned and available.
+5.	Payment Handling:
+•	Generate invoices for guests upon check-out, detailing the total cost of stay and any additional charges. Implement a payment system (without real transactions, for demonstration purposes) to simulate payment processing.
+
+
+
+
+Extra Features:
+
+1.	Hotel Photo Gallery:
+•	Admin can Add and Delete photos of hotel to show it to the users online.
+2.	Feedback and Reviews:
+•	Allow guests to leave feedback and reviews after their stay. Display average ratings and reviews for rooms and services.
+3.	User Authentication and Authorization:
+•	Implement user authentication for both guests and staff (admin, receptionists). Admins should have privileges to add/delete staff members, view bookings, and manage rooms.
+4.	Local Attraction and Recommendations:
+•	Include a section showcasing local attractions, restaurants, and activities near the hotel.
+5.	Notifications and Reminders:
+•	Send email or SMS notifications to guests for booking confirmations, reminders for upcoming reservations, and thank you messages after check-out.
+![image](https://github.com/mahesh349/CS546_Group14_Final_Project/assets/67485594/fa169cd6-9c23-4e99-974a-579679ffcaf5)
