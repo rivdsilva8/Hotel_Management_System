@@ -23,19 +23,18 @@ Core Features:
 •	Implement digital check-in forms for guests. Staff should be able to verify check-in details and process check-outs, marking rooms as cleaned and available.
 5.	Payment Handling:
 •	Generate invoices for guests upon check-out, detailing the total cost of stay and any additional charges. Implement a payment system (without real transactions, for demonstration purposes) to simulate payment processing.
+6.	Hotel Photo Gallery:
+•	Admin can Add and Delete photos of hotel to show it to the users online.
+7.	Feedback and Reviews:
+•	Allow guests to leave feedback and reviews after their stay. Display average ratings and reviews for rooms and services.
 
 
 
 
 Extra Features:
-
-1.	Hotel Photo Gallery:
-•	Admin can Add and Delete photos of hotel to show it to the users online.
-2.	Feedback and Reviews:
-•	Allow guests to leave feedback and reviews after their stay. Display average ratings and reviews for rooms and services.
-3.	User Authentication and Authorization:
+1.	User Authentication and Authorization:
 •	Implement user authentication for both guests and staff (admin, receptionists). Admins should have privileges to add/delete staff members, view bookings, and manage rooms.
-4.	Local Attraction and Recommendations:
+2.	Local Attraction and Recommendations:
 •	Include a section showcasing local attractions, restaurants, and activities near the hotel.
-5.	Notifications and Reminders:
+3.	Notifications and Reminders:
 •	Send email or SMS notifications to guests for booking confirmations, reminders for upcoming reservations, and thank you messages after check-out.
