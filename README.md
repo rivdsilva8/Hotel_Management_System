@@ -32,9 +32,7 @@ Core Features:
 
 
 Extra Features:
-1.	User Authentication and Authorization:
-•	Implement user authentication for both guests and staff (admin, receptionists). Admins should have privileges to add/delete staff members, view bookings, and manage rooms.
-2.	Local Attraction and Recommendations:
+1.	Local Attraction and Recommendations:
 •	Include a section showcasing local attractions, restaurants, and activities near the hotel.
-3.	Notifications and Reminders:
+2.	Notifications and Reminders:
 •	Send email or SMS notifications to guests for booking confirmations, reminders for upcoming reservations, and thank you messages after check-out.
