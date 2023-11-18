@@ -1,8 +1,8 @@
 import express from 'express';
 const app = express();
-import configRoutes from './routes/index.js';
+import configRoutes from './src/routes/index.js';
 import {fileURLToPath} from 'url';
-import {dirname} from 'path';
+import path, {dirname} from 'path';
 import exphbs from 'express-handlebars';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -21,8 +21,10 @@ const rewriteUnsupportedBrowserMethods = (req, res, next) => {
   app.use(express.urlencoded({extended: true}));
   app.use(rewriteUnsupportedBrowserMethods);
   
-  app.engine('handlebars', exphbs.engine({defaultLayout: 'main'}));
+  app.engine('handlebars', exphbs.engine({defaultLayout: 'main',
+layoutsDir:path.join(__dirname,'src/views/layouts')}));
   app.set('view engine', 'handlebars');
+  app.set('views', path.join(__dirname,'src/views/layouts'));
   
   configRoutes(app);
   
