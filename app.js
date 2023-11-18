@@ -20,11 +20,14 @@ const rewriteUnsupportedBrowserMethods = (req, res, next) => {
   app.use(express.json());
   app.use(express.urlencoded({extended: true}));
   app.use(rewriteUnsupportedBrowserMethods);
+
+  app.set('views', path.join(__dirname,'src/views'));
   
   app.engine('handlebars', exphbs.engine({defaultLayout: 'main',
-layoutsDir:path.join(__dirname,'src/views/layouts')}));
+layoutsDir:path.join(app.get('views'),'layouts')}));
   app.set('view engine', 'handlebars');
-  app.set('views', path.join(__dirname,'src/views/layouts'));
+ // app.set('view engine', 'handlebars');
+  //app.set('views', path.join(__dirname,'src/views/room'));
   
   configRoutes(app);
   

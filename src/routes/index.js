@@ -4,12 +4,12 @@ import paymentRoutes from './paymentRoutes.js';
 import roomRoutes from './roomRoutes.js';
 
 const constructorMethod = (app) =>{
-    app.use('/', adminRoutes);
-    app.use('/', bookingRoutes);
-    app.use('/', paymentRoutes);
-    app.use('/', roomRoutes);
+    app.use('/adminRoutes', adminRoutes);
+    app.use('/bookingRoutes', bookingRoutes);
+    app.use('/paymentRoutes', paymentRoutes);
+    app.use('/roomRoutes', roomRoutes);
     app.use('*', (req, res) => {
-        res.status(404).render(`error`,{title:"Error",code:404, description: 'Page Not found'});
+        res.status(404).render(`layouts/error`,{title:"Error",code:404, description: 'Page Not found'});
       });
 };
 export default constructorMethod;
