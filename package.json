@@ -1,0 +1,19 @@
+{
+  "name": "hotel_management_final_project",
+  "version": "1.0.0",
+  "description": "group 14 web programming final project",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js",
+    "seed": "node seed.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Team 14",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-handlebars": "^7.1.2",
+    "mongodb": "^6.3.0"
+  }
+}
