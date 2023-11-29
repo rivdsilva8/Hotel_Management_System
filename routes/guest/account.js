@@ -4,7 +4,7 @@ import accountData from "../../data/account.js";
 
 router.route("/").get(async (req, res) => {
   try {
-    res.render("../views/home", {
+    res.render("../views/login/UserCreate", {
       title: "guest account",
     });
   } catch (e) {}
