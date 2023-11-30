@@ -18,14 +18,14 @@ const constructorMethod = (app) => {
 
   app.use("/admin", adminRoutes);
 
-  //   app.use("*", (req, res) => {
-  //     res.render("error", {
-  //       title: "Error",
-  //       code: 404,
-  //       hasError: true,
-  //       error: "page not found",
-  //     });
-  //   });
+    app.use("*", (req, res) => {
+      res.render("error", {
+        title: "Error",
+        code: 404,
+        hasError: true,
+        error: "page not found",
+      });
+    });
 };
 
 export default constructorMethod;
