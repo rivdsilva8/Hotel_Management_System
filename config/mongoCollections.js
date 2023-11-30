@@ -14,3 +14,4 @@ const getCollectionFn = (collection) => {
 };
 
 export const accounts = getCollectionFn("accounts");
+export const feedbacks = getCollectionFn("feedbacks");

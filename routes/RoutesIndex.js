@@ -1,4 +1,8 @@
 import adminRoutes from "./admin/index.js";
+<<<<<<< Updated upstream
+=======
+import usersRoutes from "./user_routes.js";
+>>>>>>> Stashed changes
 
 const constructorMethod = (app) => {
   app.get("/", (req, res) => {
@@ -11,7 +15,12 @@ const constructorMethod = (app) => {
 
   app.get("/register", (req, res) => {
     res.render("./login/UserCreate");
+<<<<<<< Updated upstream
   });
+=======
+  });*/
+  app.use("/", usersRoutes);
+>>>>>>> Stashed changes
 
   //admin routes
   // TODO: middleware to check if user is actually an admin
