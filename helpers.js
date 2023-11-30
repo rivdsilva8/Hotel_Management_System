@@ -1,8 +1,6 @@
 // mahesh, yuzhi, kaushik: Bookings, room both routes and data functions
 
 // sushmita, rivaldo: account, feedback, gallery both routes and data functions
-<<<<<<< Updated upstream
-=======
 
 //sushmita helpers
 import validator from "validator";
@@ -70,13 +68,6 @@ export const validatePhoneNumber = async (phNumber) => {
   }
   return phNumber;
 };
->>>>>>> Stashed changes
-
-export function isAdmin(object) {
-  if (object.isAdmin == true) {
-    return true;
-  } else return false;
-}
 
 //rivaldo helpers
 // You can add and export any helper functions you want here - if you aren't using any, then you can just leave this file as is
@@ -297,4 +288,10 @@ export function validRating(rating) {
   if (rating < 0) {
     throw "ERROR :  " + rating + " cannot be less than 0";
   }
+}
+
+export function isAdmin(object) {
+  if (object.isAdmin == true) {
+    return true;
+  } else return false;
 }
