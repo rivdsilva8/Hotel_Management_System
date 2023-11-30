@@ -1,10 +1,11 @@
-<form action="POST">
+<form action="/login" method="POST">
+  <div id = "error-container">{{#if error}}{{error}}{{/if}}</div>
   <label for="name">Name</label>
-  <input type="text" placeholder="enter your name" />
+  <input type="text" id="name" name ="name"placeholder="enter your name" />
   <label for="password">Password</label>
-  <input type="password" placeholder="create your password" />
+  <input type="password" id="password" name ="password" placeholder="create your password" />
   <label for="email">Email</label>
-  <input type="text" placeholder="Please enter your email" />
+  <input type="text" id="email" name ="email" placeholder="Please enter your email" />
   <button type="submit">Login</button>
 </form>
 
