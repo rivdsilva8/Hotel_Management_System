@@ -5,7 +5,8 @@ import {accounts } from "../config/mongoCollections.js";
 import * as helpers from '../helpers.js'
 
 const checkUserDetails = async(accountName,email,password)=>{
-    accountName = await helpers.validateString(accountName);
+    const nameErr = {empty:'Name cannot be Empty', invalid:'Given name is invalid'};
+    accountName = await helpers.validateString(accountName,2,25,nameErr);
     email= await helpers.validateEmail(email);
     password =await helpers.validatePassword(password);   
 }
