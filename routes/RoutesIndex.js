@@ -1,21 +1,23 @@
 import adminRoutes from "./admin/index.js";
+import usersRoutes  from './user_routes.js';
 
 const constructorMethod = (app) => {
   app.get("/", (req, res) => {
     res.render("home");
   });
 
-  app.get("/login", (req, res) => {
+  /*app.get("/login", (req, res) => {
+    console.log("Hi I am in");
     res.render("./login/UserLogin");
   });
 
   app.get("/register", (req, res) => {
     res.render("./login/UserCreate");
-  });
+  });*/
 
   //admin routes
   // TODO: middleware to check if user is actually an admin
-
+  app.use('/', usersRoutes);
   app.use("/admin", adminRoutes);
 
   //   app.use("*", (req, res) => {
