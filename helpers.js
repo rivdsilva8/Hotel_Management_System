@@ -2,19 +2,20 @@
 
 // sushmita, rivaldo: account, feedback, gallery both routes and data functions
 import validator from "validator";
+const nameRegex = /[^A-Za-z]/;
 const prefixPattern = /^([a-zA-Z0-9]+([_\.-]?[a-zA-Z0-9]+)*)$/
 const domainPattern = /^([a-zA-Z0-9-]+)+(\.[a-zA-Z]{2,})+$/
 const UpperCase = /[A-Z]/;
 const number = /[0-9]/;
 const specialChar = /[^A-Za-z0-9]/;
 
-export const validateString = async (name) =>{
+export const validateString = async (name,min,max,errMsg) =>{
   if(!name || typeof(name)!=='string'||name.trim().length === 0){
     throw{code:400,error: `Please provide valid name`};
   }
-  /*if(nameRegex.test(name)){//check for the name with space condition
-    throw{code:400,error: `Name format is improper`};  
-  }*/
+  if(name.length<min || name.length>max || nameRegex.test(name)){//check for the name with space condition
+    throw{code:400,error: errMsg.invalid};  
+  }
   return name.trim();
 }
 
