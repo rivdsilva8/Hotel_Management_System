@@ -55,18 +55,14 @@ export const readAll = async()=>{
 }
 
 export const getAccountById = async (accountId) => {
-    await checkId(accountId,"Attendee Id");
-    let accountGetDetails = await events();
-    const accountData = await accountGetDetails.aggregate([
-      {$unwind:"$attendees"},
-      {$match:{"attendees._id": new ObjectId(accountId)}},
-      {$replaceRoot:{newRoot:"$attendees"}}
-    ]).toArray();
-    if(accountData.length === 0){
-      throw `Attendee with the give id :${accountId} not found`;
+    accountId = await helpers.checkId(accountId,"Attendee Id");
+    let accountGetDetails = await accounts();
+    const accountData = await accountGetDetails.findOne({"_id":new ObjectId(accountId)});
+    if(!accountData){
+        throw `Account with the id:${accountId} not found`;
     }
-    accountData[0]._id = accountData[0]._id.toString();
-    return accountData[0];
+    accountData._id = accountData._id.toString();
+    return accountData;
   };//needs work
 
 //const exportedMethods = {};
