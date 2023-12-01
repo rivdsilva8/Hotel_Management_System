@@ -5,22 +5,22 @@ import {getAccountById} from "../../data/account.js";
 
 
   router
-  .route('/account/view/:id')
+  .route('/view/:id')
   .get(async(req,res)=>{
     if(!req.session.user || req.session.user.id!== req.params.id){
       return res.status(403).send("Unauthorized access");
     }
     try{
       const accountDetails = await getAccountById(req.params.id);
-      req.render('./guest/guestAccount/viewAccount',{account:accountDetails});
+      res.render('guest/guestAccount/viewAccount',{account:accountDetails});
 
     }catch(e){
-      res.status(500).render('errorPage',{error:e.message});
+      res.status(500).render('guest/errorPage',{error:e.message});
     }
   })
 
   router
-  .route('/account/edit/:id')
+  .route('/edit/:id')
   .get(async(req,res)=>{
     console.log("I am in edit");
     if(!req.session.user || req.session.user.id!== req.params.id){
@@ -28,10 +28,11 @@ import {getAccountById} from "../../data/account.js";
     }
     try{
       const accountDetails = await getAccountById(req.params.id);
-      req.render('./guest/guestAccount/editAccount',{account:accountDetails});
+      res.render('guest/guestAccount/viewAccount',{account:accountDetails});
 
     }catch(e){
-      res.status(500).render('errorPage',{error:e.message});
+      console.log(e);
+      res.status(500).render('guest/errorPage',{error:e.message});
     }
   })
   .post(async(req,res)=>{

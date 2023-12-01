@@ -13,7 +13,8 @@ router.get("/", async (req, res) => {
     }
   try {
     res.render("../views/guest/Homepage", {
-      title: "Welcome to Guest Page"
+      title: "Welcome to Guest Page",
+      userId:req.session.user.id
       //userId:req.session.user.id
     });
   } catch (e) {
@@ -26,7 +27,5 @@ router.use("/booking", bookingRoutes);
 router.use("/feedback", feedbackRoutes);
 router.use("/gallery", galleryRoutes);
 router.use("/room", roomRoutes);
-router.use("/account/edit", accountRoutes);
-router.use("/account/view/", accountRoutes);
 
 export default router;
