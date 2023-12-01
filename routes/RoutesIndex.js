@@ -1,5 +1,6 @@
 import adminRoutes from "./admin/index.js";
-import usersRoutes  from './user_routes.js';
+import usersRoutes  from './users.js';
+import guestRoutes  from './guest/index.js';
 
 const constructorMethod = (app) => {
   app.get("/", (req, res) => {
@@ -18,6 +19,7 @@ const constructorMethod = (app) => {
   //admin routes
   // TODO: middleware to check if user is actually an admin
   app.use('/', usersRoutes);
+  app.use('/guest', guestRoutes);
   app.use("/admin", adminRoutes);
 
   //   app.use("*", (req, res) => {

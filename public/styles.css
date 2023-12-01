@@ -1,0 +1,23 @@
+.dropdown-content{
+    display: none;
+    position:absolute;
+    background-color: aliceblue;
+    min-width: 160px;
+    box-shadow: none;
+    z-index: 1;
+}
+.show{display: block;}
+
+nav ul{
+    display:flex;
+    padding:20px;
+    margin:auto;
+    list-style-type: none; 
+}
+nav li{
+    margin-right: 80 px;
+}
+nav{
+    justify-content: center;
+    align-items: center;
+}
