@@ -1,6 +1,6 @@
 import adminRoutes from "./admin/index.js";
-import usersRoutes  from './users.js';
-import guestRoutes  from './guest/index.js';
+import usersRoutes from "./user_routes.js";
+import guestRoutes from "./guest/index.js";
 
 const constructorMethod = (app) => {
   app.get("/", (req, res) => {
@@ -18,18 +18,18 @@ const constructorMethod = (app) => {
 
   //admin routes
   // TODO: middleware to check if user is actually an admin
-  app.use('/', usersRoutes);
-  app.use('/guest', guestRoutes);
+  app.use("/", usersRoutes);
+  app.use("/guest", guestRoutes);
   app.use("/admin", adminRoutes);
 
-  //   app.use("*", (req, res) => {
-  //     res.render("error", {
-  //       title: "Error",
-  //       code: 404,
-  //       hasError: true,
-  //       error: "page not found",
-  //     });
-  //   });
+  app.use("*", (req, res) => {
+    res.render("error", {
+      title: "Error",
+      code: 404,
+      hasError: true,
+      error: "page not found",
+    });
+  });
 };
 
 export default constructorMethod;
