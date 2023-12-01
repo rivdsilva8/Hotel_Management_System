@@ -1,6 +1,5 @@
 import {Router} from 'express';
 const router = Router();
-import validator from "validator";
 import * as helpers from '../helpers.js';
 import { loginUser,createAccount} from "../data/users.js";
 
@@ -22,7 +21,12 @@ router
       const passwordGiven= await helpers.validatePassword(password);
       const loginDetails = await loginUser(userName, emailAddress, passwordGiven);
       if(loginDetails._id){
-        return res.render('./guest/guestAccount/createAccount');
+        //console.log(loginDetails._id);
+        req.session.user = {id:loginDetails._id};
+        req.session.save(()=>{
+            return res.redirect('/guest');
+
+        });      
       }else{
         res.status(500).render('./login/UserLogin',{error:`Internal Server Error`,title:"Login"});
       }

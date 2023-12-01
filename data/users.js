@@ -1,5 +1,3 @@
-// CREATE, DELETE, EDIT, READ ALL
-// CREATE: name, email, contact number, create youe own id, password, confirm password
 import { ObjectId } from "mongodb";
 import {accounts } from "../config/mongoCollections.js";
 import * as helpers from '../helpers.js'
@@ -50,7 +48,4 @@ export const createAccount = async( accountName, email, password)=>{
     const detailsAct = await accountDetails.findOne({_id: newAcctId})
     detailsAct._id = detailsAct._id.toString();
     return detailsAct;
-}
-//const exportedMethods = {createAccount};
-
-//export default exportedMethods;
+};
