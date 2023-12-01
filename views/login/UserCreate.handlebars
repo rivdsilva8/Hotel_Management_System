@@ -1,12 +1,15 @@
-<form action="POST">
+<form action="/register"method="POST">
+<div id = "error-container">{{#if error}}{{error}}{{/if}}</div>
   <label for="name">Name</label>
-  <input type="text" id="name" placeholder="Please enter a name" />
-  <label for="password">Password</label>
-  <input type="password" id="password"  placeholder="Please create a password" />
-  <label for="cpassword">Confirm Password</label>
-  <input type="password" id="cpassword" placeholder="confirm password" />
+  <input type="text" id="name" name ="name" placeholder="Please enter a name" />
   <label for="email">Email</label>
-  <input type="text" placeholder="Please enter an email" />
+  <input type="email" id="email" name ="email" placeholder="enter your email" />
+ <!--  <label for="contactNumber">Contact Number</label>
+  <input type="contactNumber" placeholder="enter contact number" />!-->
+  <label for="password" >Password</label>
+  <input type="password" id="password" name ="password"  placeholder="Please create a password" />
+  <label for="cpassword">Confirm Password</label>
+  <input type="password" id="cpassword" name ="cpassword" placeholder="confirm password" />
   <button type="submit">Create Account</button>
 </form>
 
