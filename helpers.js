@@ -4,8 +4,8 @@
 import { ObjectId } from "mongodb";
 import validator from "validator";
 const nameRegex = /[^A-Za-z]/;
-const prefixPattern = /^([a-zA-Z0-9]+([_\.-]?[a-zA-Z0-9]+)*)$/
-const domainPattern = /^([a-zA-Z0-9-]+)+(\.[a-zA-Z]{2,})+$/
+const prefixPattern = /^([a-zA-Z0-9]+([_\.-]?[a-zA-Z0-9]+)*)$/;
+const domainPattern = /^([a-zA-Z0-9-]+)+(\.[a-zA-Z]{2,})+$/;
 const UpperCase = /[A-Z]/;
 const number = /[0-9]/;
 const specialChar = /[^A-Za-z0-9]/;
