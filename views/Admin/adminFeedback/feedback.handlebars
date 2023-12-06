@@ -1,3 +1,16 @@
+<ul>
+  {{#each feedback}}
+    <li>
+      <h2>Guest: {{guestName}}</h2>
+      Room:
+      {{roomType}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      rating :
+      {{rating}}/10
+      <p>{{comment}}</p>
+    </li>
+  {{/each}}
+</ul>
+
 <footer>
 
   <a href="/admin">back to admin Dashboard</a>

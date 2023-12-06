@@ -10,55 +10,6 @@ const UpperCase = /[A-Z]/;
 const number = /[0-9]/;
 const specialChar = /[^A-Za-z0-9]/;
 
-export const validateString = async (name,min,max,errMsg) =>{
-  if(!name || typeof(name)!=='string'||name.trim().length === 0){
-    throw{code:400,error: `Please provide valid name`};
-  }
-  if(name.length<min || name.length>max || nameRegex.test(name)){//check for the name with space condition
-    throw{code:400,error: errMsg.invalid};  
-  }
-  return name.trim();
-}
-
-export const validateEmail = async(emailAddress) =>{
-  emailAddress = emailAddress.trim().toLowerCase();
-  if(!validator.isEmail(emailAddress)){
-    throw{code:400,error:`Given email: ${emailAddress} is not in a valid email address format`}; 
-
-  }
-  let [prefix,domain]=emailAddress.split("@");
-  if(!prefixPattern.test(prefix) || !domainPattern.test(domain)) {
-    throw{code:400,error:`Given email: ${emailAddress} doesn't have a valid prefix or domain`}; 
-  }
-  return emailAddress;
-}
-
-export const validatePassword = async (password)=>{
-  if(typeof(password)!=='string' || password.includes(' ') || password.length<8){
-    throw{code:400,error:`Password must be valid String with no spaces and should be at least 8 characters long`}; 
-  }
-  if(!UpperCase.test(password)|| !number.test(password || !specialChar.test(password))){
-    throw{code:400,error:`Password must contain at least one upperCase character, one number and one special character`}; 
-  }
-  return password;
-
-}
-export const validatePhoneNumber = async(phNumber)=>{
-  if(typeof(phNumber) !=='Number'){
-    throw{code:400,error:`Phone Number must be of Number type`}; 
-  }
-  return phNumber;
-}
-
-//sushmita helpers
-import validator from "validator";
-const nameRegex = /[^A-Za-z]/;
-const prefixPattern = /^([a-zA-Z0-9]+([_\.-]?[a-zA-Z0-9]+)*)$/;
-const domainPattern = /^([a-zA-Z0-9-]+)+(\.[a-zA-Z]{2,})+$/;
-const UpperCase = /[A-Z]/;
-const number = /[0-9]/;
-const specialChar = /[^A-Za-z0-9]/;
-
 export const validateString = async (name, min, max, errMsg) => {
   if (!name || typeof name !== "string" || name.trim().length === 0) {
     throw { code: 400, error: `Please provide valid name` };
@@ -117,9 +68,10 @@ export const validatePhoneNumber = async (phNumber) => {
   return phNumber;
 };
 
+//sushmita helpers
+
 //rivaldo helpers
 // You can add and export any helper functions you want here - if you aren't using any, then you can just leave this file as is
-import { ObjectId } from "mongodb";
 
 export function checknum(num) {
   if (typeof num !== "number" || num == Infinity || isNaN(num))
@@ -174,9 +126,6 @@ export function emptyStringCheck(string) {
   if (string.length == 0) throw "ERROR : string cannot be empty";
 }
 
-export function checkId(id) {
-  if (!ObjectId.isValid(id)) throw `Error: invalid object ID`;
-}
 export function stringValidation(string) {
   checkundefined(string);
   checkstring(string);
@@ -344,12 +293,12 @@ export function isAdmin(object) {
   } else return false;
 }
 
-export const checkId = async(id, varName) =>{
+export const checkId = async (id, varName) => {
   if (!id) throw `Error: You must provide a ${varName}`;
-  if (typeof id !== 'string') throw `Error:${varName} must be a string`;
+  if (typeof id !== "string") throw `Error:${varName} must be a string`;
   id = id.trim();
   if (id.length === 0)
     throw `Error: ${varName} cannot be an empty string or just spaces`;
   if (!ObjectId.isValid(id)) throw `Error: ${varName} invalid object ID`;
   return id;
-}
+};

@@ -1,4 +1,13 @@
-
+<ul>
+  {{#each feedback}}
+    <li>
+      <strong>{{guestName}}</strong>
+      rating :
+      {{rating}}/10
+      <p>{{comment}}</p>
+    </li>
+  {{/each}}
+</ul>
 <footer>
 
   <a href="/guest">back to guest Homepage</a>
