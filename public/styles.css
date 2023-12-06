@@ -34,5 +34,5 @@ li {
   border-color: grey;
   border-style: solid; /* Specify the border style */
   margin-bottom: 10px; /* Add margin for spacing between li elements */
-  padding: 10px; /* Add padding for content */
+  padding: 10px;
 }

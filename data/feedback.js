@@ -90,4 +90,5 @@ const exportedMethods = {
     return allFeedback;
   },
 };
+
 export default exportedMethods;

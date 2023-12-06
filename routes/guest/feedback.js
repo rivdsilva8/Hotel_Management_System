@@ -33,9 +33,6 @@ router
         comment,
       } = feedbackPostData;
 
-      // Validate and trim data if necessary
-      // ...
-
       let newFeedback = await feedbackData.create(
         guestId,
         roomType,
