@@ -1,7 +1,7 @@
 import {Router} from 'express';
 const router = Router();
 import * as helpers from '../../helpers.js';
-import {getAccountById} from "../../data/account.js";
+import {getAccountById,updateAccount} from "../../data/account.js";
 
 
   router
@@ -43,7 +43,8 @@ import {getAccountById} from "../../data/account.js";
       await updateAccount(req.params.id,req.body);
       res.redirect('/account/view/${req.params.id}');
     }catch(e){
-      res.status(400).render('./guest/guestAccount/editAccount',{error:e.message,account:req.body});
+      console.log(e);
+      res.status(400).render('./guest/guestAccount/viewAccount',{error:e.message,account:req.body});
     }
 
   })
