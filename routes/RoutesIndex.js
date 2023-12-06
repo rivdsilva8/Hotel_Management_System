@@ -1,5 +1,5 @@
 import adminRoutes from "./admin/index.js";
-import usersRoutes from "../routes/users.js";
+import usersRoutes from "./users.js";
 import guestRoutes from "./guest/index.js";
 
 const constructorMethod = (app) => {
