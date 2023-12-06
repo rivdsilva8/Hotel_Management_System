@@ -2,7 +2,6 @@
 
 // sushmita, rivaldo: account, feedback, gallery both routes and data functions
 import { ObjectId } from "mongodb";
-//sushmita helpers
 import validator from "validator";
 const nameRegex = /[^A-Za-z]/;
 const prefixPattern = /^([a-zA-Z0-9]+([_\.-]?[a-zA-Z0-9]+)*)$/;
@@ -68,6 +67,8 @@ export const validatePhoneNumber = async (phNumber) => {
   }
   return phNumber;
 };
+
+//sushmita helpers
 
 //rivaldo helpers
 // You can add and export any helper functions you want here - if you aren't using any, then you can just leave this file as is
@@ -291,12 +292,13 @@ export function isAdmin(object) {
   } else return false;
 }
 
-export const checkId = async(id, varName) =>{
+export const checkId = async (id, varName) => {
   if (!id) throw `Error: You must provide a ${varName}`;
-  if (typeof id !== 'string') throw `Error:${varName} must be a string`;
+  if (typeof id !== "string") throw `Error:${varName} must be a string`;
+
   id = id.trim();
   if (id.length === 0)
     throw `Error: ${varName} cannot be an empty string or just spaces`;
   if (!ObjectId.isValid(id)) throw `Error: ${varName} invalid object ID`;
   return id;
-}
+};

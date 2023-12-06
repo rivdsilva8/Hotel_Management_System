@@ -1,23 +1,38 @@
-.dropdown-content{
-    display: none;
-    position:absolute;
-    background-color: aliceblue;
-    min-width: 160px;
-    box-shadow: none;
-    z-index: 1;
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: aliceblue;
+  min-width: 160px;
+  box-shadow: none;
+  z-index: 1;
 }
-.show{display: block;}
+.show {
+  display: block;
+}
 
-nav ul{
-    display:flex;
-    padding:20px;
-    margin:auto;
-    list-style-type: none; 
+nav ul {
+  display: flex;
+  padding: 20px;
+  margin: auto;
+  list-style-type: none;
 }
-nav li{
-    margin-right: 80 px;
+nav li {
+  margin-right: 80 px;
 }
-nav{
-    justify-content: center;
-    align-items: center;
+nav {
+  justify-content: center;
+  align-items: center;
+}
+
+ul {
+  list-style-type: none; /* Remove default list styling */
+  padding: 0; /* Remove default padding */
+}
+
+li {
+  border-width: 5px;
+  border-color: grey;
+  border-style: solid; /* Specify the border style */
+  margin-bottom: 10px; /* Add margin for spacing between li elements */
+  padding: 10px;
 }

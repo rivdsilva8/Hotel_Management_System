@@ -4,11 +4,16 @@
 import { Router } from "express";
 import feedbackData from "../../data/feedback.js";
 const router = Router();
+import * as help from "../../helpers.js";
 router
   .route("/")
   .get(async (req, res) => {
     //get all feedback
-    return res.render("./login/UserLogin");
+    let allFeedback = await feedbackData.getAll();
+    res.render("./Admin/adminFeedback/feedback", {
+      title: "Admin feedback mainpulation",
+      feedback: allFeedback,
+    });
   })
   .post(async (req, res) => {
     try {
@@ -38,6 +43,41 @@ router
         .status(400)
         .render("./login/UserLogin", { error: e.error, title: "login" });
     }
+  })
+  .delete(async (req, res) => {
+    //code here for DELETE
+    try {
+      let id = req.params.feedbackId;
+      help.checkId(id);
+      let feedbacks = await feedbackData.delete(id);
+      res.json(feedbacks);
+    } catch (e) {
+      if (e === "Error: invalid object ID") {
+        res.status(400).json({ error: e });
+      } else {
+        res.status(404).json({ error: e });
+      }
+    }
   });
+
+router.route("/:feedbackId").delete(async (req, res) => {
+  // Delete specific feedback
+  try {
+    let id = req.params.feedbackId;
+    help.checkId(id);
+    let feedbacks = await feedbackData.delete(id);
+    if (feedbacks.deleted) {
+      res.json({ message: `Feedback with ID ${id} deleted successfully` });
+    } else {
+      res.status(404).json({ error: `Feedback with ID ${id} not found` });
+    }
+  } catch (e) {
+    if (e === "Error: invalid object ID") {
+      res.status(400).json({ error: e });
+    } else {
+      res.status(500).json({ error: e.message });
+    }
+  }
+});
 
 export default router;
