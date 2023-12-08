@@ -302,3 +302,6 @@ export const checkId = async (id, varName) => {
   if (!ObjectId.isValid(id)) throw `Error: ${varName} invalid object ID`;
   return id;
 };
+
+
+/* BOOKING.js DATA FUNCTON ERROR HANDLING */
