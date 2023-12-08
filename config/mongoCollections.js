@@ -15,4 +15,5 @@ const getCollectionFn = (collection) => {
 
 export const accounts = getCollectionFn("accounts");
 export const feedbacks = getCollectionFn("feedbacks");
-export const rooms = getCollectionFn("rooms")
+export const rooms = getCollectionFn("rooms");
+export const bookings = getCollectionFn("bookings");
