@@ -16,17 +16,23 @@ router
     //await checkIfExistsForLogin (name,email,password);
     try{
       const nameErr = {empty:'Name cannot be Empty', invalid:'Given name is invalid'};
-      const userName = await helpers.validateString(name,2,25,nameErr);
+      //const userName = await helpers.validateString(name,2,25,nameErr);
       const emailAddress = await helpers.validateEmail(email);
       const passwordGiven= await helpers.validatePassword(password);
-      const loginDetails = await loginUser(userName, emailAddress, passwordGiven);
+      const loginDetails = await loginUser(emailAddress, passwordGiven);
       if(loginDetails._id){
-        //console.log(loginDetails._id);
         req.session.user = {id:loginDetails._id};
-        req.session.save(()=>{
+        if(loginDetails.role === 'user'){
+          req.session.save(()=>{
             return res.redirect('/guest');
 
-        });      
+        });
+        }else if(loginDetails.role === 'admin'){
+          req.session.save(()=>{
+            return res.redirect('/admin');
+        });
+
+        }            
       }else{
         res.status(500).render('./login/UserLogin',{error:`Internal Server Error`,title:"Login"});
       }
@@ -44,27 +50,35 @@ router
   })
   .post(async (req, res) => {
     let registerDetails = req.body;
-    let{name,email,password,cpassword,} = registerDetails;
+    let{firstNameInput,lastNameInput,email,phone,password,cpassword,} = registerDetails;
       if(password!==cpassword){
         res.status(400).render('./login/UserCreate',{error:"Passwords doesn't match",title:"Register"});
       }
       try{
-        const nameErr = {empty:'Name cannot be Empty', invalid:'Given name is invalid'};
-        const nameInput = await helpers.validateString(name,2,25,nameErr);
+        await helpers.checkIfExistsForRegister(firstNameInput,lastNameInput,email,phone,password,cpassword);
+        const firstNameErr = {empty:'First name  cannot be Empty', invalid:'First name is invalid'};
+        const lastNameErr = {empty:'Last name cannot be Empty', invalid:'Last name is invalid'};
+        const firstName = await helpers.validateString(firstNameInput,2,25,firstNameErr);
+        const lastName = await helpers.validateString(lastNameInput,2,25,lastNameErr);
         const emailAddress = await helpers.validateEmail(email);
+        const phoneNumber = await helpers.validatePhoneNumber(phone);
         const userPassword = await helpers.validatePassword(password);
         const confirmPwd = await helpers.validatePassword(cpassword);
-        //await validateString(firstName,lastName,emailAddress,password,role);
         if(userPassword!==confirmPwd){
           throw{code:400,error:`Password and Confirm password don't match`};
         }
-        const result = await createAccount(nameInput,emailAddress,userPassword);
+        const result = await createAccount(firstName,lastName,emailAddress,phoneNumber,userPassword);
         if(result._id){
-          return res.redirect('/login');
+          if(result.role === 'user'){
+            return res.redirect('/login');
+          }else if (result.role === 'admin'){
+            return res.redirect('/admin/account/create',{successMessage:'Account created successfully!'});
+          }
         }else{
           res.status(500).render('./login/UserCreate',{error:`Internal Server Error`,title:"Register"});
         }
       }catch(e){
+        console.log(e);
         res.status(400).render('./login/UserCreate',{error:e.error,title:"Register"});
       }
   });

@@ -1,4 +1,4 @@
-// CREATE, DELETE, EDIT, READ ALL
+// CREATE, DELETE, EDIT, GET ALL
 // CREATE: name, email, contact number, create youe own id, password, confirm password
 
 import { ObjectId } from "mongodb";
@@ -21,7 +21,7 @@ export const deleteAccount = async(accountId)=>{
 
     }
     else{
-        return "Account Deleted Successfully";
+        return deleteAccount;
     }
     /*const deleteAccount = await forRemoveAccountData.updateOne(
         {_id:checkAccountDeletionId._id},
@@ -39,17 +39,32 @@ export const deleteAccount = async(accountId)=>{
 export const updateAccount = async(accountId, updateData)=>{
     accountId = await helpers.checkId(accountId,"account Id");
     let accountBeforeUpdateDetails = await accounts();
+    await helpers.checkIfExistsForAccountUpdate(updateData.firstNameInput,updateData.lastNameInput,updateData.email,updateData.phone);
+    const firstNameErr = {empty:'First Name cannot be Empty', invalid:'First Name is invalid and cannot be less than 2 letters'};
+    const lastNameErr = {empty:'Last Name cannot be Empty', invalid:'Last Name is invalid and cannot be less than 2 letters'};
+    const firstAcctName = await helpers.validateString(updateData.firstNameInput,2,25,firstNameErr);
+    const lastAcctName = await helpers.validateString(updateData.lastNameInput,2,25,lastNameErr);
+    const emailAddress= await helpers.validateEmail(updateData.email);
+    const phone = await helpers.validatePhoneNumber(updateData.phone);
+    const mappedUpdatedData={firstName:firstAcctName,
+    lastName:lastAcctName,
+    phoneNumber:phone,
+    email:emailAddress}
     const updateResult = await accountBeforeUpdateDetails.updateOne(
         {"_id":new ObjectId(accountId)},
-        {$set:updateData});
+        {$set:mappedUpdatedData});
     if(updateResult.modifiedCount === 0){
         throw `Could not update  account with id ${accountId}`;
     }else{
-        return "Account updated Successfully";
+        let updatedData =await accountBeforeUpdateDetails.findOne({"_id":new ObjectId(accountId)});
+        if(!updatedData){
+            throw`Error retrieving updated data for id${accountId}`;
+        }
+        return updatedData;
     }
 }
 
-export const readAll = async()=>{
+export const getAll = async()=>{
     let accountCollection = await accounts();
     return await accountCollection.find({}).toArray();//needs work.
 }

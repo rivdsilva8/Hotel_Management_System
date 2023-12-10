@@ -1,0 +1,36 @@
+{{#if successMessage}}<div class="alert alert-success" role="alert">{{successMessage}}</div>{{/if}}
+{{#each details}}
+<form class="user-edit-form" action="/admin/account/delete/{{this._id}}" method="POST">
+    <div class="user">
+    <input type ="hidden" name="accountId" value ="{{this._id}}">
+    <p>
+        <label for="firstNameInput">Name:</label>
+        <input type ="text" name="firstNameInput" id ="firstNameInput" value="{{this.firstName}}" disabled/>
+        <input type ="text" name="lastNameInput" id ="lastNameInput" value="{{this.lastName}}"disabled/>
+    </p>
+    <p>
+        <label for="email">Email</label>
+        <input type="email" id="email" name ="email" value="{{this.email}}" disabled/>
+    </p>
+    <p>
+        <label for="phone" >Phone</label>
+        <div class="phone-container">
+            <input type="text"  id="phonePrefix" name ="phonePrefix"  value="+1" disabled/>
+            <input type="tel" id="phone" name ="phone"  value="{{this.phoneNumber}}" disabled/>
+        </div>
+    </p>
+    <p>Role:{{this.role}}</p>
+    <!---<a href="/admin/account/edit/{{this._id}}">!--->
+    <button type="submit" class="edit-button">
+    <i class ="fas fa-pencil-alt"></i>Delete
+    </button>
+</div>
+</form>
+
+{{else}}
+<p>No users found.</p>
+{{/each}}
+<footer>
+
+  <a href="/admin/account">Back To Admin Account Dashboard</a>
+</footer>

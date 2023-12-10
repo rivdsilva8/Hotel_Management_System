@@ -3,18 +3,19 @@
 // sushmita, rivaldo: account, feedback, gallery both routes and data functions
 import { ObjectId } from "mongodb";
 import validator from "validator";
-const nameRegex = /[^A-Za-z]/;
+const nameRegex = /^[A-Za-z]+$/;
 const prefixPattern = /^([a-zA-Z0-9]+([_\.-]?[a-zA-Z0-9]+)*)$/;
 const domainPattern = /^([a-zA-Z0-9-]+)+(\.[a-zA-Z]{2,})+$/;
 const UpperCase = /[A-Z]/;
 const number = /[0-9]/;
 const specialChar = /[^A-Za-z0-9]/;
 
+//sushmita helpers
 export const validateString = async (name, min, max, errMsg) => {
-  if (!name || typeof name !== "string" || name.trim().length === 0) {
-    throw { code: 400, error: `Please provide valid name` };
+  if (!name || typeof (name) !== "string" || name.trim().length === 0) {
+    throw { code: 400, error: errMsg.empty };
   }
-  if (name.length < min || name.length > max || nameRegex.test(name)) {
+  if (name.length < min || name.length > max || !nameRegex.test(name.trim())) {
     //check for the name with space condition
     throw { code: 400, error: errMsg.invalid };
   }
@@ -24,51 +25,46 @@ export const validateString = async (name, min, max, errMsg) => {
 export const validateEmail = async (emailAddress) => {
   emailAddress = emailAddress.trim().toLowerCase();
   if (!validator.isEmail(emailAddress)) {
-    throw {
-      code: 400,
-      error: `Given email: ${emailAddress} is not in a valid email address format`,
-    };
+    throw {code: 400,error: `Given email: ${emailAddress} is not in a valid email address format`};
   }
   let [prefix, domain] = emailAddress.split("@");
   if (!prefixPattern.test(prefix) || !domainPattern.test(domain)) {
-    throw {
-      code: 400,
-      error: `Given email: ${emailAddress} doesn't have a valid prefix or domain`,
-    };
+    throw {code: 400,error: `Given email: ${emailAddress} doesn't have a valid prefix or domain`};
   }
   return emailAddress;
 };
 
 export const validatePassword = async (password) => {
-  if (
-    typeof password !== "string" ||
-    password.includes(" ") ||
-    password.length < 8
-  ) {
-    throw {
-      code: 400,
-      error: `Password must be valid String with no spaces and should be at least 8 characters long`,
-    };
+  if ( typeof (password) !== "string" || password.includes(" ") || password.length < 8) {
+    throw {code: 400,error: `Password must be valid String with no spaces and should be at least 8 characters long`};
   }
-  if (
-    !UpperCase.test(password) ||
-    !number.test(password || !specialChar.test(password))
-  ) {
-    throw {
-      code: 400,
-      error: `Password must contain at least one upperCase character, one number and one special character`,
-    };
+  if (!UpperCase.test(password) ||!number.test(password) || !specialChar.test(password)) {
+    throw {code: 400,error: `Password must contain at least one upperCase character, one number and one special character`};
   }
   return password;
 };
 export const validatePhoneNumber = async (phNumber) => {
-  if (typeof phNumber !== "Number") {
+  /*console.log(typeof(phNumber));
+  if (typeof phNumber !== "Number"|| phNumber == Infinity || isNaN(phNumber)) {
     throw { code: 400, error: `Phone Number must be of Number type` };
+  }*/
+  if(phNumber.length !== 10){
+    throw { code: 400, error: `Phone Number must have exactly 10 digits` };
   }
   return phNumber;
 };
 
-//sushmita helpers
+export const checkIfExistsForRegister = async(firstNameInput,lastNameInput,emailAddressInput,phone,passwordInput,confirmPasswordInput)=>{
+  if(!firstNameInput ||!lastNameInput || !emailAddressInput || !phone ||!passwordInput || !confirmPasswordInput){
+    throw{code:400,error:`All fields need to have valid values`};
+  }
+}
+export const checkIfExistsForAccountUpdate = async(firstNameInput,lastNameInput,emailAddressInput,phone)=>{
+  if(!firstNameInput ||!lastNameInput || !emailAddressInput || !phone){
+    throw{code:400,error:`All fields need to have valid values`};
+  }
+
+}
 
 //rivaldo helpers
 // You can add and export any helper functions you want here - if you aren't using any, then you can just leave this file as is

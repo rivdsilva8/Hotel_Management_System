@@ -2,11 +2,17 @@
 
 <form action ="/guest/account/edit/{{account._id}}"method="POST">
   <h1>In view and edit Account details for guest</h1>
-  <label for="name">Name</label>
-  <input type="text" placeholder="enter your name" value="{{account.name}}"/>
+  <label for="firstNameInput">First Name:</label>
+  <input type="text" name="firstNameInput" id ="firstNameInput" placeholder="enter your name" value="{{account.firstName}}" disabled/>
+  <label for="lastNameInput">Last Name:</label>
+  <input type="text" name="lastNameInput" id ="lastNameInput" placeholder="Enter your LastName" value="{{account.lastName}}"disabled/>
+  <label for="phone" >Phone</label>
+  <div class="phone-container">
+    <input type="text"  id="phonePrefix" name ="phonePrefix"  value="+1" disabled/>
+    <input type="tel" id="phone" name ="phone"  placeholder="Enter your Phone Number" value="{{account.phoneNumber}}" disabled/>
+  </div>
   <label for="email">Email</label>
-  <input type="text" placeholder="Please enter an email"value="{{account.email}}"/>
-  <button type="submit">Update Account</button>
+  <input type="text" id="email" name ="email"placeholder="Please enter an email"value="{{account.email}}"disabled/>
 </form>
 
 <footer>
