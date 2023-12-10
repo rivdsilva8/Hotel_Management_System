@@ -16,13 +16,15 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   session({
+    name: 'AuthState',
     secret: "secret session",
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false },
   })
 );
-app.engine("handlebars", exphbs.engine({ defaultLayout: "main" }));
+app.engine("handlebars", exphbs.engine({ defaultLayout: "main",
+helpers:{eq:(v1,v2)=>v1===v2} }));
 app.set("view engine", "handlebars");
 
 configRoutes(app);
