@@ -301,3 +301,70 @@ export const checkId = async (id, varName) => {
 
 
 /* BOOKING.js DATA FUNCTON ERROR HANDLING */
+
+/* BOOKING.js DATA FUNCTON ERROR HANDLING */
+
+/*     BookingId,
+    firstName,
+    lastName,
+    emailId,
+    contactNumber,
+    BookingDate,
+    CheckinDate,
+    CheckOutDate,
+    BookingStatus */
+
+    export const BookFirstName = async (firstName) => {
+      if (!firstName) throw `Error: you must provide a first name`;
+      if (typeof firstName !== "string") throw `Error: Provided first name is not a string`;
+      if (firstName.trim() === "") throw `Error: Provided first name is empty try again`;
+      firstName.trim();
+      firstName.toLowerCase();
+      if(firstName.length < 2) throw `Error: last name should have more than one character in it`;
+      let Symbol_check = ["!","@","#","$","%","^","&","*","(",")","_","+","=","-","[","]","{","}",";",":","<",">","?","/"];
+      let Numerical_check = ["1","2","3","4","5","6","7","8","9","0"];
+      for(let i of firstName){
+        if(Symbol_check.includes(i)) throw `Error: Input first name has invalid symbol in it please enter first name again`;
+      }
+      for(let j of firstName){
+        if(Numerical_check.includes(j)) throw `Error: Input First Name has a number in it please enter name again`;
+      }
+      return firstName;
+    };
+    
+    export const BookLastName = async (lastName) => {
+      if (typeof lastName !== "string") throw `Error: Provided last name is not a string`;
+      if (lastName.trim() === "") throw `Error: Provided last name is empty try again`;
+      lastName.trim();
+      lastName.toLowerCase();
+      if(lastName.length < 2) throw `Error: last name should have more than one character in it`;
+      let Symbol_check = ["!","@","#","$","%","^","&","*","(",")","_","+","=","-","[","]","{","}",";",":","<",">","?","/"];
+      let Numerical_check = ["1","2","3","4","5","6","7","8","9","0"];
+      for(let i of lastName){
+        if(Symbol_check.includes(i)) throw `Error: Input last name has invalid symbol in it please enter first name again`;
+      }
+      for(let j of lastName){
+        if(Numerical_check.includes(j)) throw `Error: Input last Name has a number in it please enter name again`;
+      }
+      return lastName;
+    };
+    
+    export const BookEmailId = async (emailId) => {
+      if (typeof emailId !== "string") throw `Error: Provided first name is not a string`;
+      if (emailId.trim() === "") throw `Error: Provided first name is empty try again`;
+      emailId.trim();
+      emailId.toLowerCase();
+      const EmailIdRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+      if(!EmailIdRegex.test(emailId)) throw `Error: Invalid email address please try again`;
+      return emailId;
+    };
+    
+    export const BookContactNumber = async (contactNumber) => {
+      if (typeof emacontactNumberilId !== "string") throw `Error: Provided first name is not a string`;
+      if (contactNumber.trim() === "") throw `Error: Provided first name is empty try again`;
+      contactNumber.trim();
+      contactNumber.toLowerCase();
+      let ContactRegex = /^\d{10}$/;
+      if(!ContactRegex.test(contactNumber)) throw `Error: Please enter valid contact number`;
+      return contactNumber;
+    }

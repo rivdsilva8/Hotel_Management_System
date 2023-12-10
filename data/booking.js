@@ -8,6 +8,7 @@ import * as helpers from '../helpers.js'
 
 export const CreateBooking = async(
     BookingId,
+    firstName,
     lastName,
     emailId,
     contactNumber,
@@ -16,8 +17,29 @@ export const CreateBooking = async(
     CheckOutDate,
     BookingStatus
     )=>{
+        const AddBookingsDetails = await bookings();
+
+        if(!firstName || !lastName || !emailId || !contactNumber || !BookingDate || !CheckinDate || !CheckOutDate) throw `Error: Please fill all the sections`;
+  
+        firstName = await helpers.BookFirstName(firstName);
+        lastName = await helpers.BookLastName(lastName);
+        emailId = await helpers.BookEmailId(emailId);
+        contactNumber = await helpers.BookContactNumber(contactNumber);
+  
+        firstName = firstName.trim();
+        lastName = lastName.trim();
+        emailId = emailId.trim();
+        contactNumber = contactNumber.trim();
+        BookingDate = BookingDate.trim();
+        CheckinDate = CheckinDate.trim();
+        CheckOutDate = CheckOutDate.trim();
+  
+        firstName = firstName.toLowerCase();
+        lastName = lastName.toLowerCase();
+        emailId = emailId.toLowerCase();
         const GuestBookingDetails = {
             BookingId: BookingId,
+            firstName: firstName,
             lastName: lastName,
             emailId: emailId,
             contactNumber: contactNumber,
@@ -26,7 +48,6 @@ export const CreateBooking = async(
             CheckOutDate: CheckOutDate,
             BookingStatus: BookingStatus
         };
-        const AddBookingsDetails = await bookings();
         const AddBooking = await AddBookingsDetails.insertOne(GuestBookingDetails);
         if(!AddBooking.acknowledged || !AddBooking.insertedId){
             throw `Could not add data`;
