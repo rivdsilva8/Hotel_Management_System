@@ -1,0 +1,39 @@
+<form action="/guest/feedback/createFeedback" method="post">
+  <label for="roomType">
+    Room Type:
+    <select id="roomType" name="roomType">
+      <option value="single">Single Room</option>
+      <option value="double">Double Room</option>
+      <option value="suite">Suite</option>
+    </select>
+  </label>
+
+  <label for="rating">
+    Rating:
+    <input
+      type="range"
+      id="rating"
+      name="rating"
+      min="0"
+      max="10"
+      step="1"
+      value="5"
+      oninput="updateRatingValue(this.value)"
+    />
+    <output id="ratingOutput" for="rating"></output>
+  </label>
+
+  <label for="comment">
+    <p>Comment:</p>
+    <textarea id="comment" name="comment" rows="4" cols="50"></textarea>
+  </label>
+  <hr />
+  <button type="submit">submit</button>
+</form>
+
+<script src="../../../public/js/main.js"></script>
+
+<footer>
+
+  <a href="/guest/feedback">back to feedback Page</a>
+</footer>

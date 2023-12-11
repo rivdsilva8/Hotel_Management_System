@@ -25,15 +25,14 @@ router
           .json({ error: "There are no fields in the request body" });
       }
 
-      const { guestName, bookingId, email, rating, comment } = feedbackPostData;
+      const { guestName, roomType, rating, comment } = feedbackPostData;
       //validation / 400 error
 
       //trimming
 
       const newFeedback = await feedbackData.create(
         guestName,
-        bookingId,
-        email,
+        roomType,
         rating,
         comment
       );

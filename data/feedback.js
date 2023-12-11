@@ -8,28 +8,18 @@ import { ObjectId } from "mongodb";
 import * as help from "../helpers.js";
 
 const exportedMethods = {
-  async create(
-    guestId,
-    roomType,
-    guestName,
-    bookingId,
-    email,
-    rating,
-    comment
-  ) {
+  async create(guestId, roomType, guestName, rating, comment) {
     //validation
+    console.log(rating);
     help.checkId(guestId);
     help.stringValidation(roomType);
     help.stringValidation(guestName);
-    help.checkId(bookingId);
-    help.ValidEmail(email);
     help.validRating(rating);
     help.stringValidation(comment);
 
     //trimming
     roomType = roomType.trim();
     guestName = guestName.trim();
-    email = email.trim();
     comment = comment.trim();
 
     if (comment.length > 500)
@@ -40,8 +30,6 @@ const exportedMethods = {
       guestId: guestId,
       roomType: roomType,
       guestName: guestName,
-      bookingId: bookingId,
-      email: email,
       rating: rating,
       comment: comment,
     };
@@ -51,7 +39,7 @@ const exportedMethods = {
       newFeedback
     );
     const newId = newInsertInformation.insertedId;
-    return await newId.toString();
+    return "Thank you for your feedback!";
   },
 
   async delete(feedbackIds) {
@@ -69,7 +57,7 @@ const exportedMethods = {
 
       let object = { ...deletionInfo };
       let feedbackName = object.guestName;
-      console.log({ eventName, deleted: true });
+      console.log({ guestName, deleted: true });
     }
   },
 

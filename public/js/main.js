@@ -24,22 +24,24 @@ async function deleteFlaggedFeedback() {
   const checkboxes = document.querySelectorAll(".deleteFeedbackIds:checked");
   const feedbackIds = Array.from(checkboxes).map((checkbox) => checkbox.value);
 
-  try {
-    console.log("In delete flagged function");
-    const response = await fetch("/admin/feedback", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ deleteFeedbackIds: feedbackIds }),
-    });
+  console.log("In delete flagged function");
+  const response = await fetch("/admin/feedback", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ deleteFeedbackIds: feedbackIds }),
+  });
 
-    if (response.ok) {
-      window.location.reload();
-    } else {
-      console.error("Failed to delete feedback:", response.statusText);
-    }
-  } catch (error) {
-    console.error("Error during fetch:", error);
+  if (response.ok) {
+    window.location.reload();
+  } else {
+    console.error("Failed to delete feedback:", response.statusText);
   }
+
+  console.error("Error during fetch:", error);
+}
+
+function updateRatingValue(value) {
+  document.getElementById("ratingOutput").textContent = value;
 }
