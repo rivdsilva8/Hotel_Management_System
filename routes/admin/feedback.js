@@ -27,6 +27,7 @@ router
 
       const { guestName, bookingId, email, rating, comment } = feedbackPostData;
       //validation / 400 error
+
       //trimming
 
       const newFeedback = await feedbackData.create(
@@ -47,10 +48,14 @@ router
   .delete(async (req, res) => {
     //code here for DELETE
     try {
-      let id = req.params.feedbackId;
-      help.checkId(id);
-      let feedbacks = await feedbackData.delete(id);
-      res.json(feedbacks);
+      console.log("In delete route");
+      let delete_ids = req.body.deleteFeedbackIds;
+      if (delete_ids.length == 0) {
+        console.log("No feedbacks available, please add some more");
+        throw "No feedbacks available";
+      }
+      console.log(delete_ids);
+      await feedbackData.delete(delete_ids);
     } catch (e) {
       if (e === "Error: invalid object ID") {
         res.status(400).json({ error: e });
@@ -59,25 +64,5 @@ router
       }
     }
   });
-
-router.route("/:feedbackId").delete(async (req, res) => {
-  // Delete specific feedback
-  try {
-    let id = req.params.feedbackId;
-    help.checkId(id);
-    let feedbacks = await feedbackData.delete(id);
-    if (feedbacks.deleted) {
-      res.json({ message: `Feedback with ID ${id} deleted successfully` });
-    } else {
-      res.status(404).json({ error: `Feedback with ID ${id} not found` });
-    }
-  } catch (e) {
-    if (e === "Error: invalid object ID") {
-      res.status(400).json({ error: e });
-    } else {
-      res.status(500).json({ error: e.message });
-    }
-  }
-});
 
 export default router;

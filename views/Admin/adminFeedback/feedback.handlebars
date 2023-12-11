@@ -1,16 +1,27 @@
-<ul>
-  {{#each feedback}}
-    <li>
-      <h2>Guest: {{guestName}}</h2>
-      Room:
-      {{roomType}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      rating :
-      {{rating}}/10
-      <p>{{comment}}</p>
-    </li>
-  {{/each}}
-</ul>
+<form id="deletionForm">
+  <ul>
+    {{#each feedback}}
+      <li>
+        <h2>Guest: {{guestName}}</h2>
+        Room:
+        {{roomType}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        rating :
+        {{rating}}/10
+        <input
+          type="checkbox"
+          name="deleteFeedbackIds"
+          class="deleteFeedbackIds"
+          value="{{_id}}"
+        /><span style="float: right;">Flag for deletion : </span>
+        <p>{{comment}}</p>
 
+      </li>
+    {{/each}}
+  </ul>
+  <button type="submit" onclick="deleteFlaggedFeedback()">Delete flagged
+    feedback</button>
+</form>
+<script src="../../../public/js/main.js"></script>
 <footer>
 
   <a href="/admin">back to admin Dashboard</a>

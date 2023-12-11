@@ -54,19 +54,23 @@ const exportedMethods = {
     return await newId.toString();
   },
 
-  async delete(feedbackId) {
-    help.checkId(feedbackId);
-    const feedbackCollection = await feedbacks();
-    const deletionInfo = await feedbackCollection.findOneAndDelete({
-      _id: new ObjectId(feedbackId),
-    });
-    if (deletionInfo === null) throw `feedback id not found`;
+  async delete(feedbackIds) {
+    console.log("in delete df");
 
-    let object = { ...deletionInfo };
-    let feedbackName = object.guestName;
-    let feedbackFinal = feedbackName + "'s Feedback";
-    let result = { feedbackFinal, deleted: true };
-    return result;
+    if (feedbackIds.length == 0)
+      console.log("No feedbacks available, please add more");
+    for (let id of feedbackIds) {
+      help.checkId(id);
+      const feedbackCollection = await feedbacks();
+      const deletionInfo = await feedbackCollection.findOneAndDelete({
+        _id: new ObjectId(id),
+      });
+      if (deletionInfo === null) throw `feedback id not found`;
+
+      let object = { ...deletionInfo };
+      let feedbackName = object.guestName;
+      console.log({ eventName, deleted: true });
+    }
   },
 
   async getAll() {
@@ -76,7 +80,7 @@ const exportedMethods = {
         {},
         {
           projection: {
-            _id: 0,
+            _id: 1,
             guestName: 1,
             roomType: 1,
             rating: 1,
@@ -86,7 +90,6 @@ const exportedMethods = {
       )
       .toArray();
 
-    console.log(allFeedback);
     return allFeedback;
   },
 };
