@@ -11,7 +11,7 @@ import { rooms } from "../config/mongoCollections.js";
 import * as helpers from '../helpers.js'
 import * as connection from '../config/mongoConnection.js'
 
-const createRoom = async (
+export const createRoom = async (
     roomNumber,
     roomType,
     roomPrice,
@@ -43,7 +43,7 @@ const createRoom = async (
 
 }
 
-const getAllRooms = async () => {
+export const getAllRooms = async () => {
     try {
         const roomCollection = await rooms();
         let allRooms = await roomCollection.find({}).toArray();
@@ -53,7 +53,7 @@ const getAllRooms = async () => {
     }
 }
 
-const getRoomByNumber = async (roomNumber) => {
+export const getRoomByNumber = async (roomNumber) => {
     try {
         const roomCollection = await rooms();
         let room = await roomCollection.findOne({ roomNumber: roomNumber});
@@ -67,7 +67,7 @@ const getRoomByNumber = async (roomNumber) => {
     }
 }
 
-const deleteRoom = async (roomNumber) => {
+export const deleteRoom = async (roomNumber) => {
     const roomCollection = await rooms();
     const deleteResult = await roomCollection.deleteOne({
         roomNumber: roomNumber
@@ -80,7 +80,7 @@ const deleteRoom = async (roomNumber) => {
     }
 }
 
-const editRoom = async (
+export const editRoom = async (
     originalRoomNumber,
     newRoomNumber,
     roomType,
@@ -113,7 +113,7 @@ const editRoom = async (
     return newRoom;
 }
 
-const runApp = async () => {
+export const runApp = async () => {
     const db = await connection.dbConnection();
     // await db.dropDatabase;
     try {
