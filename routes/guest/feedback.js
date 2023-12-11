@@ -3,18 +3,19 @@ import feedbackData from "../../data/feedback.js";
 const router = Router();
 
 router
-  .get("/", async (req, res) => {
+  .get("/createFeedback", async (req, res) => {
+    console.log("In createfeedback get");
     try {
-      let allFeedback = await feedbackData.getAll();
-      res.render("./guest/guestFeedback/feedback", {
-        title: "guest feedback page",
-        feedback: allFeedback,
+      res.render("./guest/guestFeedback/createFeedback", {
+        title: "Feedback creation page",
       });
     } catch (e) {}
   })
-  .post("/", async (req, res) => {
+  .post("/createFeedback", async (req, res) => {
     try {
-      // Post one feedback
+      console.log("In post feedback");
+
+      //Post one feedback
       const feedbackPostData = req.body;
       console.log(feedbackData);
       if (!feedbackPostData || Object.keys(feedbackPostData).length === 0) {
@@ -23,22 +24,16 @@ router
           .json({ error: "There are no fields in the request body" });
       }
 
-      const {
-        guestId,
-        roomType,
-        guestName,
-        bookingId,
-        email,
-        rating,
-        comment,
-      } = feedbackPostData;
+      const { roomType, guestName, rating, comment } = feedbackPostData;
+      feedbackPostData.guestId = "65768b26036df2cbfd2d2e93";
+      feedbackPostData.guestName = "Aldrich";
+
+      // Check if guestId already has feedback,if not then allow creation
 
       let newFeedback = await feedbackData.create(
-        guestId,
+        feedbackPostData.guestId, // Use feedbackPostData.guestId here
         roomType,
-        guestName,
-        bookingId,
-        email,
+        feedbackPostData.guestName,
         rating,
         comment
       );
@@ -49,6 +44,15 @@ router
       res;
       res.status(400).json({ error: e });
     }
+  })
+  .get("/", async (req, res) => {
+    try {
+      let allFeedback = await feedbackData.getAll();
+      res.render("./guest/guestFeedback/feedback", {
+        title: "guest feedback page",
+        feedback: allFeedback,
+      });
+    } catch (e) {}
   });
 
 export default router;
