@@ -21,7 +21,10 @@ router
       const passwordGiven= await helpers.validatePassword(password);
       const loginDetails = await loginUser(emailAddress, passwordGiven);
       if(loginDetails._id){
-        req.session.user = {id:loginDetails._id};
+        req.session.user = {id:loginDetails._id,
+          firstName:loginDetails.firstName,
+          lastName:loginDetails.lastName,
+          role:loginDetails.role};
         if(loginDetails.role === 'user'){
           req.session.save(()=>{
             return res.redirect('/guest');

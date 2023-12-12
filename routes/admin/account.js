@@ -20,14 +20,12 @@ router
   .route('/create')
   .get(async (req, res) => {
     //const role = req.session.user? req.session.user.role:null;
-    const role = "admin";
-    console.log("Inside admin create");
+    const role = req.session.user.role;
     return res.render('./Admin/adminAccount/adminCreateAccount',{role:role});
   });
 router.post('/create',async (req, res) => {
-  console.log("Inside admin post");
     let registerDetails = req.body;
-    const role = "admin";
+    const role = req.session.user.role;
     let{firstNameInput,lastNameInput,email,phone,password,cpassword,} = registerDetails;
       if(password!==cpassword){
         res.status(400).render('./Admin/adminAccount/adminCreateAccount',{error:"Passwords doesn't match",title:"Register"});
@@ -61,8 +59,7 @@ router
   .route('/edit')
   .get(async (req, res) => {
     //const role = req.session.user? req.session.user.role:null;
-    const role = "admin";
-    console.log("Inside admin edit");
+    const role = req.session.user.role;
     const details = await getAll();
     //console.log(details);
     const successMessage = req.query.success === "true"?"Account Updated Successfully!":null;
@@ -77,9 +74,8 @@ router
     if(!req.session.user || req.session.user.id!== req.params.id){
       return res.status(403).send("Unauthorized access");
     }*/
-    //console.log(req.body);
-    console.log("Inside individual edit");
-    const role = "admin";
+    //console.log(req.session.user);
+    const role = req.session.user.role;
     let{accountId,firstNameInput,lastNameInput,email,phone} = req.body;
     let accountUpdateID=await helpers.checkId(accountId,"account id");
     try{
@@ -98,8 +94,7 @@ router
   .route('/view')
   .get(async (req, res) => {
     //const role = req.session.user? req.session.user.role:null;
-    const role = "admin";
-    console.log("Inside admin view");
+    const role = req.session.user.role;
     const details = await getAll();
     //console.log(details);
     const successMessage = req.query.success === "true"?"Account Updated Successfully!":null;
@@ -110,8 +105,7 @@ router
   .route('/delete')
   .get(async (req, res) => {
     //const role = req.session.user? req.session.user.role:null;
-    const role = "admin";
-    console.log("Inside admin delete");
+    const role = req.session.user.role;
     const details = await getAll();
     //console.log(details);
     const successMessage = req.query.success === "true"?"Account Deleted Successfully!":null;
@@ -122,8 +116,7 @@ router
   .route('/delete/:id')
   .post(async (req, res) => {
     //const role = req.session.user? req.session.user.role:null;
-    const role = "admin";
-    console.log("Inside admin individual delete");
+    const role = req.session.user.role;
     let{accountId,firstNameInput,lastNameInput,email,phone} = req.body;
     let accountDeleteID=await helpers.checkId(accountId,"account id");
     const details = await deleteAccount(accountDeleteID);
