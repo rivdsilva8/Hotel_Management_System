@@ -19,8 +19,9 @@ app.use(
     name: 'AuthState',
     secret: "secret session",
     resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false },
+    saveUninitialized: false,
+    cookie:{maxAge: 30*60*1000}
+    //cookie: { secure: false },
   })
 );
 app.engine("handlebars", exphbs.engine({ defaultLayout: "main",
