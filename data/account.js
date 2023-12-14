@@ -13,12 +13,11 @@ export const deleteAccount = async(accountId)=>{
         "_id": new ObjectId(accountId)
     });
     if(!checkAccountDeletionId){
-        throw `No attendee found with the id: ${accountId}`;
+        throw { code: 400, error: `No attendee found with the id: ${accountId}` };
     }
     const deleteAccount = await forRemoveAccountData.deleteOne({"_id":new ObjectId(accountId)});
     if(deleteAccount.deletedCount === 0){
-        throw `Error: Could not delete user with id of ${accountId}`;
-
+        throw { code: 400, error: `Error: Could not delete user with id of ${accountId}` };
     }
     else{
         return deleteAccount;
@@ -36,29 +35,47 @@ export const deleteAccount = async(accountId)=>{
 
 
 }
-export const updateAccount = async(accountId, updateData)=>{
+export const updateAccount = async(accountId, firstNameInput,lastNameInput,email,phonePrefix,phone,roleInput)=>{
     accountId = await helpers.checkId(accountId,"account Id");
     let accountBeforeUpdateDetails = await accounts();
-    await helpers.checkIfExistsForAccountUpdate(updateData.firstNameInput,updateData.lastNameInput,updateData.email,updateData.phone);
+    await helpers.checkIfExistsForAccountUpdate(firstNameInput,lastNameInput,email,phonePrefix,phone,roleInput);
     const firstNameErr = {empty:'First Name cannot be Empty', invalid:'First Name is invalid and cannot be less than 2 letters'};
     const lastNameErr = {empty:'Last Name cannot be Empty', invalid:'Last Name is invalid and cannot be less than 2 letters'};
-    const firstAcctName = await helpers.validateString(updateData.firstNameInput,2,25,firstNameErr);
-    const lastAcctName = await helpers.validateString(updateData.lastNameInput,2,25,lastNameErr);
-    const emailAddress= await helpers.validateEmail(updateData.email);
-    const phone = await helpers.validatePhoneNumber(updateData.phone);
+    const firstAcctName = await helpers.validateString(firstNameInput,2,25,firstNameErr);
+    const lastAcctName = await helpers.validateString(lastNameInput,2,25,lastNameErr);
+    const emailAddress= await helpers.validateEmail(email);
+    const phoneVal = await helpers.validatePhone(phone);
+    const roleInputValue = await helpers.validateRole(roleInput)
+
     const mappedUpdatedData={firstName:firstAcctName,
     lastName:lastAcctName,
-    phoneNumber:phone,
-    email:emailAddress}
+    phonePrefix:phonePrefix,
+    phoneNumber:phoneVal,
+    email:emailAddress,
+    role:roleInputValue?roleInputValue:"user"}
+    const emailExists = await accountBeforeUpdateDetails.findOne({email:emailAddress,
+        _id:{$ne: new ObjectId(accountId)}
+    });
+    if(emailExists){
+      const acct = "Email address Exists already"
+      throw { code: 400, error: `Email address exits already so provide a new email` };
+    }
+    const phoneDetailsExists = await accountBeforeUpdateDetails.findOne({phoneNumber:phoneVal,
+        _id:{$ne: new ObjectId(accountId)}
+    });
+    if(phoneDetailsExists){
+      const acct = "Phone Number Exists already"
+      throw { code: 400, error: `Phone Number exits already so provide a new number` };
+    }
     const updateResult = await accountBeforeUpdateDetails.updateOne(
         {"_id":new ObjectId(accountId)},
         {$set:mappedUpdatedData});
     if(updateResult.modifiedCount === 0){
-        throw `Could not update  account with id ${accountId}`;
+        throw { code: 400, error: `Could not update  account with id ${accountId}` };
     }else{
         let updatedData =await accountBeforeUpdateDetails.findOne({"_id":new ObjectId(accountId)});
         if(!updatedData){
-            throw`Error retrieving updated data for id${accountId}`;
+            throw { code: 400, error: `Error retrieving updated data for id${accountId}`};
         }
         return updatedData;
     }
@@ -74,7 +91,7 @@ export const getAccountById = async (accountId) => {
     let accountGetDetails = await accounts();
     const accountData = await accountGetDetails.findOne({"_id":new ObjectId(accountId)});
     if(!accountData){
-        throw `Account with the id:${accountId} not found`;
+        throw { code: 400, error: `ccount with the id:${accountId} not found`};
     }
     accountData._id = accountData._id.toString();
     return accountData;

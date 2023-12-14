@@ -1,6 +1,7 @@
-{{#if successMessage}}<div class="alert alert-success" role="alert">{{successMessage}}</div>{{/if}}
+<div id="error-container" class="alert-message" style="display: none;">{{error}}</div> <!---Cross check for the style!-->
+<div id="success-message" class="alert-message" style="display: none;">{{successMessage}}</div>
 {{#each details}}
-<form class="user-edit-form" action="/admin/account/edit/{{this._id}}" method="POST">
+<form class="admin-edit-form" action="/admin/account/edit/{{this._id}}" method="POST">
     <div class="user">
     <input type ="hidden" name="accountId" value ="{{this._id}}">
     <p>
@@ -9,17 +10,24 @@
         <input type ="text" name="lastNameInput" id ="lastNameInput" value="{{this.lastName}}"/>
     </p>
     <p>
-        <label for="email">Email</label>
+        <label for="email">Email:</label>
         <input type="email" id="email" name ="email" value="{{this.email}}" />
     </p>
     <p>
-        <label for="phone" >Phone</label>
+        <label for="phone" >Phone:</label>
         <div class="phone-container">
-            <input type="text"  id="phonePrefix" name ="phonePrefix"  value="+1" disabled/>
-            <input type="tel" id="phone" name ="phone"  value="{{this.phoneNumber}}" />
+            <input type ="text" id="phonePrefix" name="phonePrefix" value = "{{this.phonePrefix}}" readonly/>
+            <input type="tel" id="phone" name ="phone" value="{{this.phoneNumber}}" />
         </div>
     </p>
-    <p>Role:{{this.role}}</p>
+    <p>
+        <label for="roleInput" >Role:</label>
+        <select name="roleInput" id ="roleInput">
+        <option value="user"{{#if (eq this.role "user")}}selected {{/if}}>User</option>
+        <option value="admin"{{#if (eq this.role "admin")}}selected {{/if}}>Admin</option>
+        <option value="staff"{{#if (eq this.role "staff")}}selected {{/if}}>Staff</option>
+  </select>
+    </p>
     <!---<a href="/admin/account/edit/{{this._id}}">!--->
     <button type="submit" class="edit-button">
     <i class ="fas fa-pencil-alt"></i>Edit
@@ -34,3 +42,4 @@
 
   <a href="/admin/account">Back To Admin Account Dashboard</a>
 </footer>
+<script src="/public/js/main.js"></script>

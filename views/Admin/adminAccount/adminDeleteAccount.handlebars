@@ -1,6 +1,7 @@
-{{#if successMessage}}<div class="alert alert-success" role="alert">{{successMessage}}</div>{{/if}}
+<div id="success-message" class="alert-message"style="display: none;">{{successMessage}}</div>
+<div id="error-container" class="alert-message" style="display: none;">{{error}}</div>
 {{#each details}}
-<form class="user-edit-form" action="/admin/account/delete/{{this._id}}" method="POST">
+<form class="admin-delete-form" action="/admin/account/delete/{{this._id}}" method="POST">
     <div class="user">
     <input type ="hidden" name="accountId" value ="{{this._id}}">
     <p>
@@ -15,13 +16,13 @@
     <p>
         <label for="phone" >Phone</label>
         <div class="phone-container">
-            <input type="text"  id="phonePrefix" name ="phonePrefix"  value="+1" disabled/>
+            <input type ="text" id="phonePrefix" name="phonePrefix" value = "{{this.phonePrefix}}" disabled/>
             <input type="tel" id="phone" name ="phone"  value="{{this.phoneNumber}}" disabled/>
         </div>
     </p>
     <p>Role:{{this.role}}</p>
     <!---<a href="/admin/account/edit/{{this._id}}">!--->
-    <button type="submit" class="edit-button">
+    <button type="submit" class="delete-button">
     <i class ="fas fa-pencil-alt"></i>Delete
     </button>
 </div>
@@ -34,3 +35,5 @@
 
   <a href="/admin/account">Back To Admin Account Dashboard</a>
 </footer>
+
+<script src="/public/js/main.js"></script>
