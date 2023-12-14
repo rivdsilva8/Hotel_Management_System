@@ -25,7 +25,10 @@ app.use(
   })
 );
 app.engine("handlebars", exphbs.engine({ defaultLayout: "main",
-helpers:{eq:(v1,v2)=>v1===v2} }));
+helpers:{eq:(v1,v2)=>v1===v2,
+  isSelected:function(code,phonePrefix){
+    return code === phonePrefix ?'selected ="selected"':'';
+  }} }));
 app.set("view engine", "handlebars");
 
 configRoutes(app);

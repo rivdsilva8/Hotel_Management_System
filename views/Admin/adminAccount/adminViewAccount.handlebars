@@ -1,25 +1,24 @@
 {{#if successMessage}}<div class="alert alert-success" role="alert">{{successMessage}}</div>{{/if}}
 {{#each details}}
-<form class="user-edit-form" action="/admin/account/view/{{this._id}}" method="POST">
+<form class="admin-view-form" action="/admin/account/view/{{this._id}}" method="POST">
     <div class="user">
     <input type ="hidden" name="accountId" value ="{{this._id}}">
     <p>
         <label for="firstNameInput">Name:</label>
-        <input type ="text" name="firstNameInput" id ="firstNameInput" value="{{this.firstName}}" disabled/>
-        <input type ="text" name="lastNameInput" id ="lastNameInput" value="{{this.lastName}}" disabled/>
+        <span>{{this.firstName}}</span>
+        <span>{{this.lastName}}</span>
     </p>
     <p>
-        <label for="email">Email</label>
-        <input type="email" id="email" name ="email" value="{{this.email}}" disabled/>
+        <label for="email">Email:</label>
+         <span>{{this.email}}</span>
     </p>
     <p>
-        <label for="phone" >Phone</label>
-        <div class="phone-container">
-            <input type="text"  id="phonePrefix" name ="phonePrefix"  value="+1" disabled/>
-            <input type="tel" id="phone" name ="phone"  value="{{this.phoneNumber}}"disabled />
-        </div>
+        <label for="phoneNumber" >Phone:</label>
+        <span>{{this.phonePrefix}}</span>  - <span>{{this.phoneNumber}}</span>
     </p>
-    <p>Role:{{this.role}} </p>
+    <p>
+         <label for="email">Role:</label>
+          <span>{{this.role}}</span></p>
     <!---<a href="/admin/account/edit/{{this._id}}">!--->
 </div>
 </form>
