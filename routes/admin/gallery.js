@@ -17,7 +17,7 @@
 // routes/gallery.js
 import express from 'express';
 import multer from 'multer';
-import { uploadImageToFirebase, deleteImageFromFirebase, saveImageDetailsToMongoDB } from '../data/firebaseGallery.js';
+import { uploadImageToFirebase, deleteImageFromFirebase, saveImageDetailsToMongoDB } from '../../data/gallery.js';
 
 const router = express.Router();
 const upload = multer();
