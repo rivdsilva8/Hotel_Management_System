@@ -1,3 +1,10 @@
+{{#if alreadyReviewed}}
+  <script>
+    alert("Sorry, you have already left a review."); window.location.href =
+    '/guest/feedback'; // Replace with the appropriate path
+  </script>
+{{/if}}
+
 <form action="/guest/feedback/createFeedback" method="post">
   <label for="roomType">
     Room Type:
@@ -28,7 +35,7 @@
     <textarea id="comment" name="comment" rows="4" cols="50"></textarea>
   </label>
   <hr />
-  <button type="submit">submit</button>
+  <button onclick="createFeedback()">submit</button>
 </form>
 
 <script src="../../../public/js/main.js"></script>

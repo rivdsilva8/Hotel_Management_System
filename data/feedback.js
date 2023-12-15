@@ -54,10 +54,6 @@ const exportedMethods = {
         _id: new ObjectId(id),
       });
       if (deletionInfo === null) throw `feedback id not found`;
-
-      let object = { ...deletionInfo };
-      let feedbackName = object.guestName;
-      console.log({ guestName, deleted: true });
     }
   },
 
@@ -79,6 +75,12 @@ const exportedMethods = {
       .toArray();
 
     return allFeedback;
+  },
+
+  async checkifExist(userId) {
+    const feedbackCollection = await feedbacks();
+    const existingId = await feedbackCollection.findOne({ guestId: userId });
+    return existingId != null;
   },
 };
 

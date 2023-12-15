@@ -39,6 +39,15 @@ li {
 
 .deleteFeedbackIds {
   float: right;
+  accent-color: red;
+}
+
+#deleteButton {
+  background-color: red;
+}
+
+#deleteButton:hover {
+  background-color: rgb(189, 1, 1);
 }
 
 label[for="phone"] {
