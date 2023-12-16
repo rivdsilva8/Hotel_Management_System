@@ -16,8 +16,9 @@
     <p>
         <label for="phone" >Phone:</label>
         <div class="phone-container">
-            <input type ="text" id="phonePrefix" name="phonePrefix" value = "{{this.phonePrefix}}" readonly/>
-            <input type="tel" id="phone" name ="phone" value="{{this.phoneNumber}}" />
+            <!--<input type ="text" id="phonePrefix" name="phonePrefix" value = "{{this.phonePrefix}}" readonly/>!-->
+            <select class="phonePrefix-select" name="phonePrefix" data-current-prefix="{{this.phonePrefix}}"></select>
+            <input type="tel" class ="phone" id="phone" name ="phone" value="{{this.phoneNumber}}" pattern="\d{3}-\d{3}-\d{4}"  placeholder="123-456-7890"/>
         </div>
     </p>
     <p>
@@ -26,7 +27,7 @@
         <option value="user"{{#if (eq this.role "user")}}selected {{/if}}>User</option>
         <option value="admin"{{#if (eq this.role "admin")}}selected {{/if}}>Admin</option>
         <option value="staff"{{#if (eq this.role "staff")}}selected {{/if}}>Staff</option>
-  </select>
+        </select>
     </p>
     <!---<a href="/admin/account/edit/{{this._id}}">!--->
     <button type="submit" class="edit-button">

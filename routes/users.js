@@ -1,7 +1,7 @@
 import {Router} from 'express';
 const router = Router();
 import * as helpers from '../helpers.js';
-import { loginUser,createAccount} from "../data/users.js";
+import { loginUser,createAccount,resetPassword} from "../data/users.js";
 
 router
   .route('/login')
@@ -12,11 +12,12 @@ router
     return res.render('./login/UserLogin',{title:"Login"});
   })
   .post(async (req, res) => {
-    const{name,email,password} = req.body;
+    const{email,password} = req.body;
     //await checkIfExistsForLogin (name,email,password);
     try{
-      const nameErr = {empty:'Name cannot be Empty', invalid:'Given name is invalid'};
+      //const nameErr = {empty:'Name cannot be Empty', invalid:'Given name is invalid'};
       //const userName = await helpers.validateString(name,2,25,nameErr);
+      await helpers.checkIfExistsForLogin(email,password);
       const emailAddress = await helpers.validateEmail(email);
       const passwordGiven= await helpers.validatePassword(password);
       const loginDetails = await loginUser(emailAddress, passwordGiven);
@@ -64,14 +65,14 @@ router
         const lastName = await helpers.validateString(lastNameInput,2,25,lastNameErr);
         const emailAddress = await helpers.validateEmail(email);
         const phoneNumber = await helpers.validatePhoneNumber(phone);
-        //logic to validate phone prefix
+        const phonePrefixVal = await helpers.validatePhonePrefix(phonePrefix);
         const userPassword = await helpers.validatePassword(password);
         const confirmPwd = await helpers.validatePassword(cpassword);
         if(userPassword!==confirmPwd){
           throw{code:400,error:`Password and Confirm password don't match`};
         }
         const roleInput = "user";
-        const result = await createAccount(firstName,lastName,emailAddress,phonePrefix,phoneNumber,roleInput,userPassword);
+        const result = await createAccount(firstName,lastName,emailAddress,phonePrefixVal,phoneNumber,roleInput,userPassword);
         if(result._id){
           if(result.role === 'user'){
             return res.redirect('/login');
@@ -80,10 +81,43 @@ router
           }
         }else{
           res.status(500).render('./login/UserCreate',{error:`Internal Server Error`,title:"Register"});
+          //return res.status(500).json({error:`Internal Server Error`});
         }
       }catch(e){
         res.status(400).render('./login/UserCreate',{error:e.error,title:"Register"});
+        //return res.status(400).json({error:e.error});
       }
+  });
+
+
+  router
+  .route('/reset')
+  .get(async (req, res) => {
+    /*if(req.session.user){
+      return res.redirect(req.session.user.role === 'admin'?'/admin':'/protected');
+    }*/
+    return res.render('./login/UserReset',{title:"Reset Password"});
+  })
+  .post(async (req, res) => {
+    const{email,password,confirmPassword} = req.body;
+    try{
+      await helpers.checkIfExistsForReset(email,password,confirmPassword);
+      const emailAddress = await helpers.validateEmail(email);
+      const userPassword = await helpers.validatePassword(password);
+      const confirmPasswd = await helpers.validatePassword(confirmPassword);
+      if(userPassword!==confirmPasswd){
+        throw{code:400,error:`Password and Confirm password don't match`};
+      }
+      const loginDetails = await resetPassword(emailAddress, userPassword);
+      console.log(loginDetails);
+      if(loginDetails.updated){
+        return res.render('./login/UserReset',{title:"Reset Password",successMessage:"Password updated successfully !"});       
+      }else{
+        res.status(500).render('./login/UserReset',{error:`Internal Server Error`,title:"Reset Password"});
+      }
+    }catch(e){
+      res.status(400).render('./login/UserReset',{error:e.error,title:"Reset Password"});
+    }
   });
 
   export default router;

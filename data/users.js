@@ -25,7 +25,7 @@ export const createAccount = async(firstName,lastName,email,phonePrefix,phoneNum
     const firstAcctName = await helpers.validateString(firstName,2,25,firstNameErr);
     const lastAcctName = await helpers.validateString(lastName,2,25,lastNameErr);
     const emailAddress= await helpers.validateEmail(email);
-    //logic to validate phone prefix
+    const phonePrefixVal = await helpers.validatePhonePrefix(phonePrefix);
     const phone = await helpers.validatePhone(phoneNumber);
     const pwd = await helpers.validatePassword(password);
     const roleInputValue = await helpers.validateRole(roleInput);
@@ -40,8 +40,8 @@ export const createAccount = async(firstName,lastName,email,phonePrefix,phoneNum
         firstName: firstAcctName.trim(), 
         lastName: lastAcctName.trim(),
         email: emailAddress.trim(),
-        phonePrefix:phonePrefix,
-        phoneNumber:phoneNumber,
+        phonePrefix:phonePrefixVal,
+        phoneNumber:phone,
         password:hashedPassword,
         role:roleInputValue?roleInputValue:"user"
       }
@@ -70,3 +70,24 @@ export const createAccount = async(firstName,lastName,email,phonePrefix,phoneNum
     detailsAct._id = detailsAct._id.toString();
     return detailsAct;
 };
+
+export const resetPassword = async (email, password) => {
+  email= await helpers.validateEmail(email);
+  password =await helpers.validatePassword(password);
+  const userData = await accounts();
+  const userRecord = await userData.findOne({email:email});
+  if(!userRecord){
+  throw{code:400,error:'Not an Registered Email'};
+  }
+  const isPasswordMatch = await bcrypt.compare(password,userRecord.password);
+  if(isPasswordMatch){
+    throw{code:400,error:'New Password cannot be same as the Old Password - So provide a new password or login with old Password'};
+  }
+  let hashedPassword = await bcrypt.hash(password,saltRounds);
+  const updateInfo = await userData.updateOne({email:email},{$set:{password:hashedPassword}});
+  if(!updateInfo.matchedCount && !updateInfo.modifiedCount){
+    throw{code:500, error: 'Could not update the password'};
+  }
+  return {updated: true, userId: userRecord._id};
+};
+

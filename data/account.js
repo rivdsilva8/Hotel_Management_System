@@ -44,12 +44,13 @@ export const updateAccount = async(accountId, firstNameInput,lastNameInput,email
     const firstAcctName = await helpers.validateString(firstNameInput,2,25,firstNameErr);
     const lastAcctName = await helpers.validateString(lastNameInput,2,25,lastNameErr);
     const emailAddress= await helpers.validateEmail(email);
+    const phonePrefixVal = await helpers.validatePhonePrefix(phonePrefix);
     const phoneVal = await helpers.validatePhone(phone);
     const roleInputValue = await helpers.validateRole(roleInput)
 
     const mappedUpdatedData={firstName:firstAcctName,
     lastName:lastAcctName,
-    phonePrefix:phonePrefix,
+    phonePrefix:phonePrefixVal,
     phoneNumber:phoneVal,
     email:emailAddress,
     role:roleInputValue?roleInputValue:"user"}

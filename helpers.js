@@ -3,6 +3,10 @@
 // sushmita, rivaldo: account, feedback, gallery both routes and data functions
 import { ObjectId } from "mongodb";
 import validator from "validator";
+import fs from'fs/promises';
+import path from 'path';
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 const nameRegex = /^[A-Za-z]+$/;
 const prefixPattern = /^([a-zA-Z0-9]+([_\.-]?[a-zA-Z0-9]+)*)$/;
 const domainPattern = /^([a-zA-Z0-9-]+)+(\.[a-zA-Z]{2,})+$/;
@@ -10,7 +14,24 @@ const UpperCase = /[A-Z]/;
 const number = /[0-9]/;
 const specialChar = /[^A-Za-z0-9]/;
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 //sushmita helpers
+
+export const validatePhonePrefix = async (phonePrefix)=>{
+
+
+    const countryCodesPath = path.join(__dirname,'public','js','countryCodes.json');
+    const data = await fs.readFile(countryCodesPath,'utf8');
+    const countryCodes =  JSON.parse(data).codes;
+    const validCountryCodes = countryCodes.map(code => code.code);
+    if(!validCountryCodes.includes(phonePrefix)){
+      throw { code: 400, error: "Invalid Phone Prefix Code" };
+    }
+    return phonePrefix;
+}
+
 const toTitleCase =(str)=>{
   return str.replace(/\w\S*/g,(txt)=>{
     return txt.charAt(0).toUpperCase()+txt.substr(1).toLowerCase();
@@ -104,6 +125,16 @@ export const validatePhoneNumber = async(phNumber) =>{
     }
   }
   return parts.join('');
+}
+export const checkIfExistsForReset = async (email,password,confirmPassword) =>{
+  if(!email || !password || !confirmPassword) {
+    throw { code: 400, error: `All fields need to have valid values` };
+  }
+}
+export const checkIfExistsForLogin = async (email,password) =>{
+  if(!email || !password){
+      throw { code: 400, error: `All fields need to have valid values` };
+  }
 }
 export const checkIfExistsForRegister = async (
   firstNameInput,
