@@ -37,6 +37,7 @@ router.post('/create',async (req, res) => {
         const firstName = await helpers.validateString(firstNameInput,2,25,firstNameErr);
         const lastName = await helpers.validateString(lastNameInput,2,25,lastNameErr);
         const emailAddress = await helpers.validateEmail(email);
+        const phonePrefixVal = await helpers.validatePhonePrefix(phonePrefix);
         const phoneNumber = await helpers.validatePhoneNumber(phone);
         const userPassword = await helpers.validatePassword(password);
         const confirmPwd = await helpers.validatePassword(cpassword);
@@ -44,7 +45,7 @@ router.post('/create',async (req, res) => {
           throw{code:400,error:`Password and Confirm password don't match`};
         }
         const roleInputValue = await helpers.validateRole(roleInput);
-        const result = await createAccount(firstName,lastName,emailAddress,phonePrefix,phoneNumber,roleInputValue,userPassword);
+        const result = await createAccount(firstName,lastName,emailAddress,phonePrefixVal,phoneNumber,roleInputValue,userPassword);
         if(result._id){
           return res.render('./Admin/adminAccount/adminCreateAccount',{title:"Admin Create Users Account",role:role,successMessage:"Account created successfully !"});
         }else{
@@ -91,9 +92,10 @@ router
       const firstName = await helpers.validateString(firstNameInput,2,25,firstNameErr);
       const lastName = await helpers.validateString(lastNameInput,2,25,lastNameErr);
       const emailAddress = await helpers.validateEmail(email);
-      const phoneNumber = await helpers.validatePhone(phone);
+      const phonePrefixVal = await helpers.validatePhonePrefix(phonePrefix);
+      const phoneNumber = await helpers.validatePhoneNumber(phone);
       const roleInputValue = await helpers.validateRole(roleInput);
-      const updateDetails = await updateAccount(accountUpdateID,firstName,lastName,emailAddress,phonePrefix,phoneNumber,roleInputValue);
+      const updateDetails = await updateAccount(accountUpdateID,firstName,lastName,emailAddress,phonePrefixVal,phoneNumber,roleInputValue);
       return res.redirect('/admin/account/edit?success=true');
     }catch(e){
       //const details = await getAll();
