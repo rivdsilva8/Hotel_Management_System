@@ -1,6 +1,6 @@
 <form action="/register"method="POST">
-{{#if successMessage}}<div class="alert alert-success" role="alert">{{successMessage}}</div>{{/if}}
-<div id = "error-container">{{#if error}}{{error}}{{/if}}</div>
+{{#if successMessage}}<div class="alert alert-success" role="alert" style="display: none;" >{{successMessage}}</div>{{/if}}
+<div id = "error-container" style="display: none;">{{#if error}}{{error}}{{/if}}</div>
   <label for="firstNameInput">First Name:</label>
   <input type ="text" name="firstNameInput" id ="firstNameInput" placeholder="Enter your First Name">
   <label for="lastNameInput">Last Name:</label>
@@ -13,8 +13,8 @@
   <input type="text" id="phonePrefix" name ="phonePrefix"  value="+1" disabled/>!-->
   <label for="phone" >Phone</label>
   <div class="phone-container">
-    <input type="text"  id="phonePrefix" name ="phonePrefix"  value="+1" disabled/>
-    <input type="tel" id="phone" name ="phone"  placeholder="Enter your Phone Number" />
+    <select id="phonePrefix" name ="phonePrefix"></select>
+    <input type="tel" id="phone" name ="phone"  placeholder="123-456-7890"  pattern="\d{3}-\d{3}-\d{4}"/>
   </div>
   <label for="password" >Password</label>
   <input type="password" id="password" name ="password"  placeholder="Please create a password" />
@@ -37,6 +37,12 @@
 {{/if}}
 {{else}}
 <footer>
+  <div class="account-create">Already have an account?
+  <a href="/login">Click here to log-in</a>
+  </div>
+  <br><br>
   <a href="/">Back to home</a>
 </footer>
 {{/if}}
+<script src="/public/js/client_side_validation.js"></script>
+<script src="/public/js/main.js"></script>

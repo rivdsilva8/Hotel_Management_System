@@ -49,30 +49,6 @@ li {
 #deleteButton:hover {
   background-color: rgb(189, 1, 1);
 }
-
-label[for="phone"] {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-.phone-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-#phonePrefix {
-  width: 50px;
-  margin-right: 5px;
-  text-align: center;
-  border: 1px solid #ccc;
-}
-#phone {
-  flex-grow: 1;
-  border: 1px solid #ccc;
-  padding: 5px;
-  width: 20px;
-}
-
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -90,6 +66,8 @@ button:hover {
 }
 
 form {
+  display: flex;
+  flex-direction: column;
   max-width: 600px;
   margin: 20px auto;
   padding: 20px;
@@ -123,73 +101,43 @@ a {
 .account-create {
   text-align: center;
 }
-
-label[for="phone"] {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
 .phone-container {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  gap: 10px;
+  /*margin-bottom: 10px;*/
 }
-#phonePrefix {
-  width: 50px;
-  margin-right: 5px;
-  text-align: center;
-  border: 1px solid #ccc;
-}
-#phone {
-  flex-grow: 1;
-  border: 1px solid #ccc;
+.phone-container select,
+.phone-container input{
+  flex: 1;
   padding: 5px;
-  width: 20px;
+  border:1px solid#ccc;
+  border-radius: 4px;
+  height: 35px;
 }
-
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="tel"],
-button {
+.phonePrefix-select, .phone{
+  width:auto;
+}
+.alert-message{
+  color: white;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  text-align: center;
+}
+#success-message{
+  background-color: green;
+}
+#error-container{
+  background-color: red;
+  color: white;
+}
+.roleInput{
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 4px;
-}
+  box-sizing: border-box;
 
-form {
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-}
-button[type="submit"] {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button[type="submit"]:hover {
-  background-color: #007bff;
-}
-a:hover {
-  text-decoration: underline;
-}
-footer {
-  text-align: center;
-  padding: 10px;
-  margin-top: 20px;
-}
-a {
-  color: #5953d4;
-  text-align: center;
-}
-.account-create {
-  text-align: center;
 }

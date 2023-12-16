@@ -3,6 +3,10 @@
 // sushmita, rivaldo: account, feedback, gallery both routes and data functions
 import { ObjectId } from "mongodb";
 import validator from "validator";
+import fs from'fs/promises';
+import path from 'path';
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 const nameRegex = /^[A-Za-z]+$/;
 const prefixPattern = /^([a-zA-Z0-9]+([_\.-]?[a-zA-Z0-9]+)*)$/;
 const domainPattern = /^([a-zA-Z0-9-]+)+(\.[a-zA-Z]{2,})+$/;
@@ -10,7 +14,29 @@ const UpperCase = /[A-Z]/;
 const number = /[0-9]/;
 const specialChar = /[^A-Za-z0-9]/;
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 //sushmita helpers
+
+export const validatePhonePrefix = async (phonePrefix)=>{
+
+
+    const countryCodesPath = path.join(__dirname,'public','js','countryCodes.json');
+    const data = await fs.readFile(countryCodesPath,'utf8');
+    const countryCodes =  JSON.parse(data).codes;
+    const validCountryCodes = countryCodes.map(code => code.code);
+    if(!validCountryCodes.includes(phonePrefix)){
+      throw { code: 400, error: "Invalid Phone Prefix Code" };
+    }
+    return phonePrefix;
+}
+
+const toTitleCase =(str)=>{
+  return str.replace(/\w\S*/g,(txt)=>{
+    return txt.charAt(0).toUpperCase()+txt.substr(1).toLowerCase();
+  });
+};
 export const validateString = async (name, min, max, errMsg) => {
   if (!name || typeof name !== "string" || name.trim().length === 0) {
     throw { code: 400, error: errMsg.empty };
@@ -19,7 +45,7 @@ export const validateString = async (name, min, max, errMsg) => {
     //check for the name with space condition
     throw { code: 400, error: errMsg.invalid };
   }
-  return name.trim();
+  return toTitleCase(name.trim());
 };
 
 export const validateEmail = async (emailAddress) => {
@@ -63,22 +89,59 @@ export const validatePassword = async (password) => {
   }
   return password;
 };
-export const validatePhoneNumber = async (phNumber) => {
-  /*console.log(typeof(phNumber));
-  if (typeof phNumber !== "Number"|| phNumber == Infinity || isNaN(phNumber)) {
-    throw { code: 400, error: `Phone Number must be of Number type` };
-  }*/
-  if (phNumber.length !== 10) {
+export const validatePhone = async(phone)=>{
+  if(typeof(phone)!== "string"){
+    throw `Phone Number needs to be a string`;
+  }
+  if (phone.length !== 10) {
     throw { code: 400, error: `Phone Number must have exactly 10 digits` };
   }
-  return phNumber;
-};
-
+  const phonePattern = /^\d{10}$/;
+  if(!phonePattern.test(phone)){
+    throw { code: 400, error: `Phone Number must be a string of  exactly 10 digits` };
+  }
+  return phone;
+}
+export const validatePhoneNumber = async(phNumber) =>{
+  let parts;
+  if(typeof(phNumber) !== "string"){
+    throw `Phone Number needs to be a string`;
+  }else{
+    if(phNumber.trim().length === 0){
+      throw `Phone NUmber cannot be just empty spaces`;
+    }
+    parts = phNumber.split('-');
+    if(parts.length !==3){
+      throw`Please provide a valid phone Number`;
+    }else{
+      if(parts[0].length!==3 || parts[1].length!==3 || parts[2].length !==4){
+        throw `Please provide phone number in the format 123-456-7890`;
+      }
+      parts.forEach(part =>{
+        if(!(/^[0-9]+$/).test(part)){
+          throw `It is phone number, please enter numbers in the format 123-456-7890`;
+        }
+      });
+    }
+  }
+  return parts.join('');
+}
+export const checkIfExistsForReset = async (email,password,confirmPassword) =>{
+  if(!email || !password || !confirmPassword) {
+    throw { code: 400, error: `All fields need to have valid values` };
+  }
+}
+export const checkIfExistsForLogin = async (email,password) =>{
+  if(!email || !password){
+      throw { code: 400, error: `All fields need to have valid values` };
+  }
+}
 export const checkIfExistsForRegister = async (
   firstNameInput,
   lastNameInput,
   emailAddressInput,
   phone,
+  roleInput,
   passwordInput,
   confirmPasswordInput
 ) => {
@@ -87,6 +150,7 @@ export const checkIfExistsForRegister = async (
     !lastNameInput ||
     !emailAddressInput ||
     !phone ||
+    !roleInput ||
     !passwordInput ||
     !confirmPasswordInput
   ) {
@@ -96,12 +160,19 @@ export const checkIfExistsForRegister = async (
 export const checkIfExistsForAccountUpdate = async (
   firstNameInput,
   lastNameInput,
-  emailAddressInput,
+  emailAddressInput,phonePrefix,
   phone
 ) => {
-  if (!firstNameInput || !lastNameInput || !emailAddressInput || !phone) {
+  if (!firstNameInput || !lastNameInput || !emailAddressInput || !phonePrefix || !phone) {
     throw { code: 400, error: `All fields need to have valid values` };
   }
+};
+
+export const validateRole = async(roleInput)=>{
+  if(!['admin','user','staff'].includes(roleInput.toLowerCase())){
+    throw{code:400,error:'Role must be either "admin", "user" or "staff"'};
+  }
+  return roleInput;
 };
 
 //rivaldo helpers

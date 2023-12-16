@@ -21,37 +21,38 @@ router
   .get(async (req, res) => {
     //const role = req.session.user? req.session.user.role:null;
     const role = req.session.user.role;
-    return res.render('./Admin/adminAccount/adminCreateAccount',{role:role});
+    return res.render('./Admin/adminAccount/adminCreateAccount',{title:"Admin Create Users Account",role:role});
   });
 router.post('/create',async (req, res) => {
     let registerDetails = req.body;
     const role = req.session.user.role;
-    let{firstNameInput,lastNameInput,email,phone,password,cpassword,} = registerDetails;
+    let{firstNameInput,lastNameInput,email,phonePrefix,phone,roleInput,password,cpassword,} = registerDetails;
       if(password!==cpassword){
-        res.status(400).render('./Admin/adminAccount/adminCreateAccount',{error:"Passwords doesn't match",title:"Register"});
+        res.status(400).render('./Admin/adminAccount/adminCreateAccount',{title:"Admin Create Users Account",error:"Passwords doesn't match"});
       }
       try{
-        await helpers.checkIfExistsForRegister(firstNameInput,lastNameInput,email,phone,password,cpassword);
+        await helpers.checkIfExistsForRegister(firstNameInput,lastNameInput,email,phonePrefix,phone,roleInput,password,cpassword);
         const firstNameErr = {empty:'First name  cannot be Empty', invalid:'First name is invalid'};
         const lastNameErr = {empty:'Last name cannot be Empty', invalid:'Last name is invalid'};
         const firstName = await helpers.validateString(firstNameInput,2,25,firstNameErr);
         const lastName = await helpers.validateString(lastNameInput,2,25,lastNameErr);
         const emailAddress = await helpers.validateEmail(email);
+        const phonePrefixVal = await helpers.validatePhonePrefix(phonePrefix);
         const phoneNumber = await helpers.validatePhoneNumber(phone);
         const userPassword = await helpers.validatePassword(password);
         const confirmPwd = await helpers.validatePassword(cpassword);
         if(userPassword!==confirmPwd){
           throw{code:400,error:`Password and Confirm password don't match`};
         }
-        const result = await createAccount(firstName,lastName,emailAddress,phoneNumber,userPassword);
+        const roleInputValue = await helpers.validateRole(roleInput);
+        const result = await createAccount(firstName,lastName,emailAddress,phonePrefixVal,phoneNumber,roleInputValue,userPassword);
         if(result._id){
-          return res.render('./Admin/adminAccount/adminCreateAccount',{role:role,successMessage:"Account created successfully !"});
+          return res.render('./Admin/adminAccount/adminCreateAccount',{title:"Admin Create Users Account",role:role,successMessage:"Account created successfully !"});
         }else{
-          return res.status(500).render('./Admin/adminAccount/adminCreateAccount',{error:`Internal Server Error`,title:"Register",role:role});
+          return res.status(500).render('./Admin/adminAccount/adminCreateAccount',{title:"Admin Create Users Account",error:`Internal Server Error`,role:role});
         }
       }catch(e){
-        console.log(e);
-        return res.status(400).render('./Admin/adminAccount/adminCreateAccount',{error:e.error,title:"Register",role:role});
+        return res.status(400).render('./Admin/adminAccount/adminCreateAccount',{title:"Admin Create Users Account",error:e.error,role:role});
       }
 });
 
@@ -61,9 +62,15 @@ router
     //const role = req.session.user? req.session.user.role:null;
     const role = req.session.user.role;
     const details = await getAll();
-    //console.log(details);
-    const successMessage = req.query.success === "true"?"Account Updated Successfully!":null;
-    return res.render('./Admin/adminAccount/adminEditAccount',{role:role, details:details,successMessage:successMessage});
+    let successMessage= null;
+    let errorMessage = null;
+    if(req.query.success === "true"){
+      successMessage = "Account Updated Successfully!";
+    }else if (req.query.success === "fail"){
+      errorMessage = req.query.error?decodeURIComponent(req.query.error):"Update Failed";
+    }
+    //const successMessage = req.query.success === "true"?"Account Updated Successfully!":null;
+    return res.render('./Admin/adminAccount/adminEditAccount',{title:"Admin Edit Users Account",role:role, details:details,successMessage:successMessage,error:errorMessage});
   });
 
 
@@ -76,16 +83,24 @@ router
     }*/
     //console.log(req.session.user);
     const role = req.session.user.role;
-    let{accountId,firstNameInput,lastNameInput,email,phone} = req.body;
+    let{accountId,firstNameInput,lastNameInput,email,phonePrefix,phone,roleInput} = req.body;
     let accountUpdateID=await helpers.checkId(accountId,"account id");
     try{
-      await helpers.checkIfExistsForAccountUpdate(firstNameInput,lastNameInput,email,phone);
-      const updateDetails = await updateAccount(accountUpdateID,req.body);
+      await helpers.checkIfExistsForAccountUpdate(firstNameInput,lastNameInput,email,phonePrefix,phone,roleInput);
+      const firstNameErr = {empty:'First name  cannot be Empty', invalid:'First name is invalid'};
+      const lastNameErr = {empty:'Last name cannot be Empty', invalid:'Last name is invalid'};
+      const firstName = await helpers.validateString(firstNameInput,2,25,firstNameErr);
+      const lastName = await helpers.validateString(lastNameInput,2,25,lastNameErr);
+      const emailAddress = await helpers.validateEmail(email);
+      const phonePrefixVal = await helpers.validatePhonePrefix(phonePrefix);
+      const phoneNumber = await helpers.validatePhoneNumber(phone);
+      const roleInputValue = await helpers.validateRole(roleInput);
+      const updateDetails = await updateAccount(accountUpdateID,firstName,lastName,emailAddress,phonePrefixVal,phoneNumber,roleInputValue);
       return res.redirect('/admin/account/edit?success=true');
     }catch(e){
-      console.log(e);
-      const details = await getAll();
-      return res.status(e.code).render('./Admin/adminAccount/adminEditAccount',{role:role,error:e.error,account:details});
+      //const details = await getAll();
+      //return res.status(400).render('./Admin/adminAccount/adminEditAccount',{title:"Admin Edit Users Account",role:role,error:e.error,details:details});
+      return res.redirect(`/admin/account/edit?success=fail&error=${encodeURIComponent(e.error)}`);
     }
 
   })
@@ -98,7 +113,7 @@ router
     const details = await getAll();
     //console.log(details);
     const successMessage = req.query.success === "true"?"Account Updated Successfully!":null;
-    return res.render('./Admin/adminAccount/adminViewAccount',{role:role, details:details,successMessage:successMessage});
+    return res.render('./Admin/adminAccount/adminViewAccount',{title:"Admin View Users Account",role:role, details:details,successMessage:successMessage});
   });
 
   router
@@ -108,8 +123,15 @@ router
     const role = req.session.user.role;
     const details = await getAll();
     //console.log(details);
-    const successMessage = req.query.success === "true"?"Account Deleted Successfully!":null;
-    return res.render('./Admin/adminAccount/adminDeleteAccount',{role:role, details:details,successMessage:successMessage});
+    let successMessage= null;
+    let errorMessage = null;
+    if(req.query.success === "true"){
+      successMessage = "Account Deleted Successfully!";
+    }else if (req.query.success === "fail"){
+      errorMessage = req.query.error?decodeURIComponent(req.query.error):"Delete Failed";
+    }
+    //const successMessage = req.query.success === "true"?"Account Deleted Successfully!":null;
+    return res.render('./Admin/adminAccount/adminDeleteAccount',{title:"Admin Delete Users Account",role:role, details:details,successMessage:successMessage,error:errorMessage});
   });
 
   router
@@ -123,7 +145,7 @@ router
     if(details.acknowledged === true){
       return res.redirect('/admin/account/delete?success=true');
     }else{
-      return res.redirect('/admin/account/delete?success=false');
+      return res.redirect('/admin/account/delete?success=fail');
     }
     
   });
