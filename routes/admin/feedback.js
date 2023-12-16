@@ -9,58 +9,39 @@ router
   .route("/")
   .get(async (req, res) => {
     //get all feedback
-    let allFeedback = await feedbackData.getAll();
-    res.render("./Admin/adminFeedback/feedback", {
-      title: "Admin feedback mainpulation",
-      feedback: allFeedback,
-    });
-  })
-  .post(async (req, res) => {
     try {
-      //post one feedback
-      const feedbackPostData = req.body;
-      if (!feedbackPostData || Object.keys(feedbackPostData).length === 0) {
-        return res
-          .status(400)
-          .json({ error: "There are no fields in the request body" });
-      }
-
-      const { guestName, roomType, rating, comment } = feedbackPostData;
-      //validation / 400 error
-
-      //trimming
-
-      const newFeedback = await feedbackData.create(
-        guestName,
-        roomType,
-        rating,
-        comment
-      );
-      res.json(newFeedback);
+      let allFeedback = await feedbackData.getAll();
+      res.render("./Admin/adminFeedback/feedback", {
+        title: "Admin feedback mainpulation",
+        feedback: allFeedback,
+      });
     } catch (e) {
       console.log(e);
-      res
-        .status(400)
-        .render("./login/UserLogin", { error: e.error, title: "login" });
+      return res.render("./Admin/adminFeedback/feedback", {
+        title: "Admin feedback mainpulation",
+        error: e,
+      });
     }
   })
+
   .delete(async (req, res) => {
     //code here for DELETE
     try {
       console.log("In delete route");
       let delete_ids = req.body.deleteFeedbackIds;
+      console.log("delete_ids =" + delete_ids);
       if (delete_ids.length == 0) {
-        console.log("No feedbacks available, please add some more");
-        throw "No feedbacks available";
+        throw "Error : No feedbacks selected";
       }
-      console.log(delete_ids);
-      await feedbackData.delete(delete_ids);
+
+      let result = await feedbackData.delete(delete_ids);
+      // return res.status(200).json(result);
     } catch (e) {
-      if (e === "Error: invalid object ID") {
-        res.status(400).json({ error: e });
-      } else {
-        res.status(404).json({ error: e });
-      }
+      console.log(e);
+      return res.render("./Admin/adminFeedback/feedback", {
+        title: "Admin feedback mainpulation",
+        error: e,
+      });
     }
   });
 

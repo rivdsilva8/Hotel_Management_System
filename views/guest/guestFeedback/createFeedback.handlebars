@@ -5,11 +5,23 @@
   </script>
 {{/if}}
 
-<form action="/guest/feedback/createFeedback" method="post">
+{{#if success}}
+  <script>
+    alert("Thank you for your feedback!"); window.location.href =
+    '/guest/feedback';
+  </script>
+{{/if}}
+
+<form
+  id="createFeedbackForm"
+  action="/guest/feedback/createFeedback"
+  method="post"
+>
   <div id="error-container">{{#if error}}{{error}}{{/if}}</div>
   <label for="roomType">
     Room Type:
     <select id="roomType" name="roomType">
+      <option value="" disabled selected>Select Room Type</option>
       <option value="single">Single Room</option>
       <option value="double">Double Room</option>
       <option value="suite">Suite</option>
@@ -36,9 +48,9 @@
     <textarea id="comment" name="comment" rows="4" cols="50"></textarea>
   </label>
   <hr />
-  <button onclick="createFeedback()">submit</button>
+  <button type="submit">submit</button>
 </form>
-
+<script src="/public/js/client_side_validation.js"></script>
 <script src="../../../public/js/main.js"></script>
 
 <footer>

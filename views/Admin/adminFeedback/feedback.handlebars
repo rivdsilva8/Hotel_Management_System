@@ -1,7 +1,9 @@
-<button action=""></button>
-<form id="deletionForm">
+
+<form id="deletionForm" action="/admin/feedback">
+
   <ul>
     {{#if feedback.length}}
+    <div id="error-container">{{#if error}}{{error}}{{/if}}</div>
       {{#each feedback}}
         <li>
           <h2>Guest: {{guestName}}</h2>
@@ -20,8 +22,8 @@
       {{/each}}
       </ul>
        <button
+    
     id="deleteButton"
-    type="submit"
     onclick="deleteFlaggedFeedback()"
   >Delete flagged feedback</button>
     {{else}}

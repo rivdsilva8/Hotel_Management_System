@@ -4,7 +4,17 @@
     window.location.href = '/guest/feedback';
   </script>
 {{/if}}
-<form action="/guest/feedback/updateFeedback" method="post">
+
+
+{{#if success}}
+  <script>
+    alert("Your feedback has been updated"); window.location.href =
+    '/guest/feedback';
+  </script>
+{{/if}}
+
+<form id="updateFeedbackForm"action="/guest/feedback/updateFeedback" method="post">
+<div id="error-container">{{#if error}}{{error}}{{/if}}</div>
   <label for="roomType">
     Room Type:
    <select id="roomType" name="roomType">
@@ -39,7 +49,7 @@
     >{{comment}}</textarea>
   </label>
   <hr />
-  <button onclick="updateFeedback()">update</button>
+  <button type="submit">update</button>
 </form>
 
 <script src="../../../public/js/main.js"></script>

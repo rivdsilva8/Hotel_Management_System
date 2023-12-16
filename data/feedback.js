@@ -10,7 +10,15 @@ import * as help from "../helpers.js";
 const exportedMethods = {
   async create(guestId, roomType, guestName, rating, comment) {
     //validation
-    console.log(rating);
+
+    if (roomType == undefined) {
+      throw "Please select a Room Type";
+    }
+
+    if (comment.length == 0) {
+      throw "Your comment cannot be empty";
+    }
+
     help.checkId(guestId);
     help.stringValidation(roomType);
     help.stringValidation(guestName);
@@ -44,15 +52,17 @@ const exportedMethods = {
 
   async delete(feedbackIds) {
     console.log("in delete df");
+    console.log(feedbackIds);
 
     if (feedbackIds.length == 0)
-      console.log("No feedbacks available, please add more");
+      throw "Error: No feedbacks available, please add more";
     for (let id of feedbackIds) {
       help.checkId(id);
       const feedbackCollection = await feedbacks();
       const deletionInfo = await feedbackCollection.findOneAndDelete({
         _id: new ObjectId(id),
       });
+
       if (deletionInfo === null) throw `feedback id not found`;
     }
   },
