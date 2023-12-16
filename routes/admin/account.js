@@ -5,7 +5,7 @@
 import { Router } from "express";
 const router = Router();
 import * as helpers from '../../helpers.js';
-import {getAccountById,updateAccount,getAll,deleteAccount} from "../../data/account.js";
+import {getAccountById,updateAccount,getAll,deleteAccount,getSearchData} from "../../data/account.js";
 import {createAccount} from "../../data/users.js";
 
 router.get("/", async (req, res) => {
@@ -111,9 +111,10 @@ router
     //const role = req.session.user? req.session.user.role:null;
     const role = req.session.user.role;
     const details = await getAll();
+    const errorMessage = null;
     //console.log(details);
     const successMessage = req.query.success === "true"?"Account Updated Successfully!":null;
-    return res.render('./Admin/adminAccount/adminViewAccount',{title:"Admin View Users Account",role:role, details:details,successMessage:successMessage});
+    return res.render('./Admin/adminAccount/adminViewAccount',{title:"Admin View Users Account",role:role, details:details,successMessage:successMessage,error:errorMessage});
   });
 
   router
@@ -150,5 +151,85 @@ router
     
   });
 
+
+  router
+  .route('/search')
+  .post(async (req, res) => {
+    //const role = req.session.user? req.session.user.role:null;
+    let role = req.session.user.role;
+    let searchDetails ="";
+    let successMessage= null;
+    let errorMessage = null;
+    try{
+    const{searchFName }= req.body;
+    const firstNameErr = {empty:'First name  cannot be Empty', invalid:'First name is invalid'};
+    const firstName = await helpers.validateString(searchFName,2,25,firstNameErr);
+    searchDetails = await getSearchData(firstName);
+    if(searchDetails.length === 0 ){
+      errorMessage = 'No results found for the given Name!';
+      return res.render('./Admin/adminAccount/adminEditAccount',{title:"Admin Edit Users Account",role:role, searchDetails:searchDetails,successMessage:successMessage,error:errorMessage});
+    }else{
+      return res.render('./Admin/adminAccount/adminEditAccount',{title:"Admin Edit Users Account",role:role, searchDetails:searchDetails,successMessage:successMessage,error:errorMessage});
+    }
+    }catch(e){
+      return res.render('./Admin/adminAccount/adminEditAccount',{title:"Admin Edit Users Account",role:role, searchDetails:searchDetails,successMessage:successMessage,error:e.error});
+    }
+    
+  });
+
+  router
+  .route('/deleteSearch')
+  .post(async (req, res) => {
+    //const role = req.session.user? req.session.user.role:null;
+    let role = req.session.user.role;
+    let searchDetails ="";
+    let successMessage= null;
+    let errorMessage = null;
+    try{
+    const{searchFName }= req.body;
+    const firstNameErr = {empty:'First name  cannot be Empty', invalid:'First name is invalid'};
+    const firstName = await helpers.validateString(searchFName,2,25,firstNameErr);
+    searchDetails = await getSearchData(firstName);
+    if(searchDetails.length === 0 ){
+      errorMessage = 'No results found for the given Name!';
+      return res.render('./Admin/adminAccount/adminDeleteAccount',{title:"Admin Delete Users Account",role:role, searchDetails:searchDetails,successMessage:successMessage,error:errorMessage});
+    }
+    else{
+      return res.render('./Admin/adminAccount/adminDeleteAccount',{title:"Admin Delete Users Account",role:role, searchDetails:searchDetails,successMessage:successMessage,error:errorMessage});
+
+    }
+    }catch(e){
+      return res.render('./Admin/adminAccount/adminDeleteAccount',{title:"Admin Delete Users Account",role:role, searchDetails:searchDetails,successMessage:successMessage,error:e.error});
+    }
+    
+  });
+
+  router
+  .route('/viewSearch')
+  .post(async (req, res) => {
+    //const role = req.session.user? req.session.user.role:null;
+    let role = req.session.user.role;
+    let searchDetails ="";
+    let successMessage= null;
+    let errorMessage = null;
+    try{
+    const{searchFName }= req.body;
+    const firstNameErr = {empty:'First name  cannot be Empty', invalid:'First name is invalid'};
+    const firstName = await helpers.validateString(searchFName,2,25,firstNameErr);
+    searchDetails = await getSearchData(firstName);
+    if(searchDetails.length === 0 ){
+      errorMessage = 'No results found for the given Name!';
+      return res.render('./Admin/adminAccount/adminViewAccount',{title:"Admin View Users Account",role:role, searchDetails:searchDetails,successMessage:successMessage,error:errorMessage});
+    }
+    else{
+      return res.render('./Admin/adminAccount/adminViewAccount',{title:"Admin View Users Account",role:role, searchDetails:searchDetails,successMessage:successMessage,error:errorMessage});
+    }
+    }catch(e){
+      return res.render('./Admin/adminAccount/adminViewAccount',{title:"Admin View Users Account",role:role, searchDetails:searchDetails,successMessage:successMessage,error:e.error});
+    }
+    
+  });
+
+  
 export default router;
 

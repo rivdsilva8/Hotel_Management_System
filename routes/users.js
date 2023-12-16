@@ -109,7 +109,6 @@ router
         throw{code:400,error:`Password and Confirm password don't match`};
       }
       const loginDetails = await resetPassword(emailAddress, userPassword);
-      console.log(loginDetails);
       if(loginDetails.updated){
         return res.render('./login/UserReset',{title:"Reset Password",successMessage:"Password updated successfully !"});       
       }else{

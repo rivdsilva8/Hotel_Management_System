@@ -31,6 +31,12 @@ document.addEventListener("DOMContentLoaded", (event) => {
         formatPhoneNumberOnLoad(phoneInput);
       }
     });
+
+    document.querySelectorAll('.phone').forEach(phoneInput =>{
+      formatPhoneNumberOnEditSubmit(phoneInput);
+      phoneInput.addEventListener('input',() => formatPhoneNumberOnEditSubmit(phoneInput));
+    });
+
   fetchCountryCodes();
   formatPhoneNumber();
   fetchCountryCodes1();
@@ -108,6 +114,11 @@ function formatPhoneNumberOnLoad(phoneInput){
   if(x){
     phoneInput.value = `${x[1]}-${x[2]}-${x[3]}`;
   }
+}
+
+function formatPhoneNumberOnEditSubmit(phoneInput){
+  var formattedNumber = phoneInput.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+    phoneInput.value = formattedNumber.slice(1).filter(Boolean).join('-');
 }
 
 function fetchCountryCodes1(){

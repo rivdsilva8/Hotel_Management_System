@@ -87,12 +87,19 @@ export const getAll = async()=>{
     return await accountCollection.find({}).toArray();//needs work.
 }
 
+export const getSearchData = async(searchFName)=>{
+    let accountDetails = await accounts();
+    let searchRegexName = new RegExp(searchFName,'i');
+    const queryResult = await accountDetails.find({ firstName:searchRegexName}).toArray();
+    return queryResult;
+}
+
 export const getAccountById = async (accountId) => {
     accountId = await helpers.checkId(accountId,"Attendee Id");
     let accountGetDetails = await accounts();
     const accountData = await accountGetDetails.findOne({"_id":new ObjectId(accountId)});
     if(!accountData){
-        throw { code: 400, error: `ccount with the id:${accountId} not found`};
+        throw { code: 400, error: `count with the id:${accountId} not found`};
     }
     accountData._id = accountData._id.toString();
     return accountData;
