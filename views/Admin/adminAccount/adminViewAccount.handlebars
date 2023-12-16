@@ -1,32 +1,35 @@
-{{#if successMessage}}<div class="alert alert-success" role="alert">{{successMessage}}</div>{{/if}}
-{{#each details}}
+<div id="success-message" class="alert-message" style="display: none;">{{successMessage}}</div>
+<div id="error-container" class="alert-message" style="display: none;">{{error}}</div> 
+<form id ="adminAccountSearch" action="/admin/account/viewSearch" method="POST">
+    <label for="searchFName" >First Name:</label>
+    <input type ="text" name="searchFName" id ="searchFName" placeholder="Enter first name"/>
+    <button type="submit">Search</button>
+
+</form>
+
+{{#if searchDetails.length}}
+{{#each searchDetails}}
 <form class="admin-view-form" action="/admin/account/view/{{this._id}}" method="POST">
     <div class="user">
     <input type ="hidden" name="accountId" value ="{{this._id}}">
-    <p>
-        <label for="firstNameInput">Name:</label>
-        <span>{{this.firstName}}</span>
-        <span>{{this.lastName}}</span>
-    </p>
-    <p>
-        <label for="email">Email:</label>
-         <span>{{this.email}}</span>
-    </p>
-    <p>
-        <label for="phoneNumber" >Phone:</label>
-        <span>{{this.phonePrefix}}</span>  - <span>{{this.phoneNumber}}</span>
-    </p>
-    <p>
-         <label for="email">Role:</label>
-          <span>{{this.role}}</span></p>
-    <!---<a href="/admin/account/edit/{{this._id}}">!--->
+    <dl>
+        <dt>Name:</dt>
+        <dd>{{this.firstName}} {{this.lastName}}</dd>
+        <dt>Email:</dt>
+        <dd>{{this.email}}</dd>
+        <dt>Phone:</dt>
+        <dd>{{this.phonePrefix}} - {{this.phoneNumber}}</dd>
+        <dt>Role:</dt>
+        <dd>{{this.role}}</dd>
+
+    </dl>
 </div>
 </form>
-
-{{else}}
-<p>No users found.</p>
 {{/each}}
+{{/if}}
 <footer>
 
   <a href="/admin/account">Back To Admin Account Dashboard</a>
 </footer>
+<script src="/public/js/client_side_validation.js"></script>
+<script src="/public/js/main.js"></script>

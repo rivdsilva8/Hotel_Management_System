@@ -1,32 +1,40 @@
 <div id="error-container" class="alert-message" style="display: none;">{{error}}</div> <!---Cross check for the style!-->
 <div id="success-message" class="alert-message" style="display: none;">{{successMessage}}</div>
-{{#each details}}
-<form class="admin-edit-form" action="/admin/account/edit/{{this._id}}" method="POST">
+<form id ="adminAccountSearch"action="/admin/account/search" method="POST">
+    <label for="searchFName" >First Name:</label>
+    <input type ="text" name="searchFName" id ="searchFName" placeholder="Enter first name"/>
+    <button type="submit">Search</button>
+
+</form>
+
+{{#if searchDetails.length}}
+{{#each searchDetails}}
+<form class="admin-edit-form" action="/admin/account/edit/{{this._id}}" method="POST" data-account-id="{{this._id}}">
     <div class="user">
     <input type ="hidden" name="accountId" value ="{{this._id}}">
     <p>
-        <label for="firstNameInput">Name:</label>
-        <input type ="text" name="firstNameInput" id ="firstNameInput" value="{{this.firstName}}"/>
-        <input type ="text" name="lastNameInput" id ="lastNameInput" value="{{this.lastName}}"/>
+        <label for="firstNameInput-{{this._id}}"> Name: </label>
+        <input type ="text" name="firstNameInput" id ="firstNameInput-{{this._id}}" value="{{this.firstName}}"/>
+        <input type ="text" name="lastNameInput" id ="lastNameInput-{{this._id}}" value="{{this.lastName}}"/>
     </p>
     <p>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name ="email" value="{{this.email}}" />
+        <label for="email-{{this._id}}"> Email: </label>
+        <input type="email" id="email-{{this._id}}" name ="email" value="{{this.email}}" />
     </p>
     <p>
-        <label for="phone" >Phone:</label>
+        <label for="phone-{{this._id}}" > Phone: </label>
+    </p>
         <div class="phone-container">
             <!--<input type ="text" id="phonePrefix" name="phonePrefix" value = "{{this.phonePrefix}}" readonly/>!-->
             <select class="phonePrefix-select" name="phonePrefix" data-current-prefix="{{this.phonePrefix}}"></select>
-            <input type="tel" class ="phone" id="phone" name ="phone" value="{{this.phoneNumber}}" pattern="\d{3}-\d{3}-\d{4}"  placeholder="123-456-7890"/>
+            <input type="tel" class ="phone" id="phone-{{this._id}}" name ="phone" value="{{this.phoneNumber}}" pattern="\d{3}-\d{3}-\d{4}"  placeholder="123-456-7890"/>
         </div>
-    </p>
     <p>
-        <label for="roleInput" >Role:</label>
-        <select name="roleInput" id ="roleInput">
-        <option value="user"{{#if (eq this.role "user")}}selected {{/if}}>User</option>
-        <option value="admin"{{#if (eq this.role "admin")}}selected {{/if}}>Admin</option>
-        <option value="staff"{{#if (eq this.role "staff")}}selected {{/if}}>Staff</option>
+        <label for="roleInput-{{this._id}}" > Role: </label>
+        <select name="roleInput" id ="roleInput-{{this._id}}">
+        <option value="user"{{#if (eq this.role "user")}} selected {{/if}}> User </option>
+        <option value="admin"{{#if (eq this.role "admin")}} selected {{/if}}> Admin </option>
+        <option value="staff"{{#if (eq this.role "staff")}} selected {{/if}}> Staff </option>
         </select>
     </p>
     <!---<a href="/admin/account/edit/{{this._id}}">!--->
@@ -35,12 +43,10 @@
     </button>
 </div>
 </form>
-
-{{else}}
-<p>No users found.</p>
 {{/each}}
+{{/if}}
 <footer>
-
   <a href="/admin/account">Back To Admin Account Dashboard</a>
 </footer>
+<script src="/public/js/client_side_validation.js"></script>
 <script src="/public/js/main.js"></script>
