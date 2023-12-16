@@ -42,66 +42,56 @@ async function deleteFlaggedFeedback() {
   console.error("Error during fetch:", error);
 }
 async function deleteFeedback() {
-  try {
-    const response = await fetch("/guest/feedback/deleteFeedback", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-    console.log(data);
+  const response = await fetch("/guest/feedback/deleteFeedback", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await response.json();
+  console.log(data);
 
-    if (1) {
-      alert(data.message);
-      window.location.href = "/guest/feedback";
-    } else {
-      console.error("Error: ", data.message);
-    }
-  } catch (error) {
-    console.error("Error during fetch:", error);
+  if (1) {
+    alert(data.message);
+    window.location.href = "/guest/feedback";
+  } else {
+    console.error("Error: ", data.message);
   }
+
+  console.error("Error during fetch:", error);
 }
 
 async function createFeedback() {
-  try {
-    const response = await fetch("/guest/feedback/createFeedback", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
+  const response = await fetch("/guest/feedback/createFeedback", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await response.json();
 
-    if (1) {
-      alert("Thank you for your feedback !");
-      window.location.href = "/guest/feedback";
-    } else {
-      console.error("Error: ", data.message);
-    }
-  } catch (error) {
-    console.error("Error during fetch:", error);
+  if (1) {
+    alert("Thank you for your feedback !");
+    window.location.href = "/guest/feedback";
+  } else {
+    console.error("Error: ", data.message);
   }
 }
 
 async function updateFeedback() {
-  try {
-    const response = await fetch("/guest/feedback/updateFeedback", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
+  const response = await fetch("/guest/feedback/updateFeedback", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await response.json();
 
-    if (1) {
-      alert("your feedback has been updated");
-      window.location.href = "/guest/feedback";
-    } else {
-      console.error("Error: ", data.message);
-    }
-  } catch (error) {
-    console.error("Error during fetch:", error);
+  if (1) {
+    alert("your feedback has been updated");
+    window.location.href = "/guest/feedback";
+  } else {
+    console.error("Error: ", data.message);
   }
 }
 

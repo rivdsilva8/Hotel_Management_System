@@ -6,6 +6,7 @@
 {{/if}}
 
 <form action="/guest/feedback/createFeedback" method="post">
+  <div id="error-container">{{#if error}}{{error}}{{/if}}</div>
   <label for="roomType">
     Room Type:
     <select id="roomType" name="roomType">
