@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rooms</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<h1>Rooms</h1>
+<a href="/admin/room/create" class="create-button">Create New Room</a>
+{{#if query.message}}
+    <div class="alert">
+        {{query.message}}
+    </div>
+{{/if}}
+{{#each rooms}}
+    <div class="room-card">
+        <h2>Room {{this.roomNumber}}</h2>
+        <p>Type: {{this.roomType}}</p>
+        <p>Price: ${{this.roomPrice}}</p>
+        <p>Availability: {{#if this.availability}}Available{{else}}Not Available{{/if}}</p>
+        <p>Description: {{this.roomDescription}}</p>
+        {{#if this.roomPhotos}}
+            <div>
+                {{#each this.roomPhotos}}
+                    <img src="{{this}}" alt="Room Photo" class="room-photo">
+                {{/each}}
+            </div>
+        {{/if}}
+        <a href="/admin/room/delete?roomNumber={{this.roomNumber}}" class="delete-button">Delete</a>
+        <a href="/admin/room/update/{{this.roomNumber}}" class="update-button">Update</a>
+    </div>
+{{/each}}
+</body>
+</html>
+
+<footer>
+
+  <a href="/admin">back to admin Dashboard</a>
+</footer>

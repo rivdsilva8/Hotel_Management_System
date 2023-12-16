@@ -1,4 +1,38 @@
-<footer>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Room</title>
+</head>
+<body>
+<h1>Add New Room</h1>
+<form action="/admin/room/create" method="post">
+    <label for="roomNumber">Room Number:</label>
+    <input type="number" id="roomNumber" name="roomNumber" placeholder="Room Number" required><br>
 
-  <a href="/admin">back to admin Dashboard</a>
+    <label for="roomType">Room Type:</label>
+    <input type="text" id="roomType" name="roomType" placeholder="Room Type" required><br>
+
+    <label for="roomPrice">Room Price:</label>
+    <input type="number" id="roomPrice" name="roomPrice" step="0.01" placeholder="Room Price" required><br>
+
+    <label for="availability">Availability:</label>
+    <select id="availability" name="availability">
+        <option value="true">Available</option>
+        <option value="false">Not Available</option>
+    </select><br>
+
+    <label for="roomPhotos">Room Photos URL:</label>
+    <input type="text" id="roomPhotos" name="roomPhotos" placeholder="Room Photos URL"><br>
+
+    <label for="roomDescription">Room Description:</label>
+    <textarea id="roomDescription" name="roomDescription" placeholder="Room Description" required></textarea><br>
+
+    <button type="submit">Create Room</button>
+</form>
+<a href="/admin/room">Cancel</a>
+
+<footer>
+    <a href="/admin">Back to Admin Dashboard</a>
 </footer>
+</body>
+</html>
