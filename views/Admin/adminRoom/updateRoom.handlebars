@@ -1,3 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Room</title>
+</head>
+<body>
+<h1>Update Room</h1>
+<form action="/admin/room/update" method="post">
+    <input type="hidden" name="originalRoomNumber" value="{{room.roomNumber}}">
+
+    <label for="roomNumber">Room Number:</label>
+    <input type="number" id="roomNumber" name="roomNumber" value="{{room.roomNumber}}" required><br>
+
+    <label for="roomType">Room Type:</label>
+    <input type="text" id="roomType" name="roomType" value="{{room.roomType}}" required><br>
+
+    <label for="roomPrice">Room Price:</label>
+    <input type="number" id="roomPrice" name="roomPrice" step="0.01" value="{{room.roomPrice}}" required><br>
+
+    <label for="availability">Availability:</label>
+    <select id="availability" name="availability">
+        <option value="true" {{#if (eq room.availability true)}}selected{{/if}}>Available</option>
+        <option value="false" {{#if (eq room.availability false)}}selected{{/if}}>Not Available</option>
+    </select><br>
+
+    <label for="roomPhotos">Room Photos URL:</label>
+    <input type="text" id="roomPhotos" name="roomPhotos" value="{{room.roomPhotos}}"><br>
+
+    <label for="roomDescription">Room Description:</label>
+    <textarea id="roomDescription" name="roomDescription">{{room.roomDescription}}</textarea><br>
+
+    <button type="submit">Update Room</button>
+</form>
+<a href="/admin/room">Cancel</a>
+</body>
+</html>
+
+
 <footer>
 
   <a href="/admin">back to admin Dashboard</a>

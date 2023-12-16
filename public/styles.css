@@ -123,6 +123,15 @@ a {
   background-color: red;
   color: white;
 }
+.room-card {
+  border: 1px solid black;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.room-photo {
+  max-width: 100px;
+  max-height: 100px;
+}
 .roleInput{
   width: 100%;
   padding: 10px;
@@ -132,7 +141,6 @@ a {
   box-sizing: border-box;
 
 }
-
 .user dl{
   width:100%;
   padding:5px;
@@ -148,3 +156,4 @@ a {
   text-indent: -80px;
   margin-bottom: 10px;
 }
+
