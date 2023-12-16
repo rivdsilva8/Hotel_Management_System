@@ -543,3 +543,69 @@ export const BookContactNumber = async (contactNumber) => {
     throw `Error: Please enter valid contact number`;
   return contactNumber;
 };
+
+export function validateRoomData(roomData) {
+
+  const roomNumber = parseInt(roomData.roomNumber, 10);
+  if (isNaN(roomNumber) || roomNumber <= 0) {
+    throw new Error("Invalid room number: must be a non-empty positive integer");
+  }
+
+
+  const roomType = roomData.roomType;
+  if (typeof roomType !== 'string' || roomType.trim() === '') {
+    throw new Error("Invalid room type: must be a non-empty string");
+  }
+
+
+  const roomPrice = parseFloat(roomData.roomPrice);
+  if (isNaN(roomPrice) || roomPrice <= 0) {
+    throw new Error("Invalid room price: must be a non-empty positive number");
+  }
+
+
+  const availability = roomData.availability;
+  if (typeof availability !== 'boolean') {
+    throw new Error("Invalid availability: must be a boolean value");
+  }
+
+  const roomPhotos = Array.isArray(roomData.roomPhotos) ? roomData.roomPhotos : [roomData.roomPhotos];
+  roomPhotos.forEach(photo => {
+    if (photo && (typeof photo !== 'string' || !isValidUrl(photo))) {
+      throw new Error("Invalid room photo URL: each photo must be a valid URL");
+    }
+  });
+
+
+  const roomDescription = roomData.roomDescription;
+  if (typeof roomDescription !== 'string' || roomDescription.trim() === '') {
+    throw new Error("Invalid room description: must be a non-empty string");
+  }
+
+}
+
+function isValidUrl(string) {
+  try {
+    new URL(string);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+export function validateRoomNumber(roomNumber) {
+
+  if (roomNumber === null || roomNumber === undefined || roomNumber === '') {
+    throw new Error("Room number cannot be empty");
+  }
+
+
+  const number = parseInt(roomNumber, 10);
+
+
+  if (isNaN(number) || number <= 0) {
+    throw new Error("Invalid room number: Must be a non-empty positive integer");
+  }
+
+
+}

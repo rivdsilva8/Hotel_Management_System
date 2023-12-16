@@ -31,12 +31,27 @@ document.addEventListener("DOMContentLoaded", (event) => {
       formatPhoneNumberOnSubmit(phoneInput);
     });
   }
+
   const phoneInputs = document.querySelectorAll(".phone");
   phoneInputs.forEach((phoneInput) => {
     if (phoneInput && phoneInput.value) {
       formatPhoneNumberOnLoad(phoneInput);
     }
   });
+
+  const phoneInputs = document.querySelectorAll('.phone');
+    phoneInputs.forEach(phoneInput =>{
+      if(phoneInput && phoneInput.value){
+        formatPhoneNumberOnLoad(phoneInput);
+      }
+    });
+
+    document.querySelectorAll('.phone').forEach(phoneInput =>{
+      formatPhoneNumberOnEditSubmit(phoneInput);
+      phoneInput.addEventListener('input',() => formatPhoneNumberOnEditSubmit(phoneInput));
+    });
+
+
   fetchCountryCodes();
   formatPhoneNumber();
   fetchCountryCodes1();
@@ -153,3 +168,43 @@ function fetchCountryCodes1() {
       console.error("Problem with fetch country code operation:", error)
     );
 }
+
+
+function formatPhoneNumberOnSubmit(phoneInput){
+  var x = phoneInput.value.replace(/\D/g,'').match(/(\d{3})(\d{0,3})(\d{0,4})/);
+  phoneInput.value= !x[2] ? x[1] :`${x[1]}-${x[2]}${x[3] ? `-${x[3]}` : ''}`;
+}
+
+function formatPhoneNumberOnLoad(phoneInput){
+  var x = phoneInput.value.replace(/\D/g,'').match(/(\d{3})(\d{3})(\d{4})/);
+  if(x){
+    phoneInput.value = `${x[1]}-${x[2]}-${x[3]}`;
+  }
+}
+
+function formatPhoneNumberOnEditSubmit(phoneInput){
+  var formattedNumber = phoneInput.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+    phoneInput.value = formattedNumber.slice(1).filter(Boolean).join('-');
+}
+
+function fetchCountryCodes1(){
+  fetch('/public/js/countryCodes.json')
+  .then(response => response.json())
+  .then(data =>{
+    const phonePrefixSelects = document.querySelectorAll('.phonePrefix-select');
+    phonePrefixSelects.forEach(select =>{
+      data.codes.forEach(item =>{
+        const option = document.createElement('option');
+        option.value = item.code;
+        option.textContent = `${item.code} (${item.name})`;
+        select.appendChild(option); 
+      });
+      const currentValue = select.getAttribute('data-current-prefix');
+      if(currentValue){
+        select.value = currentValue;
+      }
+    });
+  })
+  .catch(error => console.error('Problem with fetch country code operation:', error));
+}
+

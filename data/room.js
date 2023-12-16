@@ -20,6 +20,15 @@ export const createRoom = async (
     roomDescription
 
 ) => {
+    helpers.validateRoomData({
+        roomNumber,
+        roomType,
+        roomPrice,
+        availability,
+        roomPhotos,
+        roomDescription
+    });
+
     const newRoom = {
         roomNumber,
         roomType,
@@ -30,6 +39,10 @@ export const createRoom = async (
     }
 
     const roomCollection = await rooms();
+    const existingRoom = await roomCollection.findOne({ roomNumber });
+    if (existingRoom) {
+        throw new Error("Room number already exists");
+    }
 
     const addNewRooms = await roomCollection.insertOne(newRoom);
     if (addNewRooms.insertedCount === 0) throw new Error("Room add failed");
@@ -55,6 +68,7 @@ export const getAllRooms = async () => {
 
 export const getRoomByNumber = async (roomNumber) => {
     try {
+        helpers.validateRoomNumber(roomNumber);
         const roomCollection = await rooms();
         let room = await roomCollection.findOne({ roomNumber: roomNumber});
 
@@ -68,6 +82,7 @@ export const getRoomByNumber = async (roomNumber) => {
 }
 
 export const deleteRoom = async (roomNumber) => {
+    helpers.validateRoomNumber(roomNumber);
     const roomCollection = await rooms();
     const deleteResult = await roomCollection.deleteOne({
         roomNumber: roomNumber
@@ -80,7 +95,7 @@ export const deleteRoom = async (roomNumber) => {
     }
 }
 
-export const editRoom = async (
+export const updateRoom = async (
     originalRoomNumber,
     newRoomNumber,
     roomType,
@@ -89,6 +104,16 @@ export const editRoom = async (
     roomPhotos,
     roomDescription
 ) => {
+    helpers.validateRoomNumber(originalRoomNumber);
+    helpers.validateRoomData({
+        roomNumber: newRoomNumber,
+        roomType,
+        roomPrice,
+        availability,
+        roomPhotos,
+        roomDescription
+    });
+
     const roomCollection = await rooms();
 
     const updatedRoom = {
@@ -133,13 +158,13 @@ export const runApp = async () => {
         //
         // console.log(`Room number with ${room2} is deleted`)
 
-        const newRoom = await editRoom(
-            103,
+        const newRoom = await updateRoom(
+            102,
             102,
             'double',
-            150.00,
+            157.00,
             true,
-            ['http://example.com/photos/102-1.jpg', 'http://example.com/photos/102-2.jpg'],
+            ["https://firebasestorage.googleapis.com/v0/b/hotel-management-eceff.appspot.com/o/images%2Fmessaging.jpeg?alt=media&token=5e36cb50-cc8f-40ec-bb38-25b221c33ee9"],
             'A spacious double room.'
         );
 
@@ -155,8 +180,7 @@ export const runApp = async () => {
 
 }
 
-runApp();
+// runApp();
 
 
 
-// export const eventsDataFunctions = {createRoom, getAllRoom, getRoom, deleteRoom, editRoom}

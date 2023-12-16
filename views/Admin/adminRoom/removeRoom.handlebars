@@ -1,3 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Room</title>
+</head>
+<body>
+<h1>Are you sure you want to delete room {{roomNumber}}?</h1>
+<form action="/admin/room/delete" method="post">
+    <input type="hidden" name="roomNumber" value="{{roomNumber}}">
+    <button type="submit">Confirm Delete</button>
+</form>
+<a href="/admin/room">Cancel</a>
+</body>
+</html>
+
+
 <footer>
 
   <a href="/admin">back to admin Dashboard</a>
