@@ -16,7 +16,7 @@
     <p>
         <label for="phone" >Phone</label>
         <div class="phone-container">
-            <input type ="text" id="phonePrefix" name="phonePrefix" value = "{{this.phonePrefix}}" disabled/>
+            <select class="phonePrefix-select" name="phonePrefix" data-current-prefix="{{this.phonePrefix}}" disabled></select>
             <input type="tel" id="phone" name ="phone"  value="{{this.phoneNumber}}" disabled/>
         </div>
     </p>
