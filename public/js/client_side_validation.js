@@ -1,4 +1,5 @@
 
+
 document.addEventListener("DOMContentLoaded", function(){
     const loginForm = document.querySelector('form[action="/login"]');
     const registerForm = document.querySelector('form[action="/register"]');
@@ -200,7 +201,62 @@ document.addEventListener("DOMContentLoaded", function(){
             }
         });
 
+
+      if (roomType == null) throw "Please select a Room Type";
+      if (comment.length > 500)
+        throw "ERROR : comment cannot be more than 500 characters ";
+
+      stringValidation(roomType);
+      validRating(rating);
+      stringValidation(comment);
+    });
+  }
+
+  if (updateFeedbackForm) {
+    updateFeedbackForm.addEventListener("submit", function (event) {
+      console.log("in updateFeedbackForm CSV:");
+      const roomType = document.getElementById("roomType").value;
+      const rating = document.getElementById("rating").value;
+      const comment = document.getElementById("comment").value;
+      console.log("roomType:", roomType);
+      console.log("rating:", rating);
+      console.log("comment:", comment);
+
+      if (roomType == null) throw "Please select a Room Type";
+      if (comment.length > 500)
+        throw "ERROR : comment cannot be more than 500 characters ";
+
+      stringValidation(roomType);
+      validRating(rating);
+      stringValidation(comment);
+    });
+  }
+  function numberValidation(num) {
+    checkundefined(num);
+    checknum(num);
+    justSpaces(num);
+  }
+
+  function checknum(num) {
+    if (typeof num !== "number" || num == Infinity || isNaN(num))
+      throw "ERROR : input is not a number";
+  }
+
+  function checkundefined(input) {
+    if (input === undefined)
+      throw "ERROR : input cannot be undefined or not enough inputs passed into function";
+  }
+
+  function validRating(rating) {
+    rating = parseInt(rating);
+    numberValidation(rating);
+    if (rating > 10) {
+      throw "ERROR :  " + rating + " cannot be more than 10";
     }
+
+    if (rating < 0) {
+      throw "ERROR :  " + rating + " cannot be less than 0";
+
     if(loginForm){
         loginForm.addEventListener('submit', function(event){
             let errorMessage =[];
@@ -231,7 +287,33 @@ document.addEventListener("DOMContentLoaded", function(){
                 errorDiv.style.display ='block';
             }
         });
+
     }
+  }
+  function stringValidation(string) {
+    checkundefined(string);
+    checkstring(string);
+    emptyStringCheck(string);
+    justSpaces(string);
+  }
+
+
+  function checkundefined(input) {
+    if (input === undefined)
+      throw "ERROR : input cannot be undefined or not enough inputs passed into function";
+  }
+
+  function emptyStringCheck(string) {
+    if (string.length == 0) throw "ERROR : string cannot be empty";
+  }
+
+  function checkstring(string) {
+    if (typeof string != "string") throw "ERROR : input is not a string";
+  }
+
+  function justSpaces(string) {
+    if (/^\s*$/.test(string)) {
+      throw "ERROR : String cannot be only spaces";
 
     if(registerForm){
         registerForm.addEventListener('submit',function(event){
@@ -290,29 +372,36 @@ document.addEventListener("DOMContentLoaded", function(){
                 errorDiv.style.display ='block';
             }
         });
-    }
-    function validateEmail(email){
-        const emailRegex =/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    }
-    function validatePhone(phone){
-        if(typeof(phone) !== "string"){
-            return `Phone Number needs to be a string`;
-        }else if(phone.trim().length === 0){
-                return `Phone Number cannot be just empty spaces`;
-            }
-        const parts = phone.split('-');
-        if(parts.length !==3){
-                return`Please provide a valid phone Number`;
-        }else if(parts[0].length!==3 || parts[1].length!==3 || parts[2].length !==4){
-                return `Please provide phone number in the format 123-456-7890`;
-        }
 
-        for (const part of parts){
-            if(!(/^[0-9]+$/).test(part)){
-                return `It is phone number, please enter numbers in the format 123-456-7890`;
-            }
-        }
-        return true;
     }
+  }
+
+  function validateEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+  function validatePhone(phone) {
+    if (typeof phone !== "string") {
+      return `Phone Number needs to be a string`;
+    } else if (phone.trim().length === 0) {
+      return `Phone Number cannot be just empty spaces`;
+    }
+    const parts = phone.split("-");
+    if (parts.length !== 3) {
+      return `Please provide a valid phone Number`;
+    } else if (
+      parts[0].length !== 3 ||
+      parts[1].length !== 3 ||
+      parts[2].length !== 4
+    ) {
+      return `Please provide phone number in the format 123-456-7890`;
+    }
+
+    for (const part of parts) {
+      if (!/^[0-9]+$/.test(part)) {
+        return `It is phone number, please enter numbers in the format 123-456-7890`;
+      }
+    }
+    return true;
+  }
 });

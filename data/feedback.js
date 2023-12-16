@@ -10,7 +10,19 @@ import * as help from "../helpers.js";
 const exportedMethods = {
   async create(guestId, roomType, guestName, rating, comment) {
     //validation
-    console.log(rating);
+
+    if (roomType == undefined) {
+      throw "Please select a Room Type";
+    }
+
+    if (comment.length == 0) {
+      throw "Your comment cannot be empty";
+    }
+
+    if (roomType == null) throw "Please select a Room Type";
+    if (comment.length > 500)
+      throw "ERROR : comment cannot be more than 500 characters ";
+
     help.checkId(guestId);
     help.stringValidation(roomType);
     help.stringValidation(guestName);
@@ -44,20 +56,18 @@ const exportedMethods = {
 
   async delete(feedbackIds) {
     console.log("in delete df");
+    console.log(feedbackIds);
 
     if (feedbackIds.length == 0)
-      console.log("No feedbacks available, please add more");
+      throw "Error: No feedbacks available, please add more";
     for (let id of feedbackIds) {
       help.checkId(id);
       const feedbackCollection = await feedbacks();
       const deletionInfo = await feedbackCollection.findOneAndDelete({
         _id: new ObjectId(id),
       });
-      if (deletionInfo === null) throw `feedback id not found`;
 
-      let object = { ...deletionInfo };
-      let feedbackName = object.guestName;
-      console.log({ guestName, deleted: true });
+      if (deletionInfo === null) throw `feedback id not found`;
     }
   },
 
@@ -79,6 +89,12 @@ const exportedMethods = {
       .toArray();
 
     return allFeedback;
+  },
+
+  async checkifExist(userId) {
+    const feedbackCollection = await feedbacks();
+    const existingId = await feedbackCollection.findOne({ guestId: userId });
+    return existingId != null;
   },
 };
 

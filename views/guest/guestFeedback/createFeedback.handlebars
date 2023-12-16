@@ -1,7 +1,27 @@
-<form action="/guest/feedback/createFeedback" method="post">
+{{#if alreadyReviewed}}
+  <script>
+    alert("Sorry, you have already left a review."); window.location.href =
+    '/guest/feedback'; // Replace with the appropriate path
+  </script>
+{{/if}}
+
+{{#if success}}
+  <script>
+    alert("Thank you for your feedback!"); window.location.href =
+    '/guest/feedback';
+  </script>
+{{/if}}
+
+<form
+  id="createFeedbackForm"
+  action="/guest/feedback/createFeedback"
+  method="post"
+>
+  <div id="error-container">{{#if error}}{{error}}{{/if}}</div>
   <label for="roomType">
     Room Type:
     <select id="roomType" name="roomType">
+      <option value="" disabled selected>Select Room Type</option>
       <option value="single">Single Room</option>
       <option value="double">Double Room</option>
       <option value="suite">Suite</option>
@@ -30,7 +50,7 @@
   <hr />
   <button type="submit">submit</button>
 </form>
-
+<script src="/public/js/client_side_validation.js"></script>
 <script src="../../../public/js/main.js"></script>
 
 <footer>

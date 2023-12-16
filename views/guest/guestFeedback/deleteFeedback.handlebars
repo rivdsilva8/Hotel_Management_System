@@ -1,0 +1,26 @@
+{{#if notReviewed}}
+  <script>
+    alert("Sorry, you have not left a review yet. Please leave a review first");
+    window.location.href = '/guest/feedback';
+  </script>
+{{/if}}
+
+<h2 style="color:red">This feedback is about to be deleted</h2>
+<ul>
+
+  <li>
+    <strong>{{guestName}}</strong>
+    rating :
+    {{rating}}/10
+    <p>{{comment}}</p>
+  </li>
+</ul>
+
+<button id="deleteButton" onclick="deleteFeedback()">Delete Feedback</button>
+
+<script src="../../../public/js/main.js"></script>
+
+<footer>
+
+  <a href="/guest/feedback">back to feedback Page</a>
+</footer>

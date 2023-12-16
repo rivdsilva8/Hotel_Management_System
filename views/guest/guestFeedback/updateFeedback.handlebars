@@ -1,0 +1,60 @@
+{{#if notReviewed}}
+  <script>
+    alert("Sorry, you have not left a review yet. Please leave a review first");
+    window.location.href = '/guest/feedback';
+  </script>
+{{/if}}
+
+
+{{#if success}}
+  <script>
+    alert("Your feedback has been updated"); window.location.href =
+    '/guest/feedback';
+  </script>
+{{/if}}
+
+<form id="updateFeedbackForm"action="/guest/feedback/updateFeedback" method="post">
+<div id="error-container">{{#if error}}{{error}}{{/if}}</div>
+  <label for="roomType">
+    Room Type:
+   <select id="roomType" name="roomType">
+    <option value="single" {{#if (eq roomType "single")}}selected{{/if}}>Single Room</option>
+    <option value="double" {{#if (eq roomType "double")}}selected{{/if}}>Double Room</option>
+    <option value="suite" {{#if (eq roomType "suite")}}selected{{/if}}>Suite</option>
+  </select>
+  </label>
+
+  <label for="rating">
+    Rating:
+    <input
+      type="range"
+      id="rating"
+      name="rating"
+      min="0"
+      max="10"
+      step="1"
+      value="{{rating}}"
+      oninput="updateRatingValue(this.value)"
+    />
+    <output id="ratingOutput" for="rating">{{rating}}</output>
+  </label>
+
+  <label for="comment">
+    <p>Comment:</p>
+    <textarea
+      id="comment"
+      name="comment"
+      rows="4"
+      cols="50"
+    >{{comment}}</textarea>
+  </label>
+  <hr />
+  <button type="submit">update</button>
+</form>
+
+<script src="../../../public/js/main.js"></script>
+
+<footer>
+
+  <a href="/guest/feedback">back to feedback Page</a>
+</footer>

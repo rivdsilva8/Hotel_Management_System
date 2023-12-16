@@ -39,6 +39,17 @@ li {
 
 .deleteFeedbackIds {
   float: right;
+  accent-color: red;
+}
+
+#deleteButton {
+  background-color: red;
+  color: white;
+}
+
+#deleteButton:hover {
+  background-color: rgb(189, 1, 1);
+  color: white;
 }
 input[type="text"],
 input[type="email"],
@@ -99,30 +110,34 @@ a {
   /*margin-bottom: 10px;*/
 }
 .phone-container select,
-.phone-container input{
+.phone-container input {
   flex: 1;
   padding: 5px;
-  border:1px solid#ccc;
+  border: 1px solid#ccc;
   border-radius: 4px;
   height: 35px;
 }
-.phonePrefix-select, .phone{
-  width:auto;
+.phonePrefix-select,
+.phone {
+  width: auto;
 }
-.alert-message{
+.alert-message {
   color: white;
   padding: 10px;
   margin: 10px 0;
   border-radius: 5px;
   text-align: center;
 }
-#success-message{
+#success-message {
   background-color: green;
 }
-#error-container{
+#error-container {
   background-color: red;
   color: white;
 }
+
+.roleInput {
+
 .room-card {
   border: 1px solid black;
   padding: 10px;
@@ -133,12 +148,16 @@ a {
   max-height: 100px;
 }
 .roleInput{
+
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+
+}
+
 
 }
 .user dl{
@@ -156,4 +175,5 @@ a {
   text-indent: -80px;
   margin-bottom: 10px;
 }
+
 

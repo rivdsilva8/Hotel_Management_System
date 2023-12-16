@@ -1,13 +1,14 @@
 <a href="/guest/feedback/createFeedback"><button>Add a Feedback</button></a>
-<button>Update your Feedback</button>
-<button>Delete your Feedback</button>
+<a href="/guest/feedback/updateFeedback"><button>Update your Feedback</button></a>
+<a href="/guest/feedback/deleteFeedback"><button>Delete your Feedback</button></a>
 
 <ul>
   {{#each feedback}}
     <li>
       <strong>{{guestName}}</strong>
-      rating :
-      {{rating}}/10
+      Rating :
+      {{rating}}/10 Room Type :
+      <span>{{roomType}}</span>
       <p>{{comment}}</p>
     </li>
   {{/each}}
