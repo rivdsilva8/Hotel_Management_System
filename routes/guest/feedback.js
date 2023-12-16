@@ -2,6 +2,7 @@ import { Router } from "express";
 import feedbackData from "../../data/feedback.js";
 import { feedbacks } from "../../config/mongoCollections.js";
 import { ObjectId } from "mongodb";
+import * as help from "../../helpers.js";
 const router = Router();
 
 router
@@ -33,17 +34,31 @@ router
       }
 
       //Post one feedback
-      const feedbackPostData = req.body;
+      let feedbackPostData = req.body;
 
-      const { roomType, rating, comment } = feedbackPostData;
+      let { roomType, rating, comment } = feedbackPostData;
 
       let custName =
         req.session.user.firstName + " " + req.session.user.lastName;
       feedbackPostData.guestId = req.session.user.id;
       feedbackPostData.guestName = custName;
 
+      if (roomType == null) throw "Please select a Room Type";
+      if (comment.length > 500)
+        throw "ERROR : comment cannot be more than 500 characters ";
+
+      help.checkId(feedbackPostData.guestId);
+      help.stringValidation(roomType);
+      help.stringValidation(feedbackPostData.guestName);
+      help.validRating(rating);
+      help.stringValidation(comment);
+
+      roomType = roomType.trim();
+      feedbackPostData.guestName = feedbackPostData.guestName.trim();
+      comment = comment.trim();
+
       let newFeedback = await feedbackData.create(
-        feedbackPostData.guestId, // Use feedbackPostData.guestId here
+        feedbackPostData.guestId,
         roomType,
         feedbackPostData.guestName,
         rating,
@@ -100,7 +115,7 @@ router
     try {
       //Patch one feedback
       console.log("In updateFeedback patch()");
-      const feedbackPostData = req.body;
+      let feedbackPostData = req.body;
       console.log(feedbackData);
       if (!feedbackPostData || Object.keys(feedbackPostData).length === 0) {
         return res
@@ -108,7 +123,8 @@ router
           .json({ error: "There are no fields in the request body" });
       }
 
-      const { roomType, rating, comment } = feedbackPostData;
+      let { roomType, rating, comment } = feedbackPostData;
+
       //router validation
       if (roomType == undefined) {
         throw "Please select a Room Type";
@@ -134,6 +150,19 @@ router
 
       await feedbackData.delete([delete_id]);
       console.log("Deletion successful");
+
+      help.checkId(feedbackPostData.guestId);
+      help.stringValidation(roomType);
+      help.stringValidation(feedbackPostData.guestName);
+      help.validRating(rating);
+      help.stringValidation(comment);
+
+      roomType = roomType.trim();
+      feedbackPostData.guestName = feedbackPostData.guestName.trim();
+      comment = comment.trim();
+
+      if (comment.length > 500)
+        throw "ERROR : comment cannot be more than 500 characters ";
 
       let newFeedback = await feedbackData.create(
         feedbackPostData.guestId, // Use feedbackPostData.guestId here

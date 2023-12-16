@@ -19,6 +19,10 @@ const exportedMethods = {
       throw "Your comment cannot be empty";
     }
 
+    if (roomType == null) throw "Please select a Room Type";
+    if (comment.length > 500)
+      throw "ERROR : comment cannot be more than 500 characters ";
+
     help.checkId(guestId);
     help.stringValidation(roomType);
     help.stringValidation(guestName);
