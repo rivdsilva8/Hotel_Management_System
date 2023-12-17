@@ -1,5 +1,5 @@
 import { Router } from "express";
-import * as h from '../../data/booking.js'
+import * as h from '../../data/checkedinandout.js'
 const router = Router();
 
 router.route('/').get((req,res)=>{
@@ -8,18 +8,6 @@ router.route('/').get((req,res)=>{
 
 router.route('/getbookingbyemail/:email').get(async (req,res)=>{
     let b = await h.getBookingbyEmail(req.params.email)
-    if (b === "-1") return res.json({})
-    return res.json(b)
-})
-
-router.route('/getBooking/:BookId').get(async (req,res)=>{
-    let b = await h.getBooking(req.params.BookId)
-    if (b === "-1") return res.json({})
-    return res.json(b)
-})
-
-router.route('/putCheckOutb/:BookingId').post(async (req,res) =>{
-    let b = await h.putCheckOutb(req.params.BookingId)
     if (b === "-1") return res.json({})
     return res.json(b)
 })
