@@ -1,20 +1,20 @@
 <div class="row row-cols-1 row-cols-md-2 g-4">
-    {{#each sampleResult}}
+  {{#each sampleResult}}
     <div class="col">
-        <div class="card shadow">
-            <div class="card-body">
-                <h2 class="card-title blockquote">firstName: {{ firstName }}</h2>
-                <div class="card-text">
-                    <p class="platform">lastName: {{ lastName }}</p>
-                    <p class="payment">emailId: {{ emailId }}</p>
-                    <p class="members">contactNumber: {{ contactNumber }}</p>
-                    <p class="platform">BookingDate: {{ BookingDate }}</p>
-                    <p class="payment">CheckinDate: {{ CheckinDate }}</p>
-                    <p class="members">CheckOutDate: {{ CheckOutDate }}</p>
-                    <p class="members">BookingStatus: {{ BookingStatus }}</p>
-                </div>
-            </div>
+      <div class="card shadow">
+        <div class="card-body">
+          <h2 class="card-title blockquote">firstName: {{firstName}}</h2>
+          <div class="card-text">
+            <p class="platform">lastName: {{lastName}}</p>
+            <p class="payment">emailId: {{emailId}}</p>
+            <p class="members">contactNumber: {{contactNumber}}</p>
+            <p class="platform">BookingDate: {{BookingDate}}</p>
+            <p class="payment">CheckinDate: {{CheckinDate}}</p>
+            <p class="members">CheckOutDate: {{CheckOutDate}}</p>
+            <p class="members">BookingStatus: {{BookingStatus}}</p>
+          </div>
         </div>
+      </div>
     </div>
-    {{/each}}
+  {{/each}}
 </div>

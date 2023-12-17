@@ -1,21 +1,25 @@
-
-
-<form class="user-edit-form" action ="/guest/account/edit/{{account._id}}"method="POST">
+<form
+  class="user-edit-form"
+  action="/guest/account/edit/{{account._id}}"
+  method="POST"
+>
   <p>
-    <label for="firstNameInput">First Name :</label>
-  <span>{{account.firstName}}</span>
+    First Name :
+    <span>{{account.firstName}}</span>
   </p>
   <p>
-    <label for="lastNameInput">Last Name :</label>
-   <span>{{account.lastName}}</span>
+    Last Name :
+    <span>{{account.lastName}}</span>
   </p>
-   <p>
-    <label for="email">Email :</label>
-  <span>{{account.email}}</span>
-   </p>
   <p>
-  <label for="phoneNumber">Phone :</label>
-  <span>{{account.phonePrefix}}</span>  - <span>{{account.phoneNumber}}</span>
+    Email :
+    <span>{{account.email}}</span>
+  </p>
+  <p>
+    Phone :
+    <span>{{account.phonePrefix}}</span>
+    -
+    <span>{{account.phoneNumber}}</span>
   </p>
 </form>
 
