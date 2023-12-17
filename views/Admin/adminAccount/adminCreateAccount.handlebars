@@ -27,21 +27,9 @@
 </form>
 
 
-{{#if role}}
-{{#if (eq role "admin")}}
 <footer>
-  <a href="/admin/account">Back To Admin Account Dashboard</a>
+  <a href="/admin/account">Back to Account</a>
 </footer>
-{{else}}
-<a href="/login">Already have an account? Click here to log-in </a>
-<footer>
-  <a href="/">Back to home</a>
-</footer>
-{{/if}}
-{{else}}
-<footer>
-  <a href="/">Back to home</a>
-</footer>
-{{/if}}
+
 <script src="/public/js/client_side_validation.js"></script>
 <script src="/public/js/main.js"></script>
