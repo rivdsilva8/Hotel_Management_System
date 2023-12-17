@@ -136,7 +136,7 @@ a {
   color: white;
 }
 
-.roleInput {
+
 
 .room-card {
   border: 1px solid black;
@@ -159,7 +159,6 @@ a {
 }
 
 
-}
 .user dl{
   width:100%;
   padding:5px;
@@ -176,4 +175,28 @@ a {
   margin-bottom: 10px;
 }
 
+.alert {
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  text-align: center;
+  position: relative;
+}
 
+/* 添加关闭按钮 */
+.alert .closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.alert .closebtn:hover {
+  color: black;
+}

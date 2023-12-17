@@ -14,8 +14,9 @@ router
     try {
         const roomDetails = await room.getAllRooms();
         res.status(200).render("./Admin/adminRoom/roomList", {
-          rooms: roomDetails,
-          title: "admin Room"
+            rooms: roomDetails,
+            title: "admin Room",
+            message: req.query.message
         });
     } catch (e) {
         res.status(500).render('error', {
@@ -67,6 +68,7 @@ router
             const roomNumber = parseInt(req.body.roomNumber, 10);
             const roomPrice = parseFloat(req.body.roomPrice);
             const availability = req.body.availability === 'true';
+            const cleanStatus = req.body.cleanStatus === 'true';
 
             let { roomPhotos, roomType, roomDescription } = req.body;
 
@@ -78,7 +80,7 @@ router
                 throw new Error("Invalid room number or price");
             }
 
-            await room.createRoom(roomNumber, roomType, roomPrice, availability, roomPhotos, roomDescription);
+            await room.createRoom(roomNumber, roomType, roomPrice, availability, roomPhotos, roomDescription, cleanStatus);
             res.redirect('/admin/room?message=Room Created');
         } catch (e) {
             res.status(500).render('error', {
@@ -136,6 +138,24 @@ router
             });
         }
     });
+
+router
+    .route('/clean/:roomNumber')
+    .get(async (req, res) => {
+        try {
+            const roomNumber = parseInt(req.params.roomNumber, 10);
+            console.log(roomNumber)
+
+            await  room.cleanRoom(roomNumber);
+            console.log("Room cleaned successfully.");
+            res.redirect('/admin/room?message=Room Cleaned');
+        } catch (e) {
+            res.status(500).render('error', {
+                title: 'Error',
+                errorMessage: e.message
+            });
+        }
+    })
 
 
 export default router;

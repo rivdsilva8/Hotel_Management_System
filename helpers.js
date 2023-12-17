@@ -582,6 +582,11 @@ export function validateRoomData(roomData) {
     throw new Error("Invalid room description: must be a non-empty string");
   }
 
+  const cleanStatus = roomData.cleanStatus;
+  if (typeof cleanStatus !== 'boolean') {
+    throw new Error("Invalid cleanStatus: must be a boolean value");
+  }
+
 }
 
 function isValidUrl(string) {

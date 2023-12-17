@@ -17,7 +17,8 @@ export const createRoom = async (
     roomPrice,
     availability,
     roomPhotos,
-    roomDescription
+    roomDescription,
+    cleanStatus
 
 ) => {
     helpers.validateRoomData({
@@ -26,7 +27,8 @@ export const createRoom = async (
         roomPrice,
         availability,
         roomPhotos,
-        roomDescription
+        roomDescription,
+        cleanStatus
     });
 
     const newRoom = {
@@ -35,7 +37,8 @@ export const createRoom = async (
         roomPrice,
         availability,
         roomPhotos,
-        roomDescription
+        roomDescription,
+        cleanStatus
     }
 
     const roomCollection = await rooms();
@@ -131,11 +134,27 @@ export const updateRoom = async (
     )
 
     if (updateResult.modifiedCount === 0) {
-        throw new Error("No room found")
+        throw new Error("No room found or No changes")
     }
 
     const newRoom = await roomCollection.findOne({ roomNumber: newRoomNumber});
     return newRoom;
+}
+
+export const cleanRoom = async (roomNumber) => {
+    helpers.validateRoomNumber(roomNumber);
+    const roomCollection = await rooms();
+    let room = await roomCollection.findOne({ roomNumber: roomNumber});
+
+    if (!room) throw new Error(`This number: ${roomNumber} has no room`);
+    room.cleanStatus = true;
+
+    await roomCollection.updateOne(
+        { roomNumber: roomNumber},
+        { $set: { cleanStatus: true }}
+    );
+
+
 }
 
 export const runApp = async () => {

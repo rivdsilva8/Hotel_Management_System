@@ -5,13 +5,15 @@
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-<h1>Rooms</h1>
-<a href="/admin/room/create" class="create-button">Create New Room</a>
-{{#if query.message}}
+{{#if message}}
     <div class="alert">
-        {{query.message}}
+        {{message}}
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
     </div>
 {{/if}}
+<h1>Rooms</h1>
+<a href="/admin/room/create" class="create-button">Create New Room</a>
+
 {{#each rooms}}
     <div class="room-card">
         <h2>Room {{this.roomNumber}}</h2>
@@ -26,8 +28,10 @@
                 {{/each}}
             </div>
         {{/if}}
+        <p>cleanStatus: {{#if this.cleanStatus}}Clean{{else}}Dirty{{/if}}</p>
         <a href="/admin/room/delete?roomNumber={{this.roomNumber}}" class="delete-button">Delete</a>
         <a href="/admin/room/update/{{this.roomNumber}}" class="update-button">Update</a>
+        <a href="/admin/room/clean/{{this.roomNumber}}" class="clean-button">Clean</a>
     </div>
 {{/each}}
 </body>
