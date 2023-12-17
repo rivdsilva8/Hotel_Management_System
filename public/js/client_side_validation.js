@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function(){
     const userEditForm = document.querySelector('#userEditForm');
     const adminAccountSearch = document.querySelector('#adminAccountSearch');
     const adminCreateForm = document.querySelector('#adminCreateForm');
+    // const checkIn = document.querySelector('form[action="/admin')
     const createFeedbackForm = document.querySelector(
         'form[action="/guest/feedback/createFeedback"]'
       );
@@ -422,6 +423,8 @@ document.addEventListener("DOMContentLoaded", function(){
   }
 
 });
+
+
 /* if (roomType == null) throw "Please select a Room Type";
       if (comment.length > 500)
         throw "ERROR : comment cannot be more than 500 characters ";

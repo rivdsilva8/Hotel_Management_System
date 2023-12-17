@@ -2,6 +2,7 @@ import { dbConnection, closeConnection } from "../config/mongoConnection.js";
 import * as accountData from "../data/users.js";
 import feedbackData from "../data/feedback.js";
 import * as roomData from "../data/room.js";
+import * as bookingData from "../data/booking.js";
 
 const db = await dbConnection();
 await db.dropDatabase();
@@ -345,6 +346,48 @@ try {
     "Presidential suite",
     true
   );
+
+  await bookingData.CreateBooking(
+    "Alice",
+    "Smith",
+    "alice@example.com",
+    "1234567890",
+    "12/15/2023",
+    "12/17/2023"
+  );
+  await bookingData.CreateBooking(
+    "Bob",
+    "Johnson",
+    "bob@example.com",
+    "1234567891",
+    "12/15/2023",
+    "12/17/2023"
+  );
+
+  await bookingData.CreateBooking(
+    "Carol",
+    "Williams",
+    "carol@example.com",
+    "1234567892",
+    "12/15/2023",
+    "12/17/2023"
+  );
+  await bookingData.CreateBooking(
+    "David",
+    "Brown",
+    "david@example.com",
+    "1234567893",
+    "12/15/2023",
+    "12/17/2023"
+  );
+  await accountData.createAccount(
+    "Eve",
+    "Jones",
+    "eve@example.com",
+    "1234567894",
+    "12/15/2023",
+    "12/17/2023"
+  );
   console.log("Done seeding rooms");
 
   console.log("Done seeding database");
@@ -362,3 +405,4 @@ try {
 //     },
 // body:{}
 //   });
+
