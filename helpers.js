@@ -569,12 +569,6 @@ export function validateRoomData(roomData) {
     throw new Error("Invalid availability: must be a boolean value");
   }
 
-  const roomPhotos = Array.isArray(roomData.roomPhotos) ? roomData.roomPhotos : [roomData.roomPhotos];
-  roomPhotos.forEach(photo => {
-    if (photo && (typeof photo !== 'string' || !isValidUrl(photo))) {
-      throw new Error("Invalid room photo URL: each photo must be a valid URL");
-    }
-  });
 
 
   const roomDescription = roomData.roomDescription;
@@ -584,14 +578,7 @@ export function validateRoomData(roomData) {
 
 }
 
-function isValidUrl(string) {
-  try {
-    new URL(string);
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
+
 
 export function validateRoomNumber(roomNumber) {
 

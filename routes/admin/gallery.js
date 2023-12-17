@@ -24,6 +24,9 @@ router.post('/upload', upload.single('image'), async (req, res) => {
     const downloadURL = await uploadImageToFirebase(req.file);
     const imageData = {
         filename: req.file.originalname,
+        // roomNumber: req.body.roomNumber,
+        // roomName: req.body.roomName,
+        // roomPrice: req.body.roomPrice,
         url: downloadURL
     }
     const mongoId = await saveImageDetailsToMongoDB(imageData);

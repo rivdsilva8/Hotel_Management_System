@@ -1,0 +1,23 @@
+{{#if message}}
+    <div class="alert">
+        {{message}}
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+{{/if}}
+
+{{#each rooms}}
+    <div class="room-card">
+        <h2>{{this.roomType}}</h2>
+        <img src="{{this.url}}" alt="Photo of {{this.roomType}} Room" class="room-photo">
+        <form id="imageUploadForm-{{this.roomType}}" action="/admin/room/upload" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="roomType" value="{{this.roomType}}">
+            <input type="file" id="imageInput-{{this.roomType}}" name="image" accept="image/*">
+            <button type="submit">Upload Image</button>
+        </form>
+    </div>
+{{/each}}
+
+
+<footer>
+    <a href="/admin">back to admin Dashboard</a>
+</footer>
