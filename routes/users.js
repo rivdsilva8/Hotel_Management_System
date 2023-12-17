@@ -80,12 +80,14 @@ router
         const phonePrefixVal = await helpers.validatePhonePrefix(phonePrefix);
         const sanitizedphonePrefixVal = xss(phonePrefixVal);
         const userPassword = await helpers.validatePassword(password);
+        const sanitizedUserPassword = xss(userPassword);
         const confirmPwd = await helpers.validatePassword(cpassword);
-        if(userPassword!==confirmPwd){
+        const sanitizedConfirmPwd = xss(confirmPwd);
+        if(sanitizedUserPassword!==sanitizedConfirmPwd){
           throw{code:400,error:`Password and Confirm password don't match`};
         }
         const roleInput = "user";
-        const result = await createAccount(sanitizedFirstName,sanitizedLastName,sanitizedEmailAddress,sanitizedphonePrefixVal,sanitizedPhoneNumber,roleInput,userPassword);
+        const result = await createAccount(sanitizedFirstName,sanitizedLastName,sanitizedEmailAddress,sanitizedphonePrefixVal,sanitizedPhoneNumber,roleInput,sanitizedUserPassword);
         if(result._id){
           if(result.role === 'user'){
             return res.redirect('/login');
@@ -118,11 +120,13 @@ router
       const emailAddress = await helpers.validateEmail(email);
       const sanitizeEmailAddress = xss(emailAddress);
       const userPassword = await helpers.validatePassword(password);
+      const sanitizeUserPassword = xss(userPassword);
       const confirmPasswd = await helpers.validatePassword(confirmPassword);
-      if(userPassword!==confirmPasswd){
+      const sanitizeConfirmPasswd = xss(confirmPasswd);
+      if(sanitizeUserPassword!==sanitizeConfirmPasswd){
         throw{code:400,error:`Password and Confirm password don't match`};
       }
-      const loginDetails = await resetPassword(sanitizeEmailAddress, userPassword);
+      const loginDetails = await resetPassword(sanitizeEmailAddress, sanitizeUserPassword);
       if(loginDetails.updated){
         return res.render('./login/UserReset',{title:"Reset Password",successMessage:"Password updated successfully !"});       
       }else{
