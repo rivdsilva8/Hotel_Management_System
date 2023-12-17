@@ -87,10 +87,12 @@ export const getAll = async()=>{
     return await accountCollection.find({}).toArray();//needs work.
 }
 
-export const getSearchData = async(searchFName)=>{
+export const getSearchData = async(searchFName,searchLName)=>{
     let accountDetails = await accounts();
-    let searchRegexName = new RegExp(searchFName,'i');
-    const queryResult = await accountDetails.find({ firstName:searchRegexName}).toArray();
+    let searchRegexFName = new RegExp(searchFName,'i');
+    let searchRegexLName = new RegExp(searchLName,'i');
+    const queryResult = await accountDetails.find({ firstName:searchRegexFName,
+    lastName:searchRegexLName}).toArray();
     return queryResult;
 }
 

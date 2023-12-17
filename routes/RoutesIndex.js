@@ -1,7 +1,6 @@
 import adminRoutes from "./admin/index.js";
 import usersRoutes from "./users.js";
 import guestRoutes from "./guest/index.js";
-import staffRoutes from './staff/index.js'
 
 const constructorMethod = (app) => {
   app.get("/", (req, res) => {
@@ -22,7 +21,6 @@ const constructorMethod = (app) => {
   app.use("/", usersRoutes);
   app.use("/guest", guestRoutes);
   app.use("/admin", adminRoutes);
-  app.use("/staff", staffRoutes);
 
   app.use("*", (req, res) => {
     res.render("error", {

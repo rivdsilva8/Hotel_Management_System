@@ -2,6 +2,7 @@ import {Router} from 'express';
 const router = Router();
 import * as helpers from '../helpers.js';
 import { loginUser,createAccount,resetPassword} from "../data/users.js";
+import xss from 'xss';
 
 router
   .route('/login')
@@ -20,7 +21,9 @@ router
       await helpers.checkIfExistsForLogin(email,password);
       const emailAddress = await helpers.validateEmail(email);
       const passwordGiven= await helpers.validatePassword(password);
-      const loginDetails = await loginUser(emailAddress, passwordGiven);
+      const emailCheck = xss(emailAddress);
+      const passwordCheck = xss(passwordGiven);
+      const loginDetails = await loginUser(emailCheck, passwordCheck);
       if(loginDetails._id){
         req.session.user = {id:loginDetails._id,
           firstName:loginDetails.firstName,
@@ -36,7 +39,12 @@ router
             return res.redirect('/admin');
         });
 
-        }            
+        }else if(loginDetails.role === 'staff'){
+          req.session.save(()=>{
+            return res.redirect('/staff');
+        });
+
+        }          
       }else{
         res.status(500).render('./login/UserLogin',{error:`Internal Server Error`,title:"Login"});
       }
@@ -62,17 +70,22 @@ router
         const firstNameErr = {empty:'First name  cannot be Empty', invalid:'First name is invalid'};
         const lastNameErr = {empty:'Last name cannot be Empty', invalid:'Last name is invalid'};
         const firstName = await helpers.validateString(firstNameInput,2,25,firstNameErr);
+        const sanitizedFirstName = xss(firstName);
         const lastName = await helpers.validateString(lastNameInput,2,25,lastNameErr);
+        const sanitizedLastName = xss(lastName);
         const emailAddress = await helpers.validateEmail(email);
+        const sanitizedEmailAddress = xss(emailAddress);
         const phoneNumber = await helpers.validatePhoneNumber(phone);
+        const sanitizedPhoneNumber = xss(phoneNumber);
         const phonePrefixVal = await helpers.validatePhonePrefix(phonePrefix);
+        const sanitizedphonePrefixVal = xss(phonePrefixVal);
         const userPassword = await helpers.validatePassword(password);
         const confirmPwd = await helpers.validatePassword(cpassword);
         if(userPassword!==confirmPwd){
           throw{code:400,error:`Password and Confirm password don't match`};
         }
         const roleInput = "user";
-        const result = await createAccount(firstName,lastName,emailAddress,phonePrefixVal,phoneNumber,roleInput,userPassword);
+        const result = await createAccount(sanitizedFirstName,sanitizedLastName,sanitizedEmailAddress,sanitizedphonePrefixVal,sanitizedPhoneNumber,roleInput,userPassword);
         if(result._id){
           if(result.role === 'user'){
             return res.redirect('/login');
@@ -103,12 +116,13 @@ router
     try{
       await helpers.checkIfExistsForReset(email,password,confirmPassword);
       const emailAddress = await helpers.validateEmail(email);
+      const sanitizeEmailAddress = xss(emailAddress);
       const userPassword = await helpers.validatePassword(password);
       const confirmPasswd = await helpers.validatePassword(confirmPassword);
       if(userPassword!==confirmPasswd){
         throw{code:400,error:`Password and Confirm password don't match`};
       }
-      const loginDetails = await resetPassword(emailAddress, userPassword);
+      const loginDetails = await resetPassword(sanitizeEmailAddress, userPassword);
       if(loginDetails.updated){
         return res.render('./login/UserReset',{title:"Reset Password",successMessage:"Password updated successfully !"});       
       }else{
@@ -117,6 +131,13 @@ router
     }catch(e){
       res.status(400).render('./login/UserReset',{error:e.error,title:"Reset Password"});
     }
+  });
+
+  router.route('/logout').get(async (req, res) => {
+    req.session.destroy(()=>{
+      res.render('./login/UserLogout',{title:"Logout Page",isLoginPage:false,message:"You have been successfully logged out.", homeLink:"/"});
+    });
+    res.clearCookie('AuthState');
   });
 
   export default router;

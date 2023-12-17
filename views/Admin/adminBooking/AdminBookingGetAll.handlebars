@@ -1,0 +1,26 @@
+<main>
+    {{!-- Search Guest Booking Part --}}
+    <div id="BookingGetDiv">
+        <form id="BookingGetData">
+        <h2>Provide Guest Details:</h2>
+        <label for="DisplayFirstName">Enter First Name:</label>
+        <input type="text" name="DisplayFirstName" id="DisplayFirstName">
+        <label for="DisplayEmailId">Enter Email Address:</label>
+        <input type="email" name="DisplayEmailId" id="DisplayEmailId">
+        <br>
+        <button type="submit">Show Booking</button>
+        </form>
+    </div>
+    {{!-- Search Guest Booking Part End --}}
+
+    <div id="noResults" class="empty-search"></div>
+
+    <div id="search-results"></div> 
+
+    <div id="error" class="error"></div>
+</main>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="../../../public/js/BookingAjax.js"></script>
+<footer>
+  <a href="/admin">back to admin Dashboard</a>
+</footer>
