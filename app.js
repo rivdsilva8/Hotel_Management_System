@@ -171,6 +171,14 @@ app.use("/", (req, res, next) => {
   next();
 });
 
+app.use("/logout", (req, res, next) => {
+  if (!req.session.user) {
+    return res.redirect("/login");
+  }
+
+  next();
+});
+
 configRoutes(app);
 
 app.listen(3000, () => {
