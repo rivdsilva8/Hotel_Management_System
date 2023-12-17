@@ -3,7 +3,7 @@ import * as h from '../../data/checkedinandout.js'
 const router = Router();
 
 router.route('/').get((req,res)=>{
-    return res.render('./Admin/adminCheckinandout/adminCheckin');
+    return res.render('./Admin/adminCheckinandout/adminCheckin',{title:"Check In Page"});
 })
 
 router.route('/getbookingbyemail/:email').get(async (req,res)=>{

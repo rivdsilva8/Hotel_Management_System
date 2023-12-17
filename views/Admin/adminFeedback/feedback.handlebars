@@ -1,9 +1,8 @@
 
 <form id="deletionForm" action="/admin/feedback">
-
+ <div id="error-container">{{#if error}}{{error}}{{/if}}</div>
   <ul>
     {{#if feedback.length}}
-    <div id="error-container">{{#if error}}{{error}}{{/if}}</div>
       {{#each feedback}}
         <li>
           <h2>Guest: {{guestName}}</h2>

@@ -111,8 +111,13 @@ router
       const roleInputValue = await helpers.validateRole(roleInput);
       const sanitizeRoleInputValue = xss(roleInputValue);
       const updateDetails = await updateAccount(accountUpdateID,sanitizeFirstName,sanitizeLastName,sanitizeEmailAddress,sanitizePhonePrefixVal,sanitizePhoneNumber,sanitizeRoleInputValue);
-      console.log(updateDetails);
-      return res.redirect('/admin/account/edit?success=true');
+      if(updateDetails && updateDetails._id){
+        return res.redirect('/admin/account/edit?success=true');
+      }
+      else{
+        return res.redirect('/admin/account/edit?success=fail');
+      }
+      
     }catch(e){
       //const details = await getAll();
       //return res.status(400).render('./Admin/adminAccount/adminEditAccount',{title:"Admin Edit Users Account",role:role,error:e.error,details:details});

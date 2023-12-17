@@ -30,7 +30,7 @@ router
     .get(async (req, res) => {
         try {
             const { roomNumber } = req.query;
-            res.render('./Admin/adminRoom/removeRoom', { roomNumber });
+            res.render('./Admin/adminRoom/removeRoom', { roomNumber ,title: "Delete Room"});
         } catch (e) {
             res.status(500).render('error', {
                 title: 'Error',
@@ -60,7 +60,7 @@ router
 router
     .route('/create')
     .get(async (req, res) => {
-        res.render('./Admin/adminRoom/createRoom');
+        res.render('./Admin/adminRoom/createRoom',{title:"Add New Room"});
     })
     .post(async (req, res) => {
         try {
@@ -95,7 +95,7 @@ router
         try {
             const roomNumber = parseInt(req.params.roomNumber, 10);
             const newRoom = await room.getRoomByNumber(roomNumber);
-            res.render('./Admin/adminRoom/updateRoom', { room: newRoom });
+            res.render('./Admin/adminRoom/updateRoom', { room: newRoom , title:"Update Room"});
         } catch (e) {
             res.status(500).render('error', {
                 title: 'Error',
