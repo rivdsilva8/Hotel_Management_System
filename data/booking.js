@@ -67,6 +67,21 @@ export const GetBooking = async(firstName, emailId) => {
     }
 };
 
+export const GetAllBooking = async(firstName, emailId) => {
+    let GetAllBookingId = await bookings();
+    console.log(emailId,firstName);
+    let GetAllBookingDetails = await GetAllBookingId.find({firstName: firstName, emailId: emailId}).toArray();
+    console.log(GetAllBookingDetails)
+    return GetAllBookingDetails;
+};
+
+export const ShowAllBooking = async() => {
+    let GetAllBookingId = await bookings();
+    let GetAllBookingDetails = await GetAllBookingId.find({}).toArray();
+    return GetAllBookingDetails;
+};
+
+
 export const DeleteBooking = async(BookId) => {
     let DeleteBooking = await bookings();
     let DeleteBookingData = await DeleteBooking.findOneAndDelete({_id: new ObjectId(BookId)});
