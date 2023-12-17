@@ -1,9 +1,10 @@
 import adminRoutes from "./admin/index.js";
 import usersRoutes from "./users.js";
 import guestRoutes from "./guest/index.js";
-import staffRoutes from './staff/index.js'
 
+console.log("in routesindex");
 const constructorMethod = (app) => {
+  console.log("came in to / route");
   app.get("/", (req, res) => {
     res.render("home");
   });
@@ -22,9 +23,9 @@ const constructorMethod = (app) => {
   app.use("/", usersRoutes);
   app.use("/guest", guestRoutes);
   app.use("/admin", adminRoutes);
-  app.use("/staff", staffRoutes);
 
   app.use("*", (req, res) => {
+    console.log("came into routesindex error");
     res.render("error", {
       title: "Error",
       code: 404,
