@@ -10,6 +10,7 @@ import { ObjectId } from "mongodb";
 import { rooms } from "../config/mongoCollections.js";
 import * as helpers from '../helpers.js'
 import * as connection from '../config/mongoConnection.js'
+import {averageRating} from "./report.js";
 
 export const createRoom = async (
     roomNumber,
@@ -161,33 +162,22 @@ export const runApp = async () => {
     const db = await connection.dbConnection();
     // await db.dropDatabase;
     try {
-        // const room1 = await createRoom(
-        //     103,
-        //     'single',
-        //     120.00,
+
+        // const newRoom = await createRoom(
+        //     106,
+        //     'double',
+        //     157.00,
         //     true,
-        //     [
-        //         "http://example.com/photos/101-1.jpg",
-        //         "http://example.com/photos/101-2.jpg"
-        //     ],
-        //     "New Room 1"
-        // )
-        // const allRooms = await getAllRooms()
-        // const room2 = await deleteRoom(101)
+        //     ["https://firebasestorage.googleapis.com/v0/b/hotel-management-eceff.appspot.com/o/images%2Fmessaging.jpeg?alt=media&token=5e36cb50-cc8f-40ec-bb38-25b221c33ee9"],
+        //     'A spacious double room.',
+        //     true
+        // );
         //
-        // console.log(`Room number with ${room2} is deleted`)
+        // console.log(newRoom)
 
-        const newRoom = await updateRoom(
-            102,
-            102,
-            'double',
-            157.00,
-            true,
-            ["https://firebasestorage.googleapis.com/v0/b/hotel-management-eceff.appspot.com/o/images%2Fmessaging.jpeg?alt=media&token=5e36cb50-cc8f-40ec-bb38-25b221c33ee9"],
-            'A spacious double room.'
-        );
+        const result = await averageRating("single");
+        console.log(result)
 
-        console.log(newRoom)
 
     } catch (e) {
         console.error(e.message)
