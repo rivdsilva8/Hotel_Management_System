@@ -1,6 +1,8 @@
 import { dbConnection, closeConnection } from "../config/mongoConnection.js";
 import * as accountData from "../data/users.js";
 import feedbackData from "../data/feedback.js";
+import * as room from '../data/room.js'
+import {createRoom} from "../data/room.js";
 
 const db = await dbConnection();
 await db.dropDatabase();
@@ -231,6 +233,7 @@ try {
     8,
     "Great amenities and friendly service."
   );
+
 
   console.log("Done seeding feedbacks");
 

@@ -6,6 +6,7 @@
 import { feedbacks } from "../config/mongoCollections.js";
 import { ObjectId } from "mongodb";
 import * as help from "../helpers.js";
+import * as connection from "../config/mongoConnection.js";
 
 const exportedMethods = {
   async create(guestId, roomType, guestName, rating, comment) {
@@ -97,5 +98,9 @@ const exportedMethods = {
     return existingId != null;
   },
 };
+
+
+
+
 
 export default exportedMethods;

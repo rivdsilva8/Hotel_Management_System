@@ -6,7 +6,6 @@
 import { Router } from "express";
 const router = Router();
 import * as room from '../../data/room.js'
-import {getRoomByNumber} from "../../data/room.js";
 
 router
     .route('/')
