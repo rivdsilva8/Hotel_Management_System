@@ -11,7 +11,7 @@ router
             const avgRatingSingle = await averageRating('single');
             const avgRatingDouble = await averageRating('double');
             const avgRatingSuite = await averageRating('suite');
-            
+
 
             res.render('./Admin/adminReport/report', {
                 avgRatingSingle,
