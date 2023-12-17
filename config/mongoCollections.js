@@ -18,3 +18,5 @@ export const feedbacks = getCollectionFn("feedbacks");
 export const rooms = getCollectionFn("rooms");
 export const bookings = getCollectionFn("bookings");
 export const gallery = getCollectionFn("gallery");
+
+export const photos = getCollectionFn("photos");

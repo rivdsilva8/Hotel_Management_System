@@ -4,9 +4,14 @@
 // delete: we need to add the room number and type to delete the room from the database
 
 import { Router } from "express";
-const router = Router();
+import multer from "multer";
+
+
 import * as room from '../../data/room.js'
 
+
+const router = Router();
+const upload = multer();
 router
     .route('/')
     .get(async (req, res) => {
@@ -155,6 +160,41 @@ router
             });
         }
     })
+
+
+router
+    .get('/upload', async (req, res) => {
+        try {
+            const photoDetails = await room.getAllPhotos();
+            res.status(200).render("./Admin/adminRoom/roomPhotos", {
+                rooms: photoDetails,
+                title: "Room photos",
+                message: req.query.message
+            });
+        } catch (e) {
+            res.status(500).render('error', {
+                title: 'Error',
+                errorMessage: e.message
+            });
+        }
+
+    })
+    .post('/upload', upload.single('image'), async (req, res) => {
+    try {
+        const downloadURL = await room.uploadImageToFirebase(req.file);
+        const imageData = {
+            filename: req.file.originalname,
+            // roomNumber: req.body.roomNumber,
+            // roomName: req.body.roomName,
+            // roomPrice: req.body.roomPrice,
+            url: downloadURL
+        }
+
+        res.json({ message: "Image uploaded successfully", url: downloadURL });
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
 
 
 export default router;

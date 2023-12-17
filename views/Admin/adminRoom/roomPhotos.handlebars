@@ -1,0 +1,18 @@
+{{#if message}}
+    <div class="alert">
+        {{message}}
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+{{/if}}
+
+{{#each rooms}}
+    <div class="room-card">
+        <h2>{{this.roomType}}</h2>
+        <img src="{{this.url}}" alt="Photo of {{this.roomType}} Room" class="room-photo">
+    </div>
+{{/each}}
+
+
+<footer>
+    <a href="/admin">back to admin Dashboard</a>
+</footer>
