@@ -21,20 +21,29 @@ export const createRoom = async (
     roomType,
     roomPrice,
     availability,
-    roomPhotos,
     roomDescription,
     cleanStatus
 
 ) => {
+
     helpers.validateRoomData({
         roomNumber,
         roomType,
         roomPrice,
         availability,
-        roomPhotos,
         roomDescription,
         cleanStatus
     });
+    const photoCollection = await photos();
+    const photosCursor = await photoCollection.find({ roomType: roomType });
+    const photoDocuments = await photosCursor.toArray();
+
+    if (photoDocuments.length === 0) {
+        throw new Error(`No photos found for room type: ${roomType}`);
+    }
+
+    const roomPhotos = photoDocuments.map(photo => photo.url);
+
 
     const newRoom = {
         roomNumber,
@@ -109,7 +118,6 @@ export const updateRoom = async (
     roomType,
     roomPrice,
     availability,
-    roomPhotos,
     roomDescription
 ) => {
     helpers.validateRoomNumber(originalRoomNumber);
@@ -118,9 +126,18 @@ export const updateRoom = async (
         roomType,
         roomPrice,
         availability,
-        roomPhotos,
         roomDescription
     });
+
+    const photoCollection = await photos();
+    const photosCursor = await photoCollection.find({ roomType: roomType });
+    const photoDocuments = await photosCursor.toArray();
+
+    if (photoDocuments.length === 0) {
+        throw new Error(`No photos found for room type: ${roomType}`);
+    }
+
+    const roomPhotos = photoDocuments.map(photo => photo.url);
 
     const roomCollection = await rooms();
 
@@ -208,6 +225,7 @@ export const createPhotos = async (roomType, url) => {
     }
 };
 
+
 export const uploadImageToFirebase = async (file) => {
     const storageRef = ref(storage, `images/${file.originalname}`);
     const snapshot = await uploadBytes(storageRef, file.buffer);
@@ -215,12 +233,31 @@ export const uploadImageToFirebase = async (file) => {
     return downloadURL;
 };
 
-export const saveUrlToPhotos = async (roomDetails) => {
-    const roomData = await rooms();
-    const insertInfo = await roomData.insertOne(roomDetails);
-    if (insertInfo.insertedCount === 0) throw new Error('Could not add room details to MongoDB.');
-    return insertInfo.insertedId;
+export const savePhoto = async (roomType, url) => {
+    const photoCollection = await photos();
+
+
+    const existingPhoto = await photoCollection.findOne({ roomType: roomType });
+
+    if (existingPhoto) {
+
+        const updateResult = await photoCollection.updateOne(
+            { roomType: roomType },
+            { $set: { url: url } }
+        );
+        return updateResult;
+    } else {
+
+        const newPhoto = {
+            roomType: roomType,
+            url: url
+        };
+        const insertResult = await photoCollection.insertOne(newPhoto);
+        return insertResult;
+    }
 };
+
+
 
 export const runApp = async () => {
     const db = await connection.dbConnection();
