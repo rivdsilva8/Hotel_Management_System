@@ -5,7 +5,9 @@ import staffRoutes from "./staff/index.js";
 
 const constructorMethod = (app) => {
   app.get("/", (req, res) => {
-    res.render("home");
+    res.render("home", {
+      title: "Welcome to Home Page",
+    });
   });
 
   /*app.get("/login", (req, res) => {
