@@ -1,21 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <title>Check out Page</title>
-</head>
-<body>
+
     <p>Search Booking By Email:</p>
     <p>Enter First Name</p>
     <input type="text" name ="FirstName" id ="FirstName">
     <p>Enter Email:</p>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <input type="text" name="email_search" id="email_search">
     <button id="SearchByEmail" onclick="searche()">Search</button>
     <div class="results" id="rdiv"></div>
     <script>
-        function searche(){
+        jQuery(document).ready(function(){
+            window.searche = function() {
             let d = document.getElementById("email_search")
             let rdiv = document.getElementById('rdiv')
             let u = "http://localhost:3000/admin/checkout/getbookingbyemail/" + d.value
@@ -42,10 +36,11 @@
                         `
                     rdiv.appendChild(booking)
                 }
+             })
+            }
         })
-        }
 
-        function checkOute(emailId) {
+        window.checkOute = function(emailId){
             let u = "http://localhost:3000/admin/checkOut/putcheckOute/" + emailId;
             let rdiv = document.getElementById('rdiv')
             $.ajax({
@@ -60,5 +55,3 @@
         }
         
     </script>
-</body>
-</html>
