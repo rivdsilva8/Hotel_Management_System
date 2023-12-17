@@ -2,7 +2,7 @@ import { ObjectId } from "mongodb";
 import { accounts } from "../config/mongoCollections.js";
 import * as helpers from "../helpers.js";
 import bcrypt from "bcryptjs";
-const saltRounds = 1;
+const saltRounds = 16;
 
 export const loginUser = async (email, password) => {
   email = await helpers.validateEmail(email);
