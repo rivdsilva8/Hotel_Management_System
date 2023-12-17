@@ -1,10 +1,39 @@
-<h1>Gallery:</h1>
-  <div>
-    
-    {{#each images}}
-      <img src="{{this.url}}" alt="Hotel Image">
-    {{/each}}
-  </div>
+
+<main>
+  <form id="imageUploadForm" enctype="multipart/form-data">
+    <input type="file" id="imageInput" name="image" accept="image/*">
+    <button type="submit" >Upload Image</button>
+  </form>
+</main>
 <footer>
-  <a href="/admin">back to admin Dashboard</a>
+  <a href="/guest">back to guest Homepage</a>
 </footer>
+
+<script>
+  document.getElementById('imageUploadForm').addEventListener('submit',function(event){
+    event.preventDefault();
+    const imageFile = document.getElementById('imageInput').files[0];
+    if (imageFile) {
+        uploadImage(imageFile);
+    } else {
+        alert('Please select an image file to upload.');
+    }
+  });
+
+  function uploadImage(imageFile) {
+        const formData = new FormData();
+        formData.append('image', imageFile);
+
+        fetch('/admin/gallery/upload', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          alert('Image Upload Success.');
+        })
+        .catch(error => {
+            alert('Could not add image.');
+        });
+    }  
+</script>
