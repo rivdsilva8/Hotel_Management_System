@@ -7,6 +7,7 @@ const router = Router();
 import * as helpers from '../../helpers.js';
 import {getAccountById,updateAccount,getAll,deleteAccount,getSearchData} from "../../data/account.js";
 import {createAccount} from "../../data/users.js";
+import xss from 'xss';
 
 router.get("/", async (req, res) => {
   try {
@@ -35,17 +36,25 @@ router.post('/create',async (req, res) => {
         const firstNameErr = {empty:'First name  cannot be Empty', invalid:'First name is invalid'};
         const lastNameErr = {empty:'Last name cannot be Empty', invalid:'Last name is invalid'};
         const firstName = await helpers.validateString(firstNameInput,2,25,firstNameErr);
+        const sanitizeFirstName = xss(firstName);
         const lastName = await helpers.validateString(lastNameInput,2,25,lastNameErr);
+        const sanitizeLastName = xss(lastName);
         const emailAddress = await helpers.validateEmail(email);
+        const sanitizeEmailAddress = xss(emailAddress);
         const phonePrefixVal = await helpers.validatePhonePrefix(phonePrefix);
+        const sanitizePhonePrefixVal = xss(phonePrefixVal);
         const phoneNumber = await helpers.validatePhoneNumber(phone);
+        const sanitizePhoneNumber = xss(phoneNumber);
         const userPassword = await helpers.validatePassword(password);
+        const sanitizeUserPassword = xss(userPassword);
         const confirmPwd = await helpers.validatePassword(cpassword);
-        if(userPassword!==confirmPwd){
+        const sanitizeconfirmPwd = xss(confirmPwd);
+        if(sanitizeUserPassword!==sanitizeconfirmPwd){
           throw{code:400,error:`Password and Confirm password don't match`};
         }
         const roleInputValue = await helpers.validateRole(roleInput);
-        const result = await createAccount(firstName,lastName,emailAddress,phonePrefixVal,phoneNumber,roleInputValue,userPassword);
+        const sanitizeRoleInputValue = xss(roleInputValue);
+        const result = await createAccount(sanitizeFirstName,sanitizeLastName,sanitizeEmailAddress,sanitizePhonePrefixVal,sanitizePhoneNumber,sanitizeRoleInputValue,sanitizeUserPassword);
         if(result._id){
           return res.render('./Admin/adminAccount/adminCreateAccount',{title:"Admin Create Users Account",role:role,successMessage:"Account created successfully !"});
         }else{
@@ -90,12 +99,19 @@ router
       const firstNameErr = {empty:'First name  cannot be Empty', invalid:'First name is invalid'};
       const lastNameErr = {empty:'Last name cannot be Empty', invalid:'Last name is invalid'};
       const firstName = await helpers.validateString(firstNameInput,2,25,firstNameErr);
+      const sanitizeFirstName = xss(firstName);
       const lastName = await helpers.validateString(lastNameInput,2,25,lastNameErr);
+      const sanitizeLastName = xss(lastName);
       const emailAddress = await helpers.validateEmail(email);
+      const sanitizeEmailAddress = xss(emailAddress);
       const phonePrefixVal = await helpers.validatePhonePrefix(phonePrefix);
+      const sanitizePhonePrefixVal = xss(phonePrefixVal);
       const phoneNumber = await helpers.validatePhoneNumber(phone);
+      const sanitizePhoneNumber = xss(phoneNumber);
       const roleInputValue = await helpers.validateRole(roleInput);
-      const updateDetails = await updateAccount(accountUpdateID,firstName,lastName,emailAddress,phonePrefixVal,phoneNumber,roleInputValue);
+      const sanitizeRoleInputValue = xss(roleInputValue);
+      const updateDetails = await updateAccount(accountUpdateID,sanitizeFirstName,sanitizeLastName,sanitizeEmailAddress,sanitizePhonePrefixVal,sanitizePhoneNumber,sanitizeRoleInputValue);
+      console.log(updateDetails);
       return res.redirect('/admin/account/edit?success=true');
     }catch(e){
       //const details = await getAll();
@@ -164,9 +180,11 @@ router
     const{searchFName ,searchLName}= req.body;
     const firstNameErr = {empty:'First name  cannot be Empty', invalid:'First name is invalid'};
     const firstName = await helpers.validateString(searchFName,2,25,firstNameErr);
+    const sanitizeFirstName = xss(firstName);
     const lastNameErr = {empty:'Last name cannot be Empty', invalid:'Last name is invalid'};
     const lastName = await helpers.validateString(searchLName,2,25,lastNameErr);
-    searchDetails = await getSearchData(firstName,lastName);
+    const sanitizeLastName = xss(lastName);
+    searchDetails = await getSearchData(sanitizeFirstName,sanitizeLastName);
     if(searchDetails.length === 0 ){
       errorMessage = 'No results found for the given Name!';
       return res.render('./Admin/adminAccount/adminEditAccount',{title:"Admin Edit Users Account",role:role, searchDetails:searchDetails,successMessage:successMessage,error:errorMessage});
@@ -191,9 +209,11 @@ router
     const{searchFName , searchLName}= req.body;
     const firstNameErr = {empty:'First name  cannot be Empty', invalid:'First name is invalid'};
     const firstName = await helpers.validateString(searchFName,2,25,firstNameErr);
+    const sanitizeFirstName = xss(firstName);
     const lastNameErr = {empty:'Last name cannot be Empty', invalid:'Last name is invalid'};
     const lastName = await helpers.validateString(searchLName,2,25,lastNameErr);
-    searchDetails = await getSearchData(firstName,lastName);
+    const sanitizeLastName = xss(lastName);
+    searchDetails = await getSearchData(sanitizeFirstName,sanitizeLastName);
     if(searchDetails.length === 0 ){
       errorMessage = 'No results found for the given Name!';
       return res.render('./Admin/adminAccount/adminDeleteAccount',{title:"Admin Delete Users Account",role:role, searchDetails:searchDetails,successMessage:successMessage,error:errorMessage});
@@ -220,9 +240,11 @@ router
     const{searchFName ,searchLName}= req.body;
     const firstNameErr = {empty:'First name  cannot be Empty', invalid:'First name is invalid'};
     const firstName = await helpers.validateString(searchFName,2,25,firstNameErr);
+    const sanitizeFirstName = xss(firstName);
     const lastNameErr = {empty:'Last name cannot be Empty', invalid:'Last name is invalid'};
     const lastName = await helpers.validateString(searchLName,2,25,lastNameErr);
-    searchDetails = await getSearchData(firstName,lastName);
+    const sanitizeLastName = xss(lastName);
+    searchDetails = await getSearchData(sanitizeFirstName,sanitizeLastName);
     if(searchDetails.length === 0 ){
       errorMessage = 'No results found for the given Name!';
       return res.render('./Admin/adminAccount/adminViewAccount',{title:"Admin View Users Account",role:role, searchDetails:searchDetails,successMessage:successMessage,error:errorMessage});
