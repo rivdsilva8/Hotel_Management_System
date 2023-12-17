@@ -39,14 +39,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
   });
 
-  const phoneInputs = document.querySelectorAll('.phone');
-    phoneInputs.forEach(phoneInput =>{
-      if(phoneInput && phoneInput.value){
-        formatPhoneNumberOnLoad(phoneInput);
-      }
-    });
-
-    document.querySelectorAll('.phone').forEach(phoneInput =>{
+  document.querySelectorAll('.phone').forEach(phoneInput =>{
       formatPhoneNumberOnEditSubmit(phoneInput);
       phoneInput.addEventListener('input',() => formatPhoneNumberOnEditSubmit(phoneInput));
     });
