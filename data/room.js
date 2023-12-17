@@ -158,6 +158,16 @@ export const cleanRoom = async (roomNumber) => {
 
 }
 
+export const roomNumberToId = async (roomNumber) => {
+    helpers.validateRoomNumber(roomNumber);
+    const roomCollection = await rooms();
+    let room = await roomCollection.findOne({ roomNumber: roomNumber});
+
+    if (!room) throw new Error(`This number: ${roomNumber} has no room`);
+
+    return room._id;
+}
+
 export const runApp = async () => {
     const db = await connection.dbConnection();
     // await db.dropDatabase;
@@ -175,8 +185,11 @@ export const runApp = async () => {
         //
         // console.log(newRoom)
 
-        const result = await averageRating("single");
-        console.log(result)
+        // const result = await averageRating("single");
+        // console.log(result)
+
+        const id = await roomNumberToId(104);
+        console.log(id)
 
 
     } catch (e) {
