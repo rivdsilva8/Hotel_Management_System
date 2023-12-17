@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function(){
     if(loginForm){
         loginForm.addEventListener('submit', function(event){
             let errorMessage =[];
-            const email = document.getElementById('email').value;
+            const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
             if(!validateEmail(email)){
                 errorMessage.push('Please enter a valid email address.');
@@ -48,9 +48,9 @@ document.addEventListener("DOMContentLoaded", function(){
         if(registerForm){
             registerForm.addEventListener('submit',function(event){
                 let errorMessage =[];
-                const firstName = document.getElementById('firstNameInput').value;
-                const lastName = document.getElementById('lastNameInput').value;
-                const email = document.getElementById('email').value;
+                const firstName = document.getElementById('firstNameInput').value.trim();
+                const lastName = document.getElementById('lastNameInput').value.trim();
+                const email = document.getElementById('email').value.trim();
                 const phone = document.getElementById('phone').value;
                 const password = document.getElementById('password').value;
                 const confirmPassword = document.getElementById('cpassword').value;
@@ -109,9 +109,9 @@ document.addEventListener("DOMContentLoaded", function(){
         adminCreateForm.addEventListener('submit',function(event){
             let errorMessage =[];
 
-            const firstName = document.getElementById('firstNameInput').value;
-            const lastName = document.getElementById('lastNameInput').value;
-            const userEmail = document.getElementById('email').value;
+            const firstName = document.getElementById('firstNameInput').value.trim();
+            const lastName = document.getElementById('lastNameInput').value.trim();
+            const userEmail = document.getElementById('email').value.trim();
             const phone = document.getElementById('phone').value;
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('cpassword').value;
@@ -171,9 +171,9 @@ document.addEventListener("DOMContentLoaded", function(){
             let errorMessage =[];
             const targetForm = event.target;
             const accountId = targetForm.dataset.accountId;
-            const firstName = document.getElementById('firstNameInput-' + accountId).value;
-            const lastName = document.getElementById('lastNameInput-' + accountId).value;
-            const userEmail = document.getElementById('email-' + accountId).value;
+            const firstName = document.getElementById('firstNameInput-' + accountId).value.trim();
+            const lastName = document.getElementById('lastNameInput-' + accountId).value.trim();
+            const userEmail = document.getElementById('email-' + accountId).value.trim();
             const phone = document.getElementById('phone-' + accountId).value;
             if(!firstName || firstName.length <2 || firstName.length>25 || !/^[A-Za-z]+$/.test(firstName)){
                 errorMessage.push('First Name must be between 2 to 25 characters and must contain only letters.');
@@ -205,9 +205,13 @@ document.addEventListener("DOMContentLoaded", function(){
     if(adminAccountSearch){
         adminAccountSearch.addEventListener('submit',function(event){
             let errorMessage =[];
-            const firstName = document.getElementById('searchFName').value;
+            const firstName = document.getElementById('searchFName').value.trim();
+            const lastName = document.getElementById('searchLName').value.trim();
             if(!firstName || firstName.length <2 || firstName.length>25 || !/^[A-Za-z]+$/.test(firstName)){
                 errorMessage.push('First Name must be between 2 to 25 characters and must contain only letters.');
+            }
+            if(!lastName || lastName.length <2 || lastName.length>25 || !/^[A-Za-z]+$/.test(lastName)){
+                errorMessage.push('Last Name must be between 2 to 25 characters and must contain only letters.');
             }
 
             if(errorMessage.length>0){
@@ -221,9 +225,9 @@ document.addEventListener("DOMContentLoaded", function(){
     if(userEditForm){
         userEditForm.addEventListener('submit', function(event){
             let errorMessage =[];
-            const firstName = document.getElementById('firstNameInput').value;
-            const lastName = document.getElementById('lastNameInput').value;
-            const userEmail = document.getElementById('email').value;
+            const firstName = document.getElementById('firstNameInput').value.trim();
+            const lastName = document.getElementById('lastNameInput').value.trim();
+            const userEmail = document.getElementById('email').value.trim();
             const phone = document.getElementById('phone').value;
 
             if(!firstName || firstName.length <2 || firstName.length>25 || !/^[A-Za-z]+$/.test(firstName)){
@@ -256,7 +260,7 @@ document.addEventListener("DOMContentLoaded", function(){
     if(resetForm){
         resetForm.addEventListener('submit', function(event){
             let errorMessage =[];
-            const email = document.getElementById('email').value;
+            const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
             if(!validateEmail(email)){

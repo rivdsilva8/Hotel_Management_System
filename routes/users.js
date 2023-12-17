@@ -36,7 +36,12 @@ router
             return res.redirect('/admin');
         });
 
-        }            
+        }else if(loginDetails.role === 'staff'){
+          req.session.save(()=>{
+            return res.redirect('/staff');
+        });
+
+        }          
       }else{
         res.status(500).render('./login/UserLogin',{error:`Internal Server Error`,title:"Login"});
       }
