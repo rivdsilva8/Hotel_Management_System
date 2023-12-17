@@ -1,7 +1,26 @@
 body {
-
+background-color: rgb(240, 240, 240);
+}
+.feedback-card {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
+.room-type{
+  font-weight: bold;
+}
+
+nav ul li:last-child {
+  margin-bottom: 20px; /* Adjust the margin as needed */
+}
+
+.feedback-card p {
+  margin-top: 10px;
+}
 .dropdown-content {
   display: none;
   position: absolute;

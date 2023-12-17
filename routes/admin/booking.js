@@ -124,10 +124,5 @@ router
     } catch (error) {
       res.status(500).json({ success: false, message: 'Error deleting booking' });
     }
-    
-      // if(updated){
-        //     await updateResult(req.params.id);
-      // }
-      // res.render('partials/searched-group', {layout: null, sampleResult: result});
 })
 export default router;
