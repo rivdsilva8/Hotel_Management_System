@@ -1,5 +1,40 @@
 
+<main>
+  <form id="imageUploadForm" enctype="multipart/form-data">
+    <input type="file" id="imageInput" name="image" accept="image/*">
+    <button type="submit" >Upload Image</button>
+  </form>
+</main>
 <footer>
-
   <a href="/guest">back to guest Homepage</a>
 </footer>
+
+<script>
+  document.getElementById('imageUploadForm').addEventListener('submit',function(event){
+    event.preventDefault();
+    const imageFile = document.getElementById('imageInput').files[0];
+    if (imageFile) {
+        uploadImage(imageFile);
+    } else {
+        alert('Please select an image file to upload.');
+    }
+  });
+
+  function uploadImage(imageFile) {
+        const formData = new FormData();
+        formData.append('image', imageFile);
+
+        fetch('/admin/gallery/upload', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            // Handle the response data
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }  
+</script>
