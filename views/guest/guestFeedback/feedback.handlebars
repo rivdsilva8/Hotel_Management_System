@@ -1,20 +1,28 @@
-<a href="/guest/feedback/createFeedback">Add a Feedback</a>
-<a href="/guest/feedback/updateFeedback">Update your Feedback</a>
-<a href="/guest/feedback/deleteFeedback">Delete your Feedback</a>
 
+<nav>
 <ul>
+  <li><a href="/guest/feedback/createFeedback">Add a Feedback</a></li>
+  <li><a href="/guest/feedback/updateFeedback">Update your Feedback</a></li>
+  <li><a href="/guest/feedback/deleteFeedback">Delete your Feedback</a></li>
+</ul>
+</nav>
+
+
+
+<ul id="feedbacks">
   {{#each feedback}}
-    <li>
+    <div class="feedback-card" style="width: 50%;">
       <strong>{{guestName}}</strong>
-      Rating :
-      {{rating}}/10 Room Type :
-      <span>{{roomType}}</span>
+      <span  style="margin-left: 70px; margin-right: 70px">Room Type : {{roomType}}</span>
+      <span >Rating :
+      {{rating}}/10</span>
+      
       <p>{{comment}}</p>
-    </li>
+    </div>
+    
   {{/each}}
 </ul>
 
 <footer>
-
   <a href="/guest">back to guest Homepage</a>
 </footer>

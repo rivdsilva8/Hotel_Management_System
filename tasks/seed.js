@@ -66,15 +66,7 @@ try {
     "user",
     "UserF1*234"
   );
-  let graceDetails = await accountData.createAccount(
-    "Grace",
-    "Davis",
-    "grace@example.com",
-    "+1",
-    "1234567896",
-    "user",
-    "Gr4ce$789"
-  );
+  
   let henryDetails = await accountData.createAccount(
     "Henry",
     "Garcia",
@@ -163,13 +155,7 @@ try {
     "Best hotel ever!!!"
   );
 
-  await feedbackData.create(
-    graceDetails._id.toString(),
-    "suite",
-    "Alice Smith",
-    9,
-    "Wonderful experience and excellent service."
-  );
+  
 
   await feedbackData.create(
     henryDetails._id.toString(),
@@ -382,6 +368,7 @@ try {
     "12/15/2023",
     "12/17/2023"
   );
+
   await bookingData.CreateBooking(
     "Eve",
     "Jones",

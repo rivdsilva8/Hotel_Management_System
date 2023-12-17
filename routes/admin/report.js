@@ -13,13 +13,15 @@ router
             const avgRatingSuite = await averageRating('suite');
 
 
-            res.render('./Admin/adminReport/report', {
+            return res.render('./Admin/adminReport/report', {
+                
                 avgRatingSingle,
                 avgRatingDouble,
-                avgRatingSuite
+                avgRatingSuite,
+                title:"Report"
             });
         } catch (e) {
-            res.status(500).render('error', {
+            return res.status(500).render('error', {
                 title: 'Error',
                 errorMessage: e.message
             });

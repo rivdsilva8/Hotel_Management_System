@@ -1,7 +1,26 @@
 body {
-  padding-left: 20px;
+background-color: rgb(240, 240, 240);
+}
+.feedback-card {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
+.room-type{
+  font-weight: bold;
+}
+
+nav ul li:last-child {
+  margin-bottom: 20px; /* Adjust the margin as needed */
+}
+
+.feedback-card p {
+  margin-top: 10px;
+}
 .dropdown-content {
   display: none;
   position: absolute;
@@ -15,8 +34,9 @@ body {
 }
 
 h1 {
-  padding-top: 1px;
-  padding-left: 7px;
+  padding-top: 2px;
+  padding-left: 5px;
+  padding-bottom: 6px;
 }
 
 nav ul {
@@ -74,6 +94,7 @@ form {
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #f9f9f9;
+  margin-bottom: 60px;
 }
 button[type="submit"] {
   background-color: #007bff;
@@ -91,14 +112,11 @@ button[type="submit"]:hover {
 a:hover {
   text-decoration: underline;
 }
-footer {
-  text-align: center;
-  padding: 10px;
-  margin-top: 20px;
-}
-a {
+
+ul a {
   color: #5953d4;
   text-align: center;
+  padding-left: 5px;
 }
 .account-create {
   text-align: center;
@@ -108,6 +126,42 @@ a {
   align-items: center;
   gap: 10px;
   /*margin-bottom: 10px;*/
+}
+
+header{
+ 
+  background-color: #333;
+  color: #fff;
+  
+}
+
+footer {
+  text-align: left;
+  padding: 10px;
+  margin-top: 20px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+}
+footer a {
+  float: left;
+  background-color: none;
+  text-decoration: none;
+  color: white;
+  padding: 5px;
+  border-radius: 50px;
+}
+
+footer a:hover {
+  float: left;
+  padding: 5px;
+  color: rgb(190, 190, 190);
+  border-radius: 50px;
 }
 .phone-container select,
 .phone-container input {
@@ -196,12 +250,12 @@ a {
   color: black;
 }
 
-#logout {
-  background-color: teal;
+.logout-button {
+  color: red;
 }
 
 .logout-button:hover {
-  background-color: #5596dd;
+  color: darkred;
 }
 .center-container {
   display: flex;

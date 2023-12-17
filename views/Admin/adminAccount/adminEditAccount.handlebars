@@ -1,5 +1,6 @@
 <div id="error-container" class="alert-message" style="display: none;">{{error}}</div> <!---Cross check for the style!-->
 <div id="success-message" class="alert-message" style="display: none;">{{successMessage}}</div>
+
 <form id ="adminAccountSearch" action="/admin/account/search" method="POST">
     <label for="searchFName" >First Name:</label>
     <input type ="text" name="searchFName" id ="searchFName" placeholder="Enter first name"/>
@@ -47,7 +48,7 @@
 {{/each}}
 {{/if}}
 <footer>
-  <a href="/admin/account">Back To Admin Account Dashboard</a>
+  <a href="/admin/account">Back to Account</a>
 </footer>
 <script src="/public/js/client_side_validation.js"></script>
 <script src="/public/js/main.js"></script>

@@ -22,27 +22,15 @@
   <input type="password" id="cpassword" name ="cpassword" placeholder="confirm password" />
   <button type="submit">Create Account</button>
 </form>
-
-
-{{#if role}}
-{{#if (eq role "admin")}}
-<footer>
-   <a href="/admin">back to admin Dashboard</a>
-</footer>
-{{else}}
-<a href="/login">Already have an account? Click here to log-in </a>
-<footer>
-  <a href="/">Back to home</a>
-</footer>
-{{/if}}
-{{else}}
-<footer>
-  <div class="account-create">Already have an account?
+ <div class="account-create">Already have an account?
   <a href="/login">Click here to log-in</a>
   </div>
   <br><br>
+
+<footer>
+ 
   <a href="/">Back to home</a>
 </footer>
-{{/if}}
+
 <script src="/public/js/client_side_validation.js"></script>
 <script src="/public/js/main.js"></script>

@@ -26,7 +26,7 @@ router
         try {
             const roomNumber = parseInt(req.params.roomNumber, 10);
             const roomId = await room.roomNumberToId(roomNumber);
-            res.render('./guest/guestBooking/booking', { room: roomId });
+            res.render('./guest/guestBooking/booking', { title:"Room booking",room: roomId });
         } catch (e) {
             res.status(500).render('error', {
                 title: 'Error',
