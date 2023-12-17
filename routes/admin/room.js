@@ -4,9 +4,14 @@
 // delete: we need to add the room number and type to delete the room from the database
 
 import { Router } from "express";
-const router = Router();
+import multer from "multer";
+
+
 import * as room from '../../data/room.js'
 
+
+const router = Router();
+const upload = multer();
 router
     .route('/')
     .get(async (req, res) => {
@@ -69,17 +74,16 @@ router
             const availability = req.body.availability === 'true';
             const cleanStatus = req.body.cleanStatus === 'true';
 
-            let { roomPhotos, roomType, roomDescription } = req.body;
+            let { roomType, roomDescription } = req.body;
 
-            if (!Array.isArray(roomPhotos)) {
-                roomPhotos = roomPhotos ? [roomPhotos] : [];
-            }
+            console.log(roomType)
+
 
             if (isNaN(roomNumber) || isNaN(roomPrice)) {
                 throw new Error("Invalid room number or price");
             }
 
-            await room.createRoom(roomNumber, roomType, roomPrice, availability, roomPhotos, roomDescription, cleanStatus);
+            await room.createRoom(roomNumber, roomType, roomPrice, availability, roomDescription, cleanStatus);
             res.redirect('/admin/room?message=Room Created');
         } catch (e) {
             res.status(500).render('error', {
@@ -115,7 +119,7 @@ router
             const newRoomNumber = parseInt(req.body.roomNumber, 10);
             const roomPrice = parseFloat(req.body.roomPrice);
             const availability = req.body.availability === 'true';
-            const roomPhotos = [req.body.roomPhotos.trim()];
+
 
             const updatedRoom = await room.updateRoom(
                 originalRoomNumber,
@@ -123,7 +127,6 @@ router
                 roomType,
                 roomPrice,
                 availability,
-                roomPhotos,
                 roomDescription
             );
 
@@ -155,6 +158,37 @@ router
             });
         }
     })
+
+
+router
+    .get('/upload', async (req, res) => {
+        try {
+            const photoDetails = await room.getAllPhotos();
+            res.status(200).render("./Admin/adminRoom/roomPhotos", {
+                rooms: photoDetails,
+                title: "Room photos",
+                message: req.query.message
+            });
+        } catch (e) {
+            res.status(500).render('error', {
+                title: 'Error',
+                errorMessage: e.message
+            });
+        }
+
+    })
+    .post('/upload', upload.single('image'), async (req, res) => {
+    try {
+        const downloadURL = await room.uploadImageToFirebase(req.file);
+        const roomType = req.body.roomType;
+
+        const savePhoto = await room.savePhoto(roomType, downloadURL);
+
+        res.redirect('/admin/room/upload?message=Image uploaded successfully');
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
 
 
 export default router;

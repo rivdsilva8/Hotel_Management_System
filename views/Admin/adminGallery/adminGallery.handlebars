@@ -1,8 +1,4 @@
-<header>
-    <a href="/guest">back to guest Homepage</a>
-</header>
-<main>
-  <form id="imageUploadForm" enctype="multipart/form-data">
+<form id="imageUploadForm" enctype="multipart/form-data">
     <input type="file" id="imageInput" name="image" accept="image/*">
     <button type="submit" >Upload Image</button>
   </form>
@@ -26,7 +22,7 @@
       {{/each}}
     </div>
   </div>
-</main>
+
 
 <script>
   document.getElementById('imageUploadForm').addEventListener('submit',function(event){
@@ -56,3 +52,7 @@
         });
     }  
 </script>
+
+<footer>
+  <a href="/admin">back to Admin Dashboard</a>
+</footer>
