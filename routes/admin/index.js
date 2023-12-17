@@ -24,7 +24,6 @@ router.use("/booking", bookingRoutes);
 router.use("/feedback", feedbackRoutes);
 router.use("/gallery", galleryRoutes);
 router.use("/room", roomRoutes);
-router.use("/report", reportRoutes);
 router.use("/checkin", CheckInRoutes);
 router.use("/checkout", CheckOutRoutes);
 

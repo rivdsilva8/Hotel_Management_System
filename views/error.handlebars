@@ -1,20 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Error</title>
-</head>
-<body>
-<h1>Error</h1>
-
-<main>
-    <p class="error">Sorry, there was an error processing your request: {{errorMessage}}</p>
-    <button onclick="goBack()">Return to Previous Page</button>
-</main>
+<p class="error">Sorry, there was an error processing your request:
+  {{errorMessage}}</p>
+<button onclick="goBack()">Return to Previous Page</button>
 
 <script>
-    function goBack() {
-        window.history.back();
-    }
+  function goBack() { window.history.back(); }
 </script>
-</body>
-</html>

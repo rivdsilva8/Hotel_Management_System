@@ -1,31 +1,66 @@
-<div id="error-container" class="alert-message" style="display: none;">{{error}}</div> <!---Cross check for the style!-->
-<div id="success-message" class="alert-message" style="display: none;">{{successMessage}}</div>
+<div
+  id="error-container"
+  class="alert-message"
+  style="display: none;"
+>{{error}}</div>
+<!--- check for the style!-->
+<div
+  id="success-message"
+  class="alert-message"
+  style="display: none;"
+>{{successMessage}}</div>
 
-<form id = "userEditForm"class="user-edit-form" action="/guest/account/edit/{{account._id}}" method="POST">
-    <div class="user">
-    <input type ="hidden" name="accountId" value ="{{account._id}}">
+<form
+  id="userEditForm"
+  class="user-edit-form"
+  action="/guest/account/edit/{{account._id}}"
+  method="POST"
+>
+  <div class="user">
+    <input type="hidden" name="accountId" value="{{account._id}}" />
     <p>
-        <label for="firstNameInput">Name:</label>
-        <input type ="text" name="firstNameInput" id ="firstNameInput" value="{{account.firstName}}"/>
-        <input type ="text" name="lastNameInput" id ="lastNameInput" value="{{account.lastName}}"/>
+      <label for="firstNameInput">Name:</label>
+      <input
+        type="text"
+        name="firstNameInput"
+        id="firstNameInput"
+        value="{{account.firstName}}"
+      />
+      <input
+        type="text"
+        name="lastNameInput"
+        id="lastNameInput"
+        value="{{account.lastName}}"
+      />
     </p>
     <p>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name ="email" value="{{account.email}}" />
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" value="{{account.email}}" />
     </p>
-    <p>
-        <label for="phone" >Phone:</label>
-        <div class="phone-container">
-            <!--<input type ="text" id="phonePrefix" name="phonePrefix" value = "{{account.phonePrefix}}" readonly/>!-->
-            <select class="phonePrefix-select" name="phonePrefix" data-current-prefix="{{account.phonePrefix}}"></select>
-            <input type="tel" class ="phone"id="phone" name ="phone" value="{{account.phoneNumber}}" pattern="\d{3}-\d{3}-\d{4}"  placeholder="123-456-7890"/>
-        </div>
-    </p>
-    <!---<a href="/admin/account/edit/{{this._id}}">!--->
+
+    <label for="phone">Phone:</label>
+    <div class="phone-container">
+
+      <select
+        class="phonePrefix-select"
+        name="phonePrefix"
+        data-current-prefix="{{account.phonePrefix}}"
+      ></select>
+      <input
+        type="tel"
+        class="phone"
+        id="phone"
+        name="phone"
+        value="{{account.phoneNumber}}"
+        pattern="\d{3}-\d{3}-\d{4}"
+        placeholder="123-456-7890"
+      />
+    </div>
+
     <button type="submit" class="edit-button">
-    <i class ="fas fa-pencil-alt"></i>Update Account
+      <i class="fas fa-pencil-alt"></i>Update Account
     </button>
-</div>
+  </div>
 </form>
 
 <footer>

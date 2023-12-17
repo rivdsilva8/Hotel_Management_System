@@ -526,6 +526,8 @@ document.addEventListener("DOMContentLoaded", function(){
 
 
 });
+
+
 /* if (roomType == null) throw "Please select a Room Type";
       if (comment.length > 500)
         throw "ERROR : comment cannot be more than 500 characters ";

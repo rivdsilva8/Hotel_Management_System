@@ -1,21 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <title>Check In Page</title>
-</head>
-<body>
+
     <p>Search Booking:</p>
     <p>Enter First Name:</p>
     <input type="text" name ="FirstName" id ="FirstName">
     <p>Enter Email:</p>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <input type="text" name="email_search" id="email_search">
     <button id="SearchByEmail" onclick="searche()">Search</button>
     <div class="results" id="rdiv"></div>
     <script>
-        function searche(){
+        jQuery(document).ready(function(){
+            window.searche = function(){
+
             let d = document.getElementById("email_search")
             let rdiv = document.getElementById('rdiv')
             let u = "http://localhost:3000/admin/checkin/getbookingbyemail/" + d.value
@@ -45,9 +40,11 @@
                 }
                     rdiv.appendChild(booking)
                 }
+             })
+                
+            }
         })
-        }
-        function makeBookinge(emailId){
+        window.makeBookinge = function (emailId){
         let u = "http://localhost:3000/admin/checkin/makeBooking/" + emailId;
         let rdiv = document.getElementById('rdiv')
         $.ajax({
@@ -61,8 +58,7 @@
             },
         });
         }
-
-        function checkIne(emailId) {
+       window.checkIne = function(emailId){
         let u = "http://localhost:3000/admin/checkin/putcheckIne/" + emailId;
         let rdiv = document.getElementById('rdiv')
         $.ajax({
@@ -74,8 +70,6 @@
                 console.log(updatedRes);
             },
         });
-    }
+       }
         
     </script>
-</body>
-</html>

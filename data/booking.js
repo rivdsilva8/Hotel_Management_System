@@ -159,3 +159,6 @@ export const UpdateBooking = async(
 //     }
 //     return "Updated successfully";
 // }
+
+// let a = await CreateBooking("Prashant", "Tej", "prashant@example.com", 5512349853, 12/3/2023,12/5/2023)
+// console.log(a)

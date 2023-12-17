@@ -13,7 +13,7 @@
   </script>
 {{/if}}
 
-<form id="updateFeedbackForm"action="/guest/feedback/updateFeedback" method="post">
+<form id="updateFeedbackForm" action="/guest/feedback/updateFeedback" method="post">
 <div id="error-container">{{#if error}}{{error}}{{/if}}</div>
   <label for="roomType">
     Room Type:
@@ -36,11 +36,12 @@
       value="{{rating}}"
       oninput="updateRatingValue(this.value)"
     />
-    <output id="ratingOutput" for="rating">{{rating}}</output>
-  </label>
-
+    </label>
+    <output id="ratingOutput" >{{rating}}</output>
+  
+Comment:
   <label for="comment">
-    <p>Comment:</p>
+    
     <textarea
       id="comment"
       name="comment"

@@ -1,17 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Rooms</title>
-    <link rel="stylesheet" href="/styles.css">
-</head>
-<body>
+
 {{#if message}}
     <div class="alert">
         {{message}}
         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
     </div>
 {{/if}}
-<h1>Rooms</h1>
 <a href="/admin/room/create" class="create-button">Create New Room</a>
 
 {{#each rooms}}
@@ -34,8 +27,7 @@
         <a href="/admin/room/clean/{{this.roomNumber}}" class="clean-button">Clean</a>
     </div>
 {{/each}}
-</body>
-</html>
+
 
 <footer>
   <a href="/admin">back to admin Dashboard</a>
