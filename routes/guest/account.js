@@ -5,6 +5,7 @@ import {getAccountById,updateAccount} from "../../data/account.js";
 //import fs from 'fs/promises';
 import {createReceiptPDF} from "../../utils/createPdf.js";
 import fs from 'fs';
+import xss from 'xss';
 import session from 'express-session';
 
 /*const loadCountryCodes = async ()=>{
@@ -79,12 +80,17 @@ router.get("/", async (req, res) => {
       const firstNameErr = {empty:'First name  cannot be Empty', invalid:'First name is invalid'};
       const lastNameErr = {empty:'Last name cannot be Empty', invalid:'Last name is invalid'};
       const firstName = await helpers.validateString(firstNameInput,2,25,firstNameErr);
+      const sanitizeFirstName = xss(firstName);
       const lastName = await helpers.validateString(lastNameInput,2,25,lastNameErr);
+      const sanitizelastName = xss(lastName);
       const emailAddress = await helpers.validateEmail(email);
+      const sanitizeEmailCheck = xss(emailAddress);
       const phonePrefixVal = await helpers.validatePhonePrefix(phonePrefix);
+      const sanitizePhonePrefixVal = xss(phonePrefixVal);
       const phoneNumber = await helpers.validatePhoneNumber(phone);
+      const sanitizePhoneNumber = xss(phoneNumber);
       const roleInput ="user";
-      const updateDetails = await updateAccount(accountUpdateID,firstName,lastName,emailAddress,phonePrefixVal,phoneNumber,roleInput);
+      const updateDetails = await updateAccount(accountUpdateID,sanitizeFirstName,sanitizelastName,sanitizeEmailCheck,sanitizePhonePrefixVal,sanitizePhoneNumber,roleInput);
       return res.render('./guest/guestAccount/editAccount',{title: "guest edit account page",account:updateDetails,
       successMessage:'Account updated successfully!'})
       //res.redirect('/account/view/${req.params.id}',{updateDetails});

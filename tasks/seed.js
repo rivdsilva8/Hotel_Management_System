@@ -4,6 +4,7 @@ import feedbackData from "../data/feedback.js";
 import * as roomData from "../data/room.js";
 import * as bookingData from "../data/booking.js";
 
+
 const db = await dbConnection();
 await db.dropDatabase();
 
@@ -233,6 +234,7 @@ try {
     8,
     "Great amenities and friendly service."
   );
+
 
   console.log("Done seeding feedbacks");
 

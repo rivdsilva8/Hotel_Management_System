@@ -7,6 +7,7 @@ import { feedbacks } from "../config/mongoCollections.js";
 import { ObjectId } from "mongodb";
 import * as help from "../helpers.js";
 
+
 const exportedMethods = {
   async create(guestId, roomType, guestName, rating, comment) {
     //validation
@@ -97,5 +98,9 @@ const exportedMethods = {
     return existingId != null;
   },
 };
+
+
+
+
 
 export default exportedMethods;

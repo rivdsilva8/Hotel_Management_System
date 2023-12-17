@@ -6,6 +6,7 @@ import bookingRoutes from "./booking.js";
 import feedbackRoutes from "./feedback.js";
 import galleryRoutes from "./gallery.js";
 import roomRoutes from "./room.js";
+import reportRoutes from './report.js'
 import CheckInRoutes from "./checkInForm.js";
 import CheckOutRoutes from "./checkOutForm.js";
 
