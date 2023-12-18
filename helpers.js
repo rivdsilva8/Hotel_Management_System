@@ -19,6 +19,33 @@ const __dirname = dirname(__filename);
 
 //sushmita helpers
 
+export const validateCardNumber = async (carrdNumber)=>{
+  return /^\d{16}$/.test(carrdNumber);
+}
+
+export const validateExpiryMonth = async(expiryMonth)=>{
+  return /^(0?[1-9]|1[012])$/.test(expiryMonth);
+}
+export const validateExpiryYear = async (expiryYear)=>{
+  const currentYear = new Date().getFullYear();
+  return /^\d{4}$/.test(expiryYear)&& expiryYear >= currentYear;
+}
+export const validateCVV = async (cvv)=>{
+  return /^\d{3,4}$/.test(cvv);
+}
+export const validateCardName = async(cardName)=>{
+  const trimmedName = cardName.trim();
+  const nameParts = trimmedName.split(' ');
+  if (nameParts.length !== 2) {
+    throw { code: 400, error: "Invalid Card Name" };
+  }
+  if(nameParts.every(part => /^[A-Za-z]+$/.test(part))){
+    return cardName
+  }else{
+    throw { code: 400, error: "Invalid Card Name" };
+  }
+}
+
 export const validatePhonePrefix = async (phonePrefix)=>{
 
 
