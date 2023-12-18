@@ -225,11 +225,6 @@ try {
 
   console.log("Done seeding feedbacks");
 
-  //Room photos first
-  await roomData.createPhotos("single", "https://firebasestorage.googleapis.com/v0/b/hotel-management-eceff.appspot.com/o/images%2Fsingle.jpg?alt=media&token=4b75d0d6-9179-4c7a-bad7-574cad70e1cb")
-
-  // //room seeding
-
   await bookingData.CreateBooking(
     "Alice",
     "Smith",

@@ -127,4 +127,38 @@ router.route("/deleteBooking/:id").delete(async (req, res) => {
     res.status(500).json({ success: false, message: "Error deleting booking" });
   }
 });
+
+router
+.route("/update-booking/:id")
+.get(async(req,res) => {
+  console.log("in routs???")
+  try{
+    const booking = await BookingFunctions.getBookingById(req.params.id);
+    return res.render('./Admin/adminBooking/updateBooking', {booking: booking});
+  }catch(e){
+    return res.status(404).render('error',{title:'Error',error: e});
+  }
+});
+
+router
+  .route("/update")
+  .post(async (req, res) => {
+    try {
+      const AddBookingData = req.body;
+      const newBooking = await BookingFunctions.UpdateBooking(
+        AddBookingData.bookingId,
+        AddBookingData.FirstNameInput,
+        AddBookingData.LastNameInput,
+        AddBookingData.EmailIdInput,
+        AddBookingData.ContactNumberInput,
+        AddBookingData.CheckinDateInput,
+        AddBookingData.CheckoutDateInput,
+      );
+      return res.redirect("/admin/booking/AdminShowAllBooking");
+    } catch (e) {
+      console.error(e); // Log the error
+      res.status(500).send('Error occurred: ' + e.message); // Send detailed error message
+    }
+});
+
 export default router;
