@@ -26,7 +26,10 @@ router
         AddBookingData.EmailIdInput,
         AddBookingData.ContactNumberInput,
         AddBookingData.CheckinDateInput,
-        AddBookingData.CheckoutDateInput
+        AddBookingData.CheckoutDateInput,
+        AddBookingData.roomNumber,
+        AddBookingData.roomType,
+        AddBookingData.roomPrice
       );
       req.session.insertBookingId = newBooking.insertedId;
       res.render("./guest/guestPayment/payment", {title: "Payment Page"});
@@ -90,7 +93,7 @@ router
         'Email':fetchBookingDataDetails.emailId,
         'Phone Number':fetchBookingDataDetails.contactNumber,
         'Booking Id':validatedBookingID,
-        'Booking Fees': "$300",
+        'Booking Fees': fetchBookingDataDetails.roomPrice,
         'Booking Date':fetchBookingDataDetails.BookingDate,
         'Check In-Date':fetchBookingDataDetails.CheckinDate,
         'Check Out-Date':fetchBookingDataDetails.CheckOutDate

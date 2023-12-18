@@ -20,13 +20,28 @@ router
       }
     });
 
+  router
+    .route('/booking/:roomNumber')
+    .post(async (req, res) => {
+        try {
+            const roomNumber = parseInt(req.params.roomNumber, 10);
+            const roomId = await room.roomNumberToId(roomNumber);
+            res.render('./guest/guestBooking/booking', { room: roomId, roomNumber: req.body.roomNumber, roomType: req.body.roomType, roomPrice: req.body.roomPrice});
+        } catch (e) {
+            res.status(500).render('error', {
+                title: 'Error',
+                errorMessage: e.message
+            });
+        }
+    })
+
 router
     .route('/booking/:roomNumber')
     .get(async (req, res) => {
         try {
             const roomNumber = parseInt(req.params.roomNumber, 10);
             const roomId = await room.roomNumberToId(roomNumber);
-            res.render('./guest/guestBooking/booking', { title:"Room booking",room: roomId });
+            res.render('./guest/guestBooking/booking', { room: roomId });
         } catch (e) {
             res.status(500).render('error', {
                 title: 'Error',
