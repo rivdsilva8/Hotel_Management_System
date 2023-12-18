@@ -1,34 +1,45 @@
-
-{{#if message}}
+<main>
+    {{#if message}}
     <div class="alert">
         {{message}}
         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
     </div>
-{{/if}}
+    {{/if}}
 
 
-{{#each rooms}}
-    <div class="feedback-card">
+    {{#each rooms}}
+    <div class="room-card">
         <h2>Room {{this.roomNumber}}</h2>
         <p>Type: {{this.roomType}}</p>
         <p>Price: ${{this.roomPrice}}</p>
         <p>Availability: {{#if this.availability}}Available{{else}}Not Available{{/if}}</p>
         <p>Description: {{this.roomDescription}}</p>
         {{#if this.roomPhotos}}
-            <div>
-                {{#each this.roomPhotos}}
-                    <img src="{{this}}" alt="Room Photo" class="room-photo">
-                {{/each}}
-            </div>
+        <div>
+            {{#each this.roomPhotos}}
+            <img src="{{this}}" alt="Room Photo" class="room-photo">
+            {{/each}}
+        </div>
         {{/if}}
-<!--        <p>cleanStatus: {{#if this.cleanStatus}}Clean{{else}}Dirty{{/if}}</p>-->
+        <p>cleanStatus: {{#if this.cleanStatus}}Clean{{else}}Dirty{{/if}}</p>
+        <form action="/guest/room/booking/{{this.roomNumber}}" method="POST" id="guest-room-form">
+        
+            <label for="roomNumber"></label>
+            <input id="roomNumber" name="roomNumber" value={{this.roomNumber}} type="hidden">
+
+            <label for="roomType"></label>
+            <input id="roomType" name="roomType" value={{this.roomType}} type="hidden">
+
+            <label for="roomPrice"></label>
+            <input id="roomPrice" name="roomPrice" value={{this.roomPrice}} type="hidden">
+
+            <button type="submit">Book</button>
+        </form>
         <a href="/guest/room/booking/{{this.roomNumber}}" class="booking-button">Book</a>
     </div>
-{{/each}}
-<div class="space-below">
+    {{/each}}
+</main>
 
-</div>
 <footer>
-
     <a href="/guest">back to guest Dashboard</a>
 </footer>

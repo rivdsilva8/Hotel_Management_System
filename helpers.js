@@ -599,6 +599,7 @@ export function validateRoomData(roomData) {
 
 
   const roomDescription = roomData.roomDescription;
+  console.log(roomData.roomDescription);
   if (typeof roomDescription !== 'string' || roomDescription.trim() === '') {
     throw new Error("Invalid room description: must be a non-empty string");
   }
