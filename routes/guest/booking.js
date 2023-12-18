@@ -8,7 +8,7 @@ import {createReceiptPDF} from "../../utils/createPdf.js";
 
 router.route("/").get(async (req, res) => {
   try {
-    res.render("./guest/guestBooking/booking", {
+    res.render("./guest/guestBooking/book", {
       title: "guest booking page",
     });
   } catch (e) {}
@@ -19,6 +19,7 @@ router
   .route("/book")
   .post(async (req, res) => {
     try {
+      console.log("came here")
       const AddBookingData = req.body;
       const newBooking = await CreateBooking(
         AddBookingData.FirstNameInput,
@@ -31,6 +32,7 @@ router
         AddBookingData.roomType,
         AddBookingData.roomPrice
       );
+      console.log(newBooking)
       req.session.insertBookingId = newBooking.insertedId;
       res.render("./guest/guestPayment/payment", {title: "Payment Page"});
     } catch (e) {

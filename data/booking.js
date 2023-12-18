@@ -20,6 +20,17 @@ export const CreateBooking = async (
     roomPrice
 ) => {
     const AddBookingsDetails = await bookings();
+    console.log(
+        firstName,
+    lastName,
+    emailId,
+    contactNumber,
+    CheckinDate,
+    CheckOutDate,
+    roomNumber,
+    roomType,
+    roomPrice
+    );
     if (!firstName || !lastName || !emailId || !contactNumber || !CheckinDate || !CheckOutDate) throw `Error: Please fill all the sections`;
 
     const checkInDate = new Date(CheckinDate);

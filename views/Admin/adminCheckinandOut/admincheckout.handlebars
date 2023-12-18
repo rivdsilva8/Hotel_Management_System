@@ -1,66 +1,64 @@
 <p style="margin-left: 30px;">Search Booking By Email:</p>
 
-<form>
-
-    
+<form id="searchForm">
     <p>Enter First Name</p>
-    <input type="text" name ="FirstName" id ="FirstName">
+    <input type="text" name="FirstName" id="FirstName">
     <p>Enter Email:</p>
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <input type="text" name="email_search" id="email_search">
-    <button id="SearchByEmail" onclick="searche()">Search</button>
+    <button type="button" id="SearchByEmail">Search</button>
     <div class="results" id="rdiv"></div>
+</form>
 
-    <script>
-        jQuery(document).ready(function(){
-            window.searche = function() {
-            let d = document.getElementById("email_search")
-            let rdiv = document.getElementById('rdiv')
-            let u = "http://localhost:3000/admin/checkout/getbookingbyemail/" + d.value
+<script>
+    jQuery(document).ready(function(){
+        $('#SearchByEmail').click(function() {
+            let email = $('#email_search').val();
+            let rdiv = $('#rdiv');
+            let url = "/admin/checkout/getbookingbyemail/" + email;
             $.ajax({
-                url: u,
+                url: url,
                 type: "GET",
-                data: "json",
+                dataType: "json",
                 success: function (res) {
+                    rdiv.empty();
                     if (res.length === 0){
-                        rdiv.textContent = 'No Booking with that email ${d.value}'
+                        rdiv.text(`No Booking with that email ${email}`);
+                    } else {
+                        const bookingHtml = `
+                            <p>First Name: ${res.firstName}</p>
+                            <p>Last Name: ${res.lastName}</p>
+                            <p>Email Id: ${res.emailId}</p>
+                            <p>Phone Number: ${res.contactNumber}</p>
+                            <p>Checkin Date: ${res.CheckinDate}</p>
+                            <p>Checkout Date: ${res.CheckOutDate}</p>
+                            <p>Booking Status: ${res.BookingStatus}</p>
+                            ${res.CheckedIn ? '<button onclick="checkOute(\'' + res.emailId + '\')">Check-out</button>' : ''}
+                        `;
+                        rdiv.html(bookingHtml);
                     }
-                    const booking = document.createElement("div");
-                    booking.innerHTML =
-                        `
-                        <p><label for="FirstName">First Name: </label>${res.firstName}</p>
-                        <p><label for="LastName">Last Name: </label>${res.lastName}</p>
-                        <p><label for="EmailId">Email Id: </label>${res.emailId}</p>
-                        <p><label for="Phonenumber">Phone Number: </label>${res.contactNumber}</p>
-                        <p><label for="Checkindate">Checkin Date: </label>${res.CheckinDate}</p>
-                        <p><label for="CheckoutDate">Checkout Date: </label>${res.CheckOutDate}</p>
-                        <p><label for="Booking Status">Booking Status: </label>${res.BookingStatus}</p>
-                        ${res.CheckedIn ? '<button onclick="checkOute(\'' + res.emailId + '\')">Check-out</button>' : ''}
-
-                        `
-                    rdiv.appendChild(booking)
+                },
+                error: function(xhr, status, error) {
+                    rdiv.text(`Error: ${error}`);
                 }
-             })
-            }
-        })
+            });
+        });
 
         window.checkOute = function(emailId){
-            let u = "http://localhost:3000/admin/checkOut/putcheckOute/" + emailId;
-            let rdiv = document.getElementById('rdiv')
+            let url = "/admin/checkOut/putcheckOute/" + emailId;
             $.ajax({
-                url: u,
+                url: url,
                 type: "POST",
                 dataType: "json",
                 success: function (updatedRes) {
-                    console.log("Check-Out successful");
-                    console.log(updatedRes);
+                    console.log("Check-Out successful", updatedRes);
                 },
+                error: function(xhr, status, error) {
+                    console.error("Error in check-out: ", error);
+                }
             });
-        }
-        
-    </script>
-</form>
-
+        };
+    });
+</script>
 
 <footer>
     <a href="/admin">back to Admin Dashboard</a>
