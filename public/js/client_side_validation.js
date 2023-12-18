@@ -8,9 +8,9 @@ document.addEventListener("DOMContentLoaded", function(){
     const adminCreateForm = document.querySelector('#adminCreateForm');
     const createFeedbackForm = document.querySelector('form[action="/guest/feedback/createFeedback"]');
     const updateFeedbackForm = document.querySelector('form[action="/guest/feedback/updateFeedback"]');
-    const paymentForm = document.querySelector('form[action="/guest/booking/payment"]');
+    const paymentForm = document.querySelector('form[action ^="/guest/booking/payment"]');
     //Booking ClientSide
-    const BookingForm = document.querySelector('form[action="/guest/booking/book"]');
+    const BookingForm = document.getElementById('BookingForm');
 
     if(paymentForm) {
         paymentForm.addEventListener('submit', function(event){
@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function(){
             const expiryMonth = document.getElementById('expiryMonth').value.trim();
             const expiryYear = document.getElementById('expiryYear').value.trim();
             const cvv = document.getElementById('cvv').value.trim();
+            let errorMessage =[];
 
             if (!/^\d{16}$/.test(cardNumber)) {
                 errorMessage.push('Card number must have 16 digits.');
@@ -35,18 +36,26 @@ document.addEventListener("DOMContentLoaded", function(){
             }
             const nameParts = cardName.split(' ');
             if (nameParts.length !== 2 || !nameParts.every(part => /^[A-Za-z]+$/.test(part))) {
-                errorMessage.push('Name on card must include only first and last name.');
+                errorMessage.push('Name on card must include first and last name ex -(Jack Wilson)');
             }
 
             if (errorMessage.length > 0) {
                 event.preventDefault();
                 errorDiv.innerHTML = errorMessage.join('<br>');
                 errorDiv.style.display = 'block';
-            } else {
-                errorDiv.style.display = 'none';
+                return;
+            } 
+            const paymentConfirm = confirm("Do You want to proceed with the payment?");
+            if(!paymentConfirm){
+                event.preventDefault();
             }
 
         });
+    }
+
+    const downloadReportSuccess = document.getElementById('downloadReport');
+    if(downloadReportSuccess && !downloadReportSuccess.disabled){
+        alert(`Your payment was successful! You can download Booking details for your reference`);
     }
 
     if(loginForm){
@@ -467,8 +476,17 @@ document.addEventListener("DOMContentLoaded", function(){
         const lastName = document.getElementById('LastNameInput').value.trim();
         const phone = document.getElementById('phone').value.trim();
         const CheckinDate = document.getElementById('CheckinDateInput').value.trim();
-        const CheckoutDate = document.getElementById('CheckoutDateInput').value.trim();
+        const CheckoutDate = document.getElementById('CheckoutDateInput').value.trim(); 
+        let checkInDateObj;
+        let  checkOutDateObj;
 
+        if(!email || !firstName || !lastName || !phone || !CheckinDate || !CheckoutDate){
+            errorMessage.push('All field values needs to be passed');
+        }
+        if(CheckinDate && CheckoutDate ){
+            checkInDateObj = new Date(CheckinDate).toISOString().slice(0, 10);
+            checkOutDateObj = new Date(CheckoutDate).toISOString().slice(0, 10);
+        }
 
         if(!firstName || firstName.length <2 || firstName.length>25 || !/^[A-Za-z]+$/.test(firstName)){
             errorMessage.push('First Name must be between 2 to 25 characters and must contain only letters.');
@@ -544,6 +562,23 @@ document.addEventListener("DOMContentLoaded", function(){
         if(Year_Valid < 1900 && Year_Valid > 9999){
             errorMessage.push(`${CheckinDate} is not valid since the year is not valid`);
         }
+        //check date 
+        if(checkInDateObj && checkOutDateObj){
+            let checkInDateValue = new Date(CheckinDate + 'T00:00:00Z');
+            let checkOutDateValue = new Date(CheckoutDate + 'T00:00:00Z');
+            let currentDate = new Date();
+            currentDate.setHours(0,0,0,0);//reset for hrs,min,sec and mls
+            let currentDateString = currentDate.toISOString().slice(0, 10);
+            let checkInDateString = checkInDateValue.toISOString().slice(0, 10);
+            let checkOutDateString = checkOutDateValue.toISOString().slice(0, 10);
+            if(checkInDateString < currentDateString){
+                errorMessage.push(`Check in date must not be in the past`);
+            }else if(checkInDateString === checkOutDateString){
+                errorMessage.push(`Check in date and Check out date cannot be same`);
+            }else if(checkOutDateValue < checkInDateValue){
+                errorMessage.push(`Check in date must be before the Check out date`);
+            }
+        }
 
         //Date validation for checkout date
         //Date Validation MM/DD/YYYY
@@ -592,8 +627,8 @@ document.addEventListener("DOMContentLoaded", function(){
 
 
 
-        // Date should be greater then current date
-        let New_DateArray = CheckinDate.split("-");
+        //Date should be greater then current date
+       /* let New_DateArray = CheckinDate.split("-");
         let Next_month_Valid = parseInt(New_DateArray[1]);
         if (Next_month_Valid >= 11) {
             Next_month_Valid -= 1; // decrement November and December
@@ -604,7 +639,7 @@ document.addEventListener("DOMContentLoaded", function(){
         let CurrentDate = new Date();
         if(Input_Date < CurrentDate){
             errorMessage.push('only future events can be created');
-        }
+        }*/
 
         if(errorMessage.length>0){
             event.preventDefault();
