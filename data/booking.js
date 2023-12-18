@@ -6,7 +6,7 @@ import { ObjectId } from "mongodb";
 import { bookings } from "../config/mongoCollections.js";
 import * as helpers from '../helpers.js'
 //import * as helpers from '../helpers.js'
-import { BookFirstName, BookLastName, BookEmailId, BookContactNumber } from "../helpers.js";
+import { BookFirstName, BookLastName, BookEmailId, validatePhoneNumber } from "../helpers.js";
 
 export const CreateBooking = async (
     firstName,
@@ -35,7 +35,7 @@ export const CreateBooking = async (
     firstName = await BookFirstName(firstName);
     lastName = await BookLastName(lastName);
     emailId = await BookEmailId(emailId);
-    contactNumber = await BookContactNumber(contactNumber);
+    contactNumber = await validatePhoneNumber(contactNumber);
 
     firstName = firstName.trim();
     lastName = lastName.trim();
