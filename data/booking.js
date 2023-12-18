@@ -4,6 +4,7 @@
 // READ: name, email, room number
 import { ObjectId } from "mongodb";
 import { bookings } from "../config/mongoCollections.js";
+import * as helpers from '../helpers.js'
 //import * as helpers from '../helpers.js'
 import { BookFirstName, BookLastName, BookEmailId, BookContactNumber} from "../helpers.js";
 
@@ -56,7 +57,7 @@ export const CreateBooking = async(
         };
         // const GetDataById = AddBooking.insertedId.toString();
         // const CheckBookingById = await GetBooking(GetDataById);
-        // return CheckBookingById; 
+         return AddBooking; 
 };
 
 export const GetBooking = async(firstName, emailId) => {
@@ -129,4 +130,36 @@ export const UpdateBooking = async(
         throw `Update failed could not update data`;
     }
     return UpdateBookingData;
+}
+
+
+export const cardPaymnetOnSuccess = async(bookingID, personName)=>{
+    let getBookindDatas = await bookings();
+    const [firstName, lastName] = personName.split(' ');
+    const bookingIDDetails = await helpers.checkId(bookingID,"Booking Id");
+    const updateResult = await getBookindDatas.updateOne({
+        _id: new ObjectId(bookingIDDetails)
+    },{
+        $set:{paymentSuccess:true}
+    }
+    );
+    if(updateResult.matchedCount === 0){
+        throw `No Matcing booking found or updateFailed`;
+    }
+    return updateResult;
+}
+
+export const fetchBookindData = async (bookingID) =>{
+    try{
+    let getBookindDatas = await bookings();
+    const objectBookingID = await helpers.checkId(bookingID,"Booking Id");
+    const fetchBookingRecords = await getBookindDatas.findOne({_id:new ObjectId(objectBookingID)});
+    if(!fetchBookingRecords){
+        throw `No booking found for the given Id: ${objectBookingID}`;
+    }
+    return fetchBookingRecords;
+    }catch(e){
+        throw e;
+    }
+
 }

@@ -8,9 +8,49 @@ document.addEventListener("DOMContentLoaded", function(){
     const adminCreateForm = document.querySelector('#adminCreateForm');
     const createFeedbackForm = document.querySelector('form[action="/guest/feedback/createFeedback"]');
     const updateFeedbackForm = document.querySelector('form[action="/guest/feedback/updateFeedback"]');
+    const paymentForm = document.querySelector('form[action="/guest/booking/payment"]');
     //Booking ClientSide
     const BookingForm = document.querySelector('form[action="/guest/booking/book"]');
 
+    //
+    if (paymentForm) {
+        paymentForm.addEventListener('submit', function(event) {
+            let errorMessage = [];
+            
+            const cardNumber = document.getElementById('cardNumber').value.trim();
+            const cardName = document.getElementById('cardName').value.trim();
+            const expiryMonth = document.getElementById('expiryMonth').value.trim();
+            const expiryYear = document.getElementById('expiryYear').value.trim();
+            const cvv = document.getElementById('cvv').value.trim();
+
+            if (!/^\d{16}$/.test(cardNumber)) {
+                errorMessage.push('Card number must have 16 digits.');
+            }
+            if (!/^(0?[1-9]|1[012])$/.test(expiryMonth)) {
+                errorMessage.push('Expiry month must be between 01 and 12.');
+            }
+            const currentYear = new Date().getFullYear();
+            if (!/^\d{4}$/.test(expiryYear) || expiryYear < currentYear) {
+                errorMessage.push('Expiry year must be a 4-digit number greater than or equal to the current year.');
+            }
+            if (!/^\d{3,4}$/.test(cvv)) {
+                errorMessage.push('CVV must be a 3 or 4 digit number.');
+            }
+            const nameParts = cardName.split(' ');
+            if (nameParts.length !== 2 || !nameParts.every(part => /^[A-Za-z]+$/.test(part))) {
+                errorMessage.push('Name on card must include only first and last name.');
+            }
+
+            if (errorMessage.length > 0) {
+                event.preventDefault();
+                errorDiv.innerHTML = errorMessage.join('<br>');
+                errorDiv.style.display = 'block';
+            } else {
+                errorDiv.style.display = 'none';
+            }
+        });
+    }
+    //
 
     if(loginForm){
         loginForm.addEventListener('submit', function(event){
