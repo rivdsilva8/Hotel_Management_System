@@ -1,5 +1,64 @@
+<p style="margin-left: 30px;">Search Booking By Email:</p>
 
+<form id="searchForm">
+    <p>Enter First Name</p>
+    <input type="text" name="FirstName" id="FirstName">
+    <p>Enter Email:</p>
+    <input type="text" name="email_search" id="email_search">
+    <button type="button" id="SearchByEmail">Search</button>
+    <div class="results" id="rdiv"></div>
+</form>
 
+<script>
+    jQuery(document).ready(function(){
+        $('#SearchByEmail').click(function() {
+            let email = $('#email_search').val();
+            let rdiv = $('#rdiv');
+            let url = "/staff/checkout/getbookingbyemail/" + email;
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "json",
+                success: function (res) {
+                    rdiv.empty();
+                    if (res.length === 0){
+                        rdiv.text(`No Booking with that email ${email}`);
+                    } else {
+                        const bookingHtml = `
+                            <p>First Name: ${res.firstName}</p>
+                            <p>Last Name: ${res.lastName}</p>
+                            <p>Email Id: ${res.emailId}</p>
+                            <p>Phone Number: ${res.contactNumber}</p>
+                            <p>Checkin Date: ${res.CheckinDate}</p>
+                            <p>Checkout Date: ${res.CheckOutDate}</p>
+                            <p>Booking Status: ${res.BookingStatus}</p>
+                            ${res.CheckedIn ? '<button onclick="checkOute(\'' + res.emailId + '\')">Check-out</button>' : ''}
+                        `;
+                        rdiv.html(bookingHtml);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    rdiv.text(`Error: ${error}`);
+                }
+            });
+        });
+
+        window.checkOute = function(emailId){
+            let url = "/staff/checkOut/putcheckOute/" + emailId;
+            $.ajax({
+                url: url,
+                type: "POST",
+                dataType: "json",
+                success: function (updatedRes) {
+                    console.log("Check-Out successful", updatedRes);
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error in check-out: ", error);
+                }
+            });
+        };
+    });
+</script>
 <footer>
 
   <a href="/staff">back to Staff Dashboard</a>

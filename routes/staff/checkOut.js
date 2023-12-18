@@ -1,18 +1,21 @@
 import { Router } from "express";
+import * as h from '../../data/checkedinandout.js'
 const router = Router();
 
-router
-    .route('/')
-    .get(async (req, res) => {
-        try {
-            res.render("./staff/checkOut", {
-              title: "staff checkOut page",
-              userId:req.session.user.id
-            });
-          } catch (e) {
-            return res.status(500).render('guest/errorPage',{error:e.message});
-          }
+router.route('/').get((req,res)=>{
+    return res.render('./staff/checkOut',{title:"Check out Page"});
+})
 
-    })
+router.route('/getbookingbyemail/:email').get(async (req,res)=>{
+    let b = await h.getBookingbyEmail(req.params.email)
+    if (b === "-1") return res.json({})
+    return res.json(b)
+})
+
+router.route('/putCheckOute/:emailId').post(async (req,res) =>{
+    let b = await h.putCheckOute(req.params.emailId)
+    if (b === "-1") return res.json({})
+    return res.json(b)
+})
 
 export default router

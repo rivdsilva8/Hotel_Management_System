@@ -1,7 +1,91 @@
+<main>
+    <p style="margin-left: 30px;">Search Booking:</p>
+    
+    <form id="searchForm">
+        <label for="FirstName">Enter First Name:</label>
+        <input type="text" name="FirstName" id="FirstName">
+        <label for="lastName">Enter Email:</label>
+        <input type="text" name="email_search" id="email_search">
+        <button type="button" id="SearchByEmail">Search</button>
+        <div class="results" id="rdiv"></div>
+    </form>
+    <script>
+        jQuery(document).ready(function(){
+            $('#SearchByEmail').click(function(){
+                var email = $('#email_search').val();
+                var rdiv = $('#rdiv');
+                var url = "/staff/checkin/getbookingbyemail/" + email;
 
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (res) {
+                        rdiv.empty(); 
+                        if (res.length === 0){
+                            rdiv.text(`No Booking with that email ${email}`);
+                        } else {
+                            const bookingHtml = `
+                                <p>First Name: ${res.firstName}</p>
+                                <p>Last Name: ${res.lastName}</p>
+                                <p>Email Id: ${res.emailId}</p>
+                                <p>Phone Number: ${res.contactNumber}</p>
+                                <p>Checkin Date: ${res.CheckinDate}</p>
+                                <p>Checkout Date: ${res.CheckOutDate}</p>
+                                <p>Booking Status: ${res.BookingStatus}</p>
+                            `;
+                            rdiv.html(bookingHtml);
+                            if (!res.BookingStatus) {
+                                $('<button/>', {
+                                    text: 'Make Booking',
+                                    click: function() { makeBookinge(res.emailId); }
+                                }).appendTo(rdiv);
+                            } else {
+                                $('<button/>', {
+                                    text: 'Check-In',
+                                    click: function() { checkIne(res.emailId); }
+                                }).appendTo(rdiv);
+                            }
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        rdiv.text(`Error: ${error}`);
+                    }
+                });
+            });
 
+            function makeBookinge(emailId){
+                let url = "/staff/checkin/makeBooking/" + emailId;
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    dataType: "json",
+                    success: function (updatedRes) {
+                        alert('Booking Confirmation Successful');
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Booking Confirmation Failed');
+                    }
+                });
+            }
 
+            function checkIne(emailId){
+                let url = "/staff/checkin/putcheckIne/" + emailId;
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    dataType: "json",
+                    success: function (updatedRes) {
+                        alert('Checkin Successful');
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Checkin Failed');
+                    }
+                });
+            }
+        });
+    </script>
+</main>
 <footer>
-
   <a href="/staff">back to Staff HomePage</a>
 </footer>
