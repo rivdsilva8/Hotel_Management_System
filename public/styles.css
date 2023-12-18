@@ -1,6 +1,10 @@
-body {
-background-color: rgb(240, 240, 240);
+#feedbacks ul{
+  padding-bottom: 20px;
 }
+.space-below{
+  margin-bottom: 5rem;
+}
+
 .feedback-card {
   background-color: #fff;
   border: 1px solid #ccc;
@@ -147,6 +151,7 @@ footer {
   color: #fff;
   text-align: center;
   padding: 5px;
+  padding: 10px 0; 
 }
 footer a {
   float: left;

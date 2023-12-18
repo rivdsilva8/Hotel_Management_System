@@ -8,7 +8,7 @@
 
 
 {{#each rooms}}
-    <div class="room-card">
+    <div class="feedback-card">
         <h2>Room {{this.roomNumber}}</h2>
         <p>Type: {{this.roomType}}</p>
         <p>Price: ${{this.roomPrice}}</p>
@@ -25,7 +25,9 @@
         <a href="/guest/room/booking/{{this.roomNumber}}" class="booking-button">Book</a>
     </div>
 {{/each}}
+<div class="space-below">
 
+</div>
 <footer>
 
     <a href="/guest">back to guest Dashboard</a>
