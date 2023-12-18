@@ -1,4 +1,9 @@
 
+<!--<head>-->
+<!--    <title>Admin room</title>-->
+<!--    <link rel="stylesheet" href="/styles.css">-->
+<!--</head>-->
+
 {{#if message}}
     <div class="alert">
         {{message}}
@@ -12,7 +17,6 @@
         <li><a href="/admin/room/upload" class="upload-button">Upload photo for each type of room</a></li>
     </ul>
 </nav>
-
 
 
 {{#each rooms}}
@@ -33,6 +37,7 @@
         <a href="/admin/room/delete?roomNumber={{this.roomNumber}}" class="delete-button">Delete</a>
         <a href="/admin/room/update/{{this.roomNumber}}" class="update-button">Update</a>
         <a href="/admin/room/clean/{{this.roomNumber}}" class="clean-button">Clean</a>
+        <a href="/admin/room/dirty/{{this.roomNumber}}" class="dirty-button">Dirty</a>
     </div>
 {{/each}}
 <div class="space-below">
