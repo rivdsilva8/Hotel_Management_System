@@ -51,6 +51,7 @@ export const CreateBooking = async (
     taxPrice = parseFloat(taxPrice.toFixed(2));
     serviceFee = parseFloat(serviceFee.toFixed(2));
     let finalPrice = totalPrice + taxPrice + serviceFee;
+    finalPrice = parseFloat(finalPrice.toFixed(2));
 
     firstName = await BookFirstName(firstName);
     lastName = await BookLastName(lastName);
