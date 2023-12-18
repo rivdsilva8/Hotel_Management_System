@@ -3,6 +3,7 @@ import * as accountData from "../data/users.js";
 import feedbackData from "../data/feedback.js";
 import * as roomData from "../data/room.js";
 import * as bookingData from "../data/booking.js";
+import { saveImageDetailsToMongoDB } from "../data/gallery.js";
 
 
 const db = await dbConnection();
@@ -224,116 +225,116 @@ try {
 
   console.log("Done seeding feedbacks");
 
-  //room seeding
+  // //room seeding
 
-  await roomData.createRoom(
-    101,
-    "single",
-    60,
-    true,
-    [],
-    "Comfy single room",
-    true
-  );
-  await roomData.createRoom(
-    102,
-    "single",
-    65,
-    true,
-    [],
-    "Cozy single room with a view",
-    true
-  );
-  await roomData.createRoom(
-    103,
-    "single",
-    70,
-    false,
-    [],
-    "Spacious single room",
-    false
-  );
-  await roomData.createRoom(
-    104,
-    "single",
-    75,
-    true,
-    [],
-    "Modern single room",
-    true
-  );
-  await roomData.createRoom(
-    201,
-    "double",
-    80,
-    true,
-    [],
-    "Elegant double room",
-    true
-  );
-  await roomData.createRoom(
-    202,
-    "double",
-    85,
-    false,
-    [],
-    "Classic double room",
-    false
-  );
-  await roomData.createRoom(
-    203,
-    "double",
-    90,
-    true,
-    [],
-    "Double room with extra comfort",
-    true
-  );
-  await roomData.createRoom(
-    204,
-    "double",
-    95,
-    true,
-    [],
-    "Stylish double room",
-    true
-  );
-  await roomData.createRoom(
-    301,
-    "suite",
-    120,
-    true,
-    [],
-    "Luxurious suite",
-    true
-  );
-  await roomData.createRoom(
-    302,
-    "suite",
-    130,
-    false,
-    [],
-    "Executive suite with amenities",
-    false
-  );
-  await roomData.createRoom(
-    303,
-    "suite",
-    140,
-    true,
-    [],
-    "Royal suite experience",
-    true
-  );
-  await roomData.createRoom(
-    304,
-    "suite",
-    150,
-    true,
-    [],
-    "Presidential suite",
-    true
-  );
+  // await roomData.createRoom(
+  //   101,
+  //   "single",
+  //   60,
+  //   true,
+  //   [],
+  //   "Comfy single room",
+  //   true
+  // );
+  // await roomData.createRoom(
+  //   102,
+  //   "single",
+  //   65,
+  //   true,
+  //   [],
+  //   "Cozy single room with a view",
+  //   true
+  // );
+  // await roomData.createRoom(
+  //   103,
+  //   "single",
+  //   70,
+  //   false,
+  //   [],
+  //   "Spacious single room",
+  //   false
+  // );
+  // await roomData.createRoom(
+  //   104,
+  //   "single",
+  //   75,
+  //   true,
+  //   [],
+  //   "Modern single room",
+  //   true
+  // );
+  // await roomData.createRoom(
+  //   201,
+  //   "double",
+  //   80,
+  //   true,
+  //   [],
+  //   "Elegant double room",
+  //   true
+  // );
+  // await roomData.createRoom(
+  //   202,
+  //   "double",
+  //   85,
+  //   false,
+  //   [],
+  //   "Classic double room",
+  //   false
+  // );
+  // await roomData.createRoom(
+  //   203,
+  //   "double",
+  //   90,
+  //   true,
+  //   [],
+  //   "Double room with extra comfort",
+  //   true
+  // );
+  // await roomData.createRoom(
+  //   204,
+  //   "double",
+  //   95,
+  //   true,
+  //   [],
+  //   "Stylish double room",
+  //   true
+  // );
+  // await roomData.createRoom(
+  //   301,
+  //   "suite",
+  //   120,
+  //   true,
+  //   [],
+  //   "Luxurious suite",
+  //   true
+  // );
+  // await roomData.createRoom(
+  //   302,
+  //   "suite",
+  //   130,
+  //   false,
+  //   [],
+  //   "Executive suite with amenities",
+  //   false
+  // );
+  // await roomData.createRoom(
+  //   303,
+  //   "suite",
+  //   140,
+  //   true,
+  //   [],
+  //   "Royal suite experience",
+  //   true
+  // );
+  // await roomData.createRoom(
+  //   304,
+  //   "suite",
+  //   150,
+  //   true,
+  //   [],
+  //   "Presidential suite",
+  //   true
+  // );
 
   await bookingData.CreateBooking(
     "Alice",
@@ -377,6 +378,49 @@ try {
     "12/15/2023",
     "12/17/2023"
   );
+
+  await saveImageDetailsToMongoDB({
+    filename: 'hotel1',
+    url: 'https://firebasestorage.googleapis.com/v0/b/hotel-management-eceff.appspot.com/o/images%2F1.PNG?alt=media&token=ff4bb65a-2c8e-424b-b555-eee16ae79eeb'
+})
+
+await saveImageDetailsToMongoDB({
+  filename: 'hotel2',
+  url: 'https://firebasestorage.googleapis.com/v0/b/hotel-management-eceff.appspot.com/o/images%2F2.PNG?alt=media&token=b03bbd4a-7f9e-4064-9bd9-c495a3bfa89e'
+})
+
+await saveImageDetailsToMongoDB({
+  filename: 'hotel3',
+  url: 'https://firebasestorage.googleapis.com/v0/b/hotel-management-eceff.appspot.com/o/images%2F3.PNG?alt=media&token=405ce41e-05e4-4a58-bd98-53b7038cf4b0'
+})
+await saveImageDetailsToMongoDB({
+  filename: 'hotel4',
+  url: 'https://firebasestorage.googleapis.com/v0/b/hotel-management-eceff.appspot.com/o/images%2F3.PNG?alt=media&token=405ce41e-05e4-4a58-bd98-53b7038cf4b0'
+})
+await saveImageDetailsToMongoDB({
+  filename: 'hotel5',
+  url: 'https://firebasestorage.googleapis.com/v0/b/hotel-management-eceff.appspot.com/o/images%2F5.PNG?alt=media&token=8c82fbc5-9bb2-47d0-a325-d0d129cc307a'
+})
+await saveImageDetailsToMongoDB({
+  filename: 'hotel6',
+  url: 'https://firebasestorage.googleapis.com/v0/b/hotel-management-eceff.appspot.com/o/images%2F6.PNG?alt=media&token=d072fad6-94c4-41f9-b369-0fd02548021a'
+})
+await saveImageDetailsToMongoDB({
+  filename: 'hotel7',
+  url: 'https://firebasestorage.googleapis.com/v0/b/hotel-management-eceff.appspot.com/o/images%2F7.PNG?alt=media&token=094df96c-a936-48c4-8566-d0b212bb8a27'
+})
+await saveImageDetailsToMongoDB({
+  filename: 'hotel8',
+  url: 'https://firebasestorage.googleapis.com/v0/b/hotel-management-eceff.appspot.com/o/images%2F8.PNG?alt=media&token=c939bf4b-db43-4c1a-a2e0-1b248980d6f6'
+})
+await saveImageDetailsToMongoDB({
+  filename: 'hotel9',
+  url: 'https://firebasestorage.googleapis.com/v0/b/hotel-management-eceff.appspot.com/o/images%2F9.PNG?alt=media&token=90bbcfc0-8144-433a-872e-628a0a35dce5'
+})
+await saveImageDetailsToMongoDB({
+  filename: 'hotel10',
+  url: 'https://firebasestorage.googleapis.com/v0/b/hotel-management-eceff.appspot.com/o/images%2F10.PNG?alt=media&token=80da958a-f091-4891-b927-478d9a0663a9'
+})
   console.log("Done seeding rooms");
 
   console.log("Done seeding database");

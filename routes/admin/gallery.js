@@ -3,7 +3,7 @@
 // routes/gallery.js
 import express from 'express';
 import multer from 'multer';
-import { uploadImageToFirebase, deleteImageFromFirebase, saveImageDetailsToMongoDB, GetAllFromMongoDB } from '../../data/gallery.js';
+import { uploadImageToFirebase, deleteImageFromFirebase, saveImageDetailsToMongoDB, GetAllFromMongoDB, deleteImageFromMongoDB} from '../../data/gallery.js';
 
 const router = express.Router();
 const upload = multer();
@@ -30,18 +30,22 @@ router.post('/upload', upload.single('image'), async (req, res) => {
         url: downloadURL
     }
     const mongoId = await saveImageDetailsToMongoDB(imageData);
-    res.json({ message: "Image uploaded successfully", url: downloadURL, mongoId: mongoId,  });
+    res.json({ message: "Image uploaded successfully", url: downloadURL, mongoId: mongoId, fileName: req.file.originalname });
   } catch (error) {
     res.status(500).send(error.message);
   }
 });
 
-router.delete('/delete/:fileName', async (req, res) => {
+router.post('/delete', async (req, res) => {
   try {
-    await deleteImageFromFirebase(req.params.fileName);
-    res.json({ message: "Image deleted successfully" });
+    const fileName = req.body.fileName;
+    let deletedData = await deleteImageFromMongoDB(fileName);
+    if (!deletedData.deleted) {
+      return res.status(404).send(deletedData);
+    }
+      res.send({ message: 'Image deleted successfully' });
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).send({ message: error.message });
   }
 });
 
