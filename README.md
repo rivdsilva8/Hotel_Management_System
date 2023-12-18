@@ -1,13 +1,21 @@
-To run the code:
+## Running the Application
 
-first install all the node modules:
-run "npm i"
+```bash
+# Install all Node Dependencies
+npm i
+```
 
-To add Dummy Data's in the database:
-First run "npm run seed"
+```bash
+# To add data in mongodb
+npm run seed
+```
+```bash
+# To run the application
+npm start
+```
 
-Now to start the project/ application:
-run "npm start"
+Now if you didn't change any of the configurations mentioned above or the Port, the applications should be running on:
+- application will run on : `http://localhost:3000`
 
 
 Hotel Management Website
