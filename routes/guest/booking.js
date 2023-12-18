@@ -24,7 +24,7 @@ router
         AddBookingData.FirstNameInput,
         AddBookingData.LastNameInput,
         AddBookingData.EmailIdInput,
-        AddBookingData.ContactNumberInput,
+        AddBookingData.phone,
         AddBookingData.CheckinDateInput,
         AddBookingData.CheckoutDateInput,
         AddBookingData.roomNumber,
@@ -35,7 +35,8 @@ router
       res.render("./guest/guestPayment/payment", {title: "Payment Page"});
     } catch (e) {
       console.error(e); // Log the error
-      res.status(500).send('Error occurred: ' + e.message); // Send detailed error message
+      return res.status(500).render('./guest/guestPayment/payment',{title: "Payment Page",error:e});
+      //res.status(500).send('Error occurred: ' + e.message); // Send detailed error message
     }
 });
 
@@ -45,6 +46,7 @@ router.route("/payment")
   try{
     
     const bookingId = req.session.insertBookingId;
+    console.log(bookingId);
     const validateBookingId = await helpers.checkId(bookingId,"booking id");
     const {cardNumber,cardName, expiryMonth, expiryYear,cvv } = req.body;
     const validatedCardNumber = await helpers.validateCardNumber(cardNumber);
@@ -58,13 +60,15 @@ router.route("/payment")
     const validateCVV = await helpers.validateCVV(cvv);
     const sanitizevalidateCVV= xss(validateCVV);
     const payment = await cardPaymnetOnSuccess(validateBookingId, sanitizeName);
+    console.log(payment);
     if(payment.acknowledged === true){
       res.render("./guest/guestPayment/payment", {title: "Payment Page", paymentSuccess: true});
     }
 
   }catch(e){
-    console.log(e);
-    res.status(500).send('Error occurred: ' + e.message); 
+    console.log(e.message);
+    //res.status(500).send('Error occurred: ' + e.message); 
+    return res.status(500).render('./guest/guestPayment/payment',{title: "Payment Page",error:e});
   }
 });
 
