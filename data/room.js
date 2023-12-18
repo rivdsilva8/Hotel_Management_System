@@ -221,7 +221,6 @@ export const createPhotos = async (roomType, url) => {
     const result = await photoCollection.insertOne(newPhoto);
 
     if (result.acknowledged && result.insertedId) {
-        console.log(`New photo added with ID: ${result.insertedId}`);
         return await photoCollection.findOne({ _id: result.insertedId });
     } else {
         throw new Error('Failed to insert new photo');
