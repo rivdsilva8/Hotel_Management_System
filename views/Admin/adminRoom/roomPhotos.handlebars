@@ -17,6 +17,11 @@
     </div>
 {{/each}}
 
+<form action="/admin/room/photo" method="post">
+    <label for="newRoomType">New Room Type:</label>
+    <input type="text" id="newRoomType" name="roomType" placeholder="Enter Room Type" required>
+    <button type="submit">Create New Room Type</button>
+</form>
 
 <footer>
     <a href="/admin/room">back to room Dashboard</a>

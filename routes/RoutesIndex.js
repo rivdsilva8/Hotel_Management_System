@@ -10,14 +10,6 @@ const constructorMethod = (app) => {
     });
   });
 
-  /*app.get("/login", (req, res) => {
-    console.log("Hi I am in");
-    res.render("./login/UserLogin");
-  });
-
-  app.get("/register", (req, res) => {
-    res.render("./login/UserCreate");
-  });*/
 
   //admin routes
   // TODO: middleware to check if user is actually an admin

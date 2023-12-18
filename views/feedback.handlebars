@@ -1,0 +1,23 @@
+
+
+
+<ul id="feedbacks">
+  {{#each feedback}}
+    <div class="feedback-card" style="width: 50%;">
+      <strong>{{guestName}}</strong>
+      <span  style="margin-left: 70px; margin-right: 70px">Room Type : {{roomType}}</span>
+      <span >Rating :
+      {{rating}}/10</span>
+      
+      <p>{{comment}}</p>
+    </div>
+    
+  {{/each}}
+</ul>
+<div class="space-below">
+
+</div>
+
+<footer>
+  <a href="/">back to Homepage</a>
+</footer>

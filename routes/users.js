@@ -1,5 +1,8 @@
 import {Router} from 'express';
 const router = Router();
+import feedbackData from '../data/feedback.js';
+import { GetAllFromMongoDB } from '../data/gallery.js';
+import * as room from '../data/room.js';
 import * as helpers from '../helpers.js';
 import { loginUser,createAccount,resetPassword} from "../data/users.js";
 import xss from 'xss';
@@ -103,6 +106,38 @@ router
         //return res.status(400).json({error:e.error});
       }
   });
+
+
+  router
+  .route('./room')
+  .get(async (req, res) => {
+    const roomDetails = await room.getAllRooms();
+    console.log(roomDetails);
+    res.status(200).render("./room", {
+      rooms: roomDetails,
+      title: "Room Details",
+      message: req.query.message
+    });
+  })
+
+  router
+  .route('/gallery')
+  .get(async (req, res) => {
+    let images = await GetAllFromMongoDB();
+    res.render("./gallery", {
+      title: "Gallary page",link: images
+    });
+  })
+
+  router
+  .route('/feedback')
+  .get(async (req, res) => {
+    let allFeedback = await feedbackData.getAll();
+    res.render("./feedback", {
+      title: "Feedback page",
+      feedback: allFeedback,
+    });
+  })
 
 
   router

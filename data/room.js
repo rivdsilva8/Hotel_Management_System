@@ -38,11 +38,11 @@ export const createRoom = async (
     const photosCursor = await photoCollection.find({ roomType: roomType });
     const photoDocuments = await photosCursor.toArray();
 
-    if (photoDocuments.length === 0) {
-        throw new Error(`No photos found for room type: ${roomType}`);
-    }
+    let roomPhotos = [];
 
-    const roomPhotos = photoDocuments.map(photo => photo.url);
+    if (photoDocuments.length > 0) {
+        roomPhotos = photoDocuments.map(photo => photo.url);
+    }
 
 
     const newRoom = {
@@ -202,6 +202,8 @@ export const getAllPhotos = async () => {
 
 }
 
+
+
 export const createPhotos = async (roomType, url) => {
     const photoCollection = await photos();
 
@@ -300,7 +302,7 @@ export const runApp = async () => {
         );
         const photo3 = await createPhotos(
             "suite",
-            "https://firebasestorage.googleapis.com/v0/b/hotel-management-eceff.appspot.com/o/images%2Fsuite.jpg?alt=media&token=875158ff-8969-48cd-8359-d54e6e7e7fec"
+            ""
         );
         console.log(photo1)
         console.log(photo2)

@@ -225,105 +225,6 @@ try {
 
   console.log("Done seeding feedbacks");
 
-  //room seeding
-
-  await roomData.createRoom(
-    101,
-    "single",
-    60,
-    true,
-    "Comfy single room",
-    true
-  );
-  await roomData.createRoom(
-    102,
-    "single",
-    65,
-    true,
-    "Cozy single room with a view",
-    true
-  );
-  await roomData.createRoom(
-    103,
-    "single",
-    70,
-    false,
-    "Spacious single room",
-    false
-  );
-  await roomData.createRoom(
-    104,
-    "single",
-    75,
-    true,
-    "Modern single room",
-    true
-  );
-  await roomData.createRoom(
-    201,
-    "double",
-    80,
-    true,
-    "Elegant double room",
-    true
-  );
-  await roomData.createRoom(
-    202,
-    "double",
-    85,
-    false,
-    "Classic double room",
-    false
-  );
-  await roomData.createRoom(
-    203,
-    "double",
-    90,
-    true,
-    "Double room with extra comfort",
-    true
-  );
-  await roomData.createRoom(
-    204,
-    "double",
-    95,
-    true,
-    "Stylish double room",
-    true
-  );
-  await roomData.createRoom(
-    301,
-    "suite",
-    120,
-    true,
-    "Luxurious suite",
-    true
-  );
-  await roomData.createRoom(
-    302,
-    "suite",
-    130,
-    false,
-    "Executive suite with amenities",
-    false
-  );
-  await roomData.createRoom(
-    303,
-    "suite",
-    140,
-    true,
-    "Royal suite experience",
-    true
-  );
-  await roomData.createRoom(
-    304,
-    "suite",
-    150,
-    true,
-    "Presidential suite",
-    true
-  );
-
   await bookingData.CreateBooking(
     "Alice",
     "Smith",
@@ -418,12 +319,4 @@ await saveImageDetailsToMongoDB({
   console.log(e);
 }
 
-//CODE FOR GALLERY POST (MAHESH PLS)
-// const response = await fetch("/guest/feedback/deleteFeedback", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-// body:{}
-//   });
 
