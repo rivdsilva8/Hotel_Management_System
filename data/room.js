@@ -292,6 +292,7 @@ export const runApp = async () => {
 
         const markRoom = await dirtyRoom(1001);
 
+
         // const newRoom = await createRoom(
         //     106,
         //     'double',
@@ -302,6 +303,9 @@ export const runApp = async () => {
         // );
         //
         // console.log(newRoom)
+
+        // console.log(newRoom)
+
 
         // const result = await averageRating("single");
         // console.log(result)

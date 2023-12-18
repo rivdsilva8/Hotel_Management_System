@@ -26,10 +26,7 @@ router.route("/").get(async (req, res) => {
 
 router.route("/book/:roomNumber").post(async (req, res) => {
   try {
-    console.log("in roomNumber route");
     const AddBookingData = req.body;
-    console.log(AddBookingData);
-
     //get roomdetails pass it here
     // let roomNumber = req.params
     console.log("req.params.roomNumber : " + req.params.roomNumber);
@@ -131,8 +128,8 @@ router.route("/report").get(async (req, res) => {
 
     await createReceiptPDF(
       {
-        "First Name": firstName,
-        "Last Name": lastName,
+        "First Name": fetchBookingDataDetails.firstName,
+        "Last Name": fetchBookingDataDetails.lastName,
         "Email": fetchBookingDataDetails.emailId,
         "Phone Number": fetchBookingDataDetails.contactNumber,
         "Room Price": "$" + fetchBookingDataDetails.roomPrice + "/day",
