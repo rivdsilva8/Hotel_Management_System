@@ -13,6 +13,15 @@ import {
   BookContactNumber,
 } from "../helpers.js";
 
+
+const changeDateFormat = (dateValue)=>{
+  const date = new Date(dateValue);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  
+  return`${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}-${year}`;
+}
 export const CreateBooking = async (
   firstName,
   lastName,
@@ -53,8 +62,12 @@ export const CreateBooking = async (
     let finalPrice = totalPrice + taxPrice + serviceFee;
     finalPrice = parseFloat(finalPrice.toFixed(2));
 
-    firstName = await BookFirstName(firstName);
-    lastName = await BookLastName(lastName);
+    //firstName = await BookFirstName(firstName);
+    //lastName = await BookLastName(lastName);
+    const firstNameErr = {empty:'First Name cannot be Empty', invalid:'First Name is invalid and cannot be less than 2 letters'};
+    const lastNameErr = {empty:'Last Name cannot be Empty', invalid:'Last Name is invalid and cannot be less than 2 letters'};
+    const firstAcctName = await helpers.validateString(firstName,2,25,firstNameErr);
+    const lastAcctName = await helpers.validateString(lastName,2,25,lastNameErr);
     emailId = await BookEmailId(emailId);
     //contactNumber = await BookContactNumber(contactNumber);
 
@@ -65,24 +78,23 @@ export const CreateBooking = async (
     CheckinDate = CheckinDate.trim();
     CheckOutDate = CheckOutDate.trim();
 
-    firstName = firstName.toLowerCase();
-    lastName = lastName.toLowerCase();
+    //firstName = firstName.toLowerCase();
+    //lastName = lastName.toLowerCase();
     emailId = emailId.toLowerCase();
 
     const Booking_Current_Date = new Date();
-    const BookYear = Booking_Current_Date.getFullYear();
-    const BookMonth = Booking_Current_Date.getMonth();
-    const BookDay = Booking_Current_Date.getDay();
-    const Final_BookDate = `${BookYear}/${BookMonth}/${BookDay}`;
+    const Final_BookDate = changeDateFormat(Booking_Current_Date);//mm-dd-yyyy
+    const checkIn_FinalDate = changeDateFormat(checkInDate);
+    const checkOut_FinalDate = changeDateFormat(checkOutDate);
 
     const GuestBookingDetails = {
-      firstName: firstName,
-      lastName: lastName,
+      firstName: firstAcctName,
+      lastName: lastAcctName,
       emailId: emailId,
       contactNumber: contactNumber,
       BookingDate: Final_BookDate,
-      CheckinDate: CheckinDate,
-      CheckOutDate: CheckOutDate,
+      CheckinDate: checkIn_FinalDate,
+      CheckOutDate: checkOut_FinalDate,
       BookingStatus: false,
       roomNumber: roomNumber,
       roomType: roomType,

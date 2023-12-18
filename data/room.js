@@ -283,7 +283,7 @@ export const runApp = async () => {
             true
         );
 
-        console.log(newRoom)
+        //console.log(newRoom)
 
         // const result = await averageRating("single");
         // console.log(result)

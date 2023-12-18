@@ -1,3 +1,4 @@
+{{#unless paymentSuccess}}
 <form>
 
   <p>Bill</p>
@@ -12,7 +13,10 @@
     <li>Final Price: ${{bookingDetails.finalPrice}}</li>
   </ul>
 </form>
-
+{{/unless}}
+ <div id="error-container" style="display: none;">{{#if
+    error
+    }}{{error}}{{/if}}</div>
 <form action="/guest/booking/payment" id="paymentForm" method="POST">
   <div class="form-group">
     <label for="cardNumber">Card Number</label>
@@ -86,6 +90,8 @@
 </form>
 
 <footer>
+  <a href="/guest/room">Back to Guest Rooms</a>
+  <br>
   <a href="/guest">back to guest Homepage</a>
 </footer>
 
