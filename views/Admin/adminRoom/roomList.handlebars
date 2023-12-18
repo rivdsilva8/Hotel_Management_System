@@ -5,8 +5,15 @@
         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
     </div>
 {{/if}}
-<a href="/admin/room/create" class="create-button">Create New Room</a>
-<a href="/admin/room/upload" class="upload-button">Upload photo for each type of room</a>
+
+<nav>
+    <ul>
+        <li><a href="/admin/room/create" class="create-button">Create New Room</a></li>
+        <li><a href="/admin/room/upload" class="upload-button">Upload photo for each type of room</a></li>
+    </ul>
+</nav>
+
+
 
 {{#each rooms}}
     <div class="room-card">

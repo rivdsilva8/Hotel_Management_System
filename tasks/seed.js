@@ -225,19 +225,103 @@ try {
 
   console.log("Done seeding feedbacks");
 
-  //Room photos first
+  //Room seeding
   await roomData.createPhotos("single", "https://firebasestorage.googleapis.com/v0/b/hotel-management-eceff.appspot.com/o/images%2Fsingle.jpg?alt=media&token=4b75d0d6-9179-4c7a-bad7-574cad70e1cb")
 
-  // //room seeding
+  await roomData.createPhotos("double", "https://firebasestorage.googleapis.com/v0/b/hotel-management-eceff.appspot.com/o/images%2F1.PNG?alt=media&token=ff4bb65a-2c8e-424b-b555-eee16ae79eeb")
+
+  await roomData.createPhotos("suite", "https://firebasestorage.googleapis.com/v0/b/hotel-management-eceff.appspot.com/o/images%2F10.PNG?alt=media&token=80da958a-f091-4891-b927-478d9a0663a9")
+ 
 
   await roomData.createRoom(
-      1001,
+    1001,
+    "single",
+    13.09,
+    true,
+    "new single room",
+    true
+)
+
+
+  await roomData.createRoom(
+      1002,
+      "single",
+      13.09,
+      true,
+      "new single room",
+      false
+  )
+
+  
+
+  await roomData.createRoom(
+      1003,
       "single",
       13.09,
       true,
       "new single room",
       true
   )
+
+  
+  
+  await roomData.createRoom(
+      2001,
+      "double",
+      20.00,
+      true,
+      "new double room",
+      true
+  )
+
+  await roomData.createRoom(
+    2002,
+    "double",
+    20.00,
+    true,
+    "new double room",
+    true
+)
+
+await roomData.createRoom(
+  2003,
+  "double",
+  20.00,
+  true,
+  "new double room",
+  true
+)
+
+
+await roomData.createRoom(
+  3001,
+  "suite",
+  50.00,
+  true,
+  "new suite room",
+  true
+)
+
+await roomData.createRoom(
+3002,
+"suite",
+50.00,
+true,
+"new suite room",
+true
+)
+
+await roomData.createRoom(
+3003,
+"suite",
+50.00,
+true,
+"new suite room",
+false
+)
+
+
+  console.log("Done seeding rooms");
 
   await bookingData.CreateBooking(
     "Alice",
@@ -324,7 +408,7 @@ await saveImageDetailsToMongoDB({
   filename: 'hotel10',
   url: 'https://firebasestorage.googleapis.com/v0/b/hotel-management-eceff.appspot.com/o/images%2F10.PNG?alt=media&token=80da958a-f091-4891-b927-478d9a0663a9'
 })
-  console.log("Done seeding rooms");
+  console.log("Done seeding gallery");
 
   console.log("Done seeding database");
 
