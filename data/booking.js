@@ -31,7 +31,7 @@ export const CreateBooking = async (
   CheckOutDate,
   roomNumber,
   roomPrice,
-  roomType
+  roomType,
 ) => {
   try {
     const AddBookingsDetails = await bookings();
@@ -96,6 +96,7 @@ export const CreateBooking = async (
       CheckinDate: checkIn_FinalDate,
       CheckOutDate: checkOut_FinalDate,
       BookingStatus: false,
+      cleanStatus: false, // addede trial code
       roomNumber: roomNumber,
       roomType: roomType,
       roomPrice: roomPrice,

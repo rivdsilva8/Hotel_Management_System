@@ -10,81 +10,88 @@
         <div class="results" id="rdiv"></div>
     </form>
     <script>
-        jQuery(document).ready(function(){
-            $('#SearchByEmail').click(function(){
-                var email = $('#email_search').val();
-                var rdiv = $('#rdiv');
-                var url = "/admin/checkin/getbookingbyemail/" + email;
+    jQuery(document).ready(function(){
+        $('#SearchByEmail').click(function(){
+            var email = $('#email_search').val();
+            var rdiv = $('#rdiv');
+            var url = "/admin/checkin/getbookingbyemail/" + email;
 
-                $.ajax({
-                    url: url,
-                    type: "GET",
-                    dataType: "json",
-                    success: function (res) {
-                        rdiv.empty(); 
-                        if (res.length === 0){
-                            rdiv.text(`No Booking with that email ${email}`);
-                        } else {
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "json",
+                success: function (res) {
+                    rdiv.empty(); 
+                    if (res.length === 0){
+                        rdiv.text(`No Booking with that email ${email}`);
+                    } else {
+                        console.log(res);
+                        res.forEach(function(booking) {
                             const bookingHtml = `
-                                <p>First Name: ${res.firstName}</p>
-                                <p>Last Name: ${res.lastName}</p>
-                                <p>Email Id: ${res.emailId}</p>
-                                <p>Phone Number: ${res.contactNumber}</p>
-                                <p>Checkin Date: ${res.CheckinDate}</p>
-                                <p>Checkout Date: ${res.CheckOutDate}</p>
-                                <p>Booking Status: ${res.BookingStatus}</p>
+                                <div class="booking-detail">
+                                    <p>First Name: ${booking.firstName}</p>
+                                    <p>Last Name: ${booking.lastName}</p>
+                                    <p>Email Id: ${booking.emailId}</p>
+                                    <p>Phone Number: ${booking.contactNumber}</p>
+                                    <p>Checkin Date: ${booking.CheckinDate}</p>
+                                    <p>Checkout Date: ${booking.CheckOutDate}</p>
+                                    <p>Booking Status: ${booking.BookingStatus}</p>
+                                    <p>Cleaned Status: ${booking.cleanStatus}</p>
+                                </div>
                             `;
-                            rdiv.html(bookingHtml);
-                            if (!res.BookingStatus) {
+                            rdiv.append(bookingHtml);
+                            if (!booking.BookingStatus) {
                                 $('<button/>', {
                                     text: 'Make Booking',
-                                    click: function() { makeBookinge(res.emailId); }
+                                    click: function() { makeBookinge(booking.emailId); }
                                 }).appendTo(rdiv);
                             } else {
                                 $('<button/>', {
                                     text: 'Check-In',
-                                    click: function() { checkIne(res.emailId); }
+                                    click: function() { checkIne(booking.emailId); }
                                 }).appendTo(rdiv);
                             }
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        rdiv.text(`Error: ${error}`);
+                        });
                     }
-                });
+                }, // Added comma here
+                error: function(xhr, status, error) {
+                    rdiv.text(`Error: ${error}`);
+                }
             });
-
-            function makeBookinge(emailId){
-                let url = "/admin/checkin/makeBooking/" + emailId;
-                $.ajax({
-                    url: url,
-                    type: "POST",
-                    dataType: "json",
-                    success: function (updatedRes) {
-                        alert('Booking Confirmation Successful');
-                    },
-                    error: function(xhr, status, error) {
-                        alert('Booking Confirmation Failed');
-                    }
-                });
-            }
-
-            function checkIne(emailId){
-                let url = "/admin/checkin/putcheckIne/" + emailId;
-                $.ajax({
-                    url: url,
-                    type: "POST",
-                    dataType: "json",
-                    success: function (updatedRes) {
-                        alert('Checkin Successful');
-                    },
-                    error: function(xhr, status, error) {
-                        alert('Checkin Failed');
-                    }
-                });
-            }
         });
-    </script>
+
+        function makeBookinge(emailId){
+            let url = "/admin/checkin/makeBooking/" + emailId;
+            $.ajax({
+                url: url,
+                type: "POST",
+                dataType: "json",
+                success: function (updatedRes) {
+                    alert('Booking Confirmation Successful');
+                },
+                error: function(xhr, status, error) {
+                    alert('Booking Confirmation Failed');
+                }
+            });
+        }
+
+        function checkIne(emailId){
+            let url = "/admin/checkin/putcheckIne/" + emailId;
+            $.ajax({
+                url: url,
+                type: "POST",
+                dataType: "json",
+                success: function (updatedRes) {
+                    alert('Checkin Successful');
+                },
+                error: function(xhr, status, error) {
+                    alert('Checkin Failed');
+                }
+            });
+        }
+    });
+</script>
+
 
 
 <footer>

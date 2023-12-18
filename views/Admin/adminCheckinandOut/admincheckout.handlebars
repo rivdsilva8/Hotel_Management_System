@@ -32,6 +32,7 @@
                             <p>Checkin Date: ${res.CheckinDate}</p>
                             <p>Checkout Date: ${res.CheckOutDate}</p>
                             <p>Booking Status: ${res.BookingStatus}</p>
+                            <p>Clean Status: ${res.cleanStatus}</p>
                             ${res.CheckedIn ? '<button onclick="checkOute(\'' + res.emailId + '\')">Check-out</button>' : ''}
                         `;
                         rdiv.html(bookingHtml);

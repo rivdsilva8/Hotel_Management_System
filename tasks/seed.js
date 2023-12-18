@@ -329,8 +329,7 @@ false
     "frank@example.com",
     "1234567895",
     "12/15/2023",
-    "12/17/2023",
-    
+    "12/17/2023",    
   );
   await bookingData.CreateBooking(
     "Henry",

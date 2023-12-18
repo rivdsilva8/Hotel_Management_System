@@ -84,6 +84,7 @@ router.route("/search.html").post(async (req, res) => {
       });
       return;
     }
+    console.log(newBooking);
     res.render("./partials/searched-bookings", {
       layout: null,
       sampleResult: newBooking,
