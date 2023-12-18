@@ -9,7 +9,9 @@ router.get("/", async (req, res) => {
     res.render("./guest/guestGallery/gallery", {
       title: "guest Gallary page",link: images
     });
-  } catch (e) {}
+  } catch (e) {
+    return res.status(500).render('./error',{title: "Error Page",error:e});
+  }
 });
 
 
