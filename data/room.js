@@ -235,17 +235,17 @@ export const uploadImageToFirebase = async (file) => {
 
 export const savePhoto = async (roomType, url) => {
     const photoCollection = await photos();
-
+    const roomCollection = await rooms();
+    let roomUpdateResult;
 
     const existingPhoto = await photoCollection.findOne({ roomType: roomType });
-
     if (existingPhoto) {
 
         const updateResult = await photoCollection.updateOne(
             { roomType: roomType },
             { $set: { url: url } }
         );
-        return updateResult;
+
     } else {
 
         const newPhoto = {
@@ -253,9 +253,19 @@ export const savePhoto = async (roomType, url) => {
             url: url
         };
         const insertResult = await photoCollection.insertOne(newPhoto);
-        return insertResult;
+
+    };
+    try {
+        roomUpdateResult = await roomCollection.updateMany(
+            { roomType: roomType },
+            { $set: { roomPhotos: [url] } }
+        );
+    } catch (error) {
+        console.error('Error updating rooms collection:', error);
+        throw error;
     }
-};
+
+}
 
 
 
