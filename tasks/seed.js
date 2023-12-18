@@ -330,9 +330,7 @@ false
     "1234567895",
     "12/15/2023",
     "12/17/2023",
-    1001,
-    "single",
-    13.09
+    
   );
   await bookingData.CreateBooking(
     "Henry",
@@ -341,9 +339,7 @@ false
     "1234567897",
     "12/15/2023",
     "12/17/2023",
-    2001,
-    "double",
-    20.
+  
   );
 
   await bookingData.CreateBooking(
@@ -353,9 +349,7 @@ false
     "1234567898",
     "12/15/2023",
     "12/17/2023",
-    3003,
-    "suite",
-    50
+    
   );
   await bookingData.CreateBooking(
     "Jack",
@@ -364,10 +358,7 @@ false
     "1234567899",
     "12/15/2023",
     "12/17/2023"
-    ,
-    1002,
-    "single",
-    13.09
+ 
   );
 
   await bookingData.CreateBooking(
@@ -377,10 +368,7 @@ false
     "1234567894",
     "12/15/2023",
     "12/17/2023"
-    ,
-    1003,
-    "single",
-    13.09
+   
   );
 
   await saveImageDetailsToMongoDB({

@@ -9,7 +9,7 @@
    <div id="error-container" style="display: none;">{{#if
     error
     }}{{error}}{{/if}}</div>
-  <form action="/guest/booking/book" method="POST" id="BookingForm">
+  <form action="/guest/booking/book/{{this.roomNumber}}" method="POST" id="BookingForm">
     <h2>Guest Details</h2>
 
     <label for="roomNumber"></label>
