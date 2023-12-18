@@ -20,9 +20,8 @@ export const deleteImageFromFirebase = async (fileName) => {
 export const GetAllFromMongoDB = async () => {
     console.log("In data function");
     const GalleryData = await gallery();
-    const insertInfo = await GalleryData.find({}, { projection: { url: 1 } }).toArray();
-    console.log(insertInfo);
-    return insertInfo.map(doc => doc.url);
+    const insertInfo = await GalleryData.find({}, { projection: { url: 1, filename:1 } }).toArray();
+    return insertInfo.map(doc => ({ url: doc.url, fileName: doc.filename }));
 };
 
 
@@ -31,5 +30,18 @@ export const saveImageDetailsToMongoDB = async (roomDetails) => {
     const GalleryData = await gallery();
     const insertInfo = await GalleryData.insertOne(roomDetails);
     if (insertInfo.insertedCount === 0) throw new Error('Could not add room details to MongoDB.');
-    return insertInfo.insertedId;
+    return {fileName: roomDetails.fileName, info:insertInfo.insertedCount};
 };
+
+export const deleteImageFromMongoDB = async (fileName) => {
+    const GalleryData = await gallery();
+    console.log(fileName,'in routes');
+   let deletedImageData =  await GalleryData.deleteOne({ filename: fileName });
+   console.log(deletedImageData,'image data');
+   if (deletedImageData.deletedCount === 0) {
+    console.log(`No document found with filename '${fileName}'`);
+    return { deleted: false, reason: "No document found with provided filename" };
+}
+
+    return {...deletedImageData, deleted: true};
+}

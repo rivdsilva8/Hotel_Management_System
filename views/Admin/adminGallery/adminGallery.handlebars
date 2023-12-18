@@ -1,17 +1,10 @@
-
-
-
-
-
-<form id="imageUploadForm" enctype="multipart/form-data">
-
+<header>
+    <a href="/guest">back to guest Homepage</a>
+</header>
+<main>
+  <form id="imageUploadForm" enctype="multipart/form-data">
     <input type="file" id="imageInput" name="image" accept="image/*">
     <button type="submit" >Upload Image</button>
-  </form>
-
-  <form id="imageTextInput" enctype="multipart/form-data">
-    <input type="text" id="imageTextInput" name="imageTextInput">
-    <button type="submit" >Delete Image</button>
   </form>
 
   <div class="container mt-4">
@@ -19,16 +12,19 @@
       {{#each AdminLink}}
       <div class="col-md-4 mb-4">
         <div class="card">
-          <img src="{{this}}" class="card-img-top" alt="Hotel Photos">
+          <img src="{{this.url}}" class="card-img-top" alt="Hotel Photos">
           <div class="card-body">
+            <h5 class="card-title">{{this.fileName}}</h5>
             <p class="card-text">Some description if needed</p>
-          </div>
+        </div>
+
+         <button class="delete-btn" data-filename="{{this.fileName}}">Delete Image</button>
         </div>
       </div>
       {{/each}}
     </div>
   </div>
-
+</main>
 
 <script>
   document.getElementById('imageUploadForm').addEventListener('submit',function(event){
@@ -41,6 +37,15 @@
     }
   });
 
+  document.querySelector('main').addEventListener('click', function(event) {
+  if (event.target.classList.contains('delete-btn')) {
+    const fileName = event.target.getAttribute('data-filename');
+    if (confirm(`Are you sure you want to delete ${fileName}?`)) {
+      deleteImage(fileName);
+    }
+  }
+});
+
   function uploadImage(imageFile) {
         const formData = new FormData();
         formData.append('image', imageFile);
@@ -52,13 +57,31 @@
         .then(response => response.json())
         .then(data => {
           alert('Image Upload Success.');
+           location.reload(); 
         })
         .catch(error => {
             alert('Could not add image.');
         });
     }  
-</script>
 
-<footer>
-  <a href="/admin">back to Admin Dashboard</a>
-</footer>
+function deleteImage(fileName) {
+  fetch('/admin/gallery/delete', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ fileName: fileName })
+  })
+  .then(response => {
+    if (response.ok) {
+      alert('Image deleted successfully');
+      location.reload();
+    } else {
+      throw new Error('Failed to delete image');
+    }
+  })
+  .catch(error => {
+    alert(error.message);
+  });
+}
+</script>
