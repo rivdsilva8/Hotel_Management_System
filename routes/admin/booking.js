@@ -11,7 +11,9 @@ router.get("/", async (req, res) => {
     res.render("./Admin/adminBooking/BookingOptions", {
       title: "admin booking manipulation",
     });
-  } catch (e) {}
+  } catch (e) {
+    return res.status(500).render('error',{title: "Error Page",error:e});
+  }
 });
 
 router.route("/adminBooking").get(async (req, res) => {

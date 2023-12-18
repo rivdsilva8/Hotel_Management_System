@@ -11,7 +11,9 @@ router.route("/").get(async (req, res) => {
     res.render("./guest/guestBooking/book", {
       title: "guest booking page",
     });
-  } catch (e) {}
+  } catch (e) {
+    return res.status(500).render('error',{title: "Error Page",error:e});
+  }
 });
 
 
@@ -21,6 +23,7 @@ router
     try {
       console.log("came here")
       const AddBookingData = req.body;
+      console.log(AddBookingData);
       const newBooking = await CreateBooking(
         AddBookingData.FirstNameInput,
         AddBookingData.LastNameInput,
@@ -32,13 +35,11 @@ router
         AddBookingData.roomType,
         AddBookingData.roomPrice
       );
-      console.log(newBooking)
       req.session.insertBookingId = newBooking.insertedId;
       res.render("./guest/guestPayment/payment", {title: "Payment Page"});
     } catch (e) {
-      console.error(e); // Log the error
-      return res.status(500).render('./guest/guestPayment/payment',{title: "Payment Page",error:e});
-      //res.status(500).send('Error occurred: ' + e.message); // Send detailed error message
+      console.log(e);
+      return res.status(500).render('error',{title: "Error Page",error:e});
     }
 });
 
@@ -48,7 +49,6 @@ router.route("/payment")
   try{
     
     const bookingId = req.session.insertBookingId;
-    console.log(bookingId);
     const validateBookingId = await helpers.checkId(bookingId,"booking id");
     const {cardNumber,cardName, expiryMonth, expiryYear,cvv } = req.body;
     const validatedCardNumber = await helpers.validateCardNumber(cardNumber);
@@ -62,15 +62,12 @@ router.route("/payment")
     const validateCVV = await helpers.validateCVV(cvv);
     const sanitizevalidateCVV= xss(validateCVV);
     const payment = await cardPaymnetOnSuccess(validateBookingId, sanitizeName);
-    console.log(payment);
     if(payment.acknowledged === true){
       res.render("./guest/guestPayment/payment", {title: "Payment Page", paymentSuccess: true});
     }
 
   }catch(e){
-    console.log(e.message);
-    //res.status(500).send('Error occurred: ' + e.message); 
-    return res.status(500).render('./guest/guestPayment/payment',{title: "Payment Page",error:e});
+    return res.status(500).render('error',{title: "Error Page",error:e});
   }
 });
 
@@ -113,7 +110,7 @@ router
         fs.unlinkSync(pdfPath);
       });
     }catch(e){
-      console.log(e);
+      return res.status(500).render('error',{title: "Error Page",error:e});
     }
     //
   });
