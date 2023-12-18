@@ -1,15 +1,16 @@
 
   <h1>Room Booking</h1>
-  <div>
+  <p style="padding-left: 390px">Please check room details:</p>
+  <form>
     <p>Room Number: {{roomNumber}}</p>
     <p>Room Type: {{roomType}}</p>
-    <p>Room Price/day: {{roomPrice}} $</p>
-  </div>
-  <p>Please enter your details to confirm your booking:</p>
+    <p>Room Price/day: ${{roomPrice}} </p>
+  </form>
+  <p style="padding-left: 390px">Please enter your details to confirm your booking:</p>
    <div id="error-container" style="display: none;">{{#if
     error
     }}{{error}}{{/if}}</div>
-  <form action="/guest/booking/book" method="POST" id="BookingForm">
+  <form action="/guest/booking/book/{{this.roomNumber}}" method="POST" id="BookingForm">
     <h2>Guest Details</h2>
 
     <label for="roomNumber"></label>
@@ -39,7 +40,7 @@
     <label for="CheckoutDateInput">Enter CheckOut Date</label>
     <input type="date" id="CheckoutDateInput" name="CheckoutDateInput" min=""/>
     <br />
-    <button type="submit">Proced For Payment</button>
+    <button type="submit">Proceed For Payment</button>
   </form>
 
 
