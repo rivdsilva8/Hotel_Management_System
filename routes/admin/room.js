@@ -190,5 +190,22 @@ router
     }
 });
 
+router
+    .route('/photo')
+    .post(async (req, res) => {
+        try {
+            const { roomType } = req.body;
+            if (!roomType) {
+                throw new Error('Room type is required');
+            }
+
+            const newPhoto = await room.createPhotos(roomType, []);
+
+            res.redirect('/admin/room/upload?message=New room Type updated');
+        } catch (error) {
+            res.status(500).send(error.message);
+        }
+    });
+
 
 export default router;
