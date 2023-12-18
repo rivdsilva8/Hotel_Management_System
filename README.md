@@ -1,3 +1,23 @@
+## Running the Application
+
+```bash
+# Install all Node Dependencies
+npm i
+```
+
+```bash
+# To add data in mongodb
+npm run seed
+```
+```bash
+# To run the application
+npm start
+```
+
+Now if you didn't change any of the configurations mentioned above or the Port, the applications should be running on:
+- application will run on : `http://localhost:3000`
+
+
 Hotel Management Website
 
 Team Members:
