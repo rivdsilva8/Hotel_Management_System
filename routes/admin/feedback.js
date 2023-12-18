@@ -35,6 +35,8 @@ router
       }
 
       let result = await feedbackData.delete(delete_ids);
+      
+      
       // return res.status(200).json(result);
     } catch (e) {
       console.log(e);
