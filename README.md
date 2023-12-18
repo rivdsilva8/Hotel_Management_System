@@ -1,3 +1,15 @@
+To run the code:
+
+first install all the node modules:
+run "npm i"
+
+To add Dummy Data's in the database:
+First run "npm run seed"
+
+Now to start the project/ application:
+run "npm start"
+
+
 Hotel Management Website
 
 Team Members:
