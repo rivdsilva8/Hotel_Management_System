@@ -9,7 +9,7 @@
         <button type="button" id="SearchByEmail">Search</button>
         <div class="results" id="rdiv"></div>
     </form>
-    <script>
+    {{!-- <script>
         jQuery(document).ready(function(){
             $('#SearchByEmail').click(function(){
                 var email = $('#email_search').val();
@@ -48,6 +48,90 @@
                             }
                         }
                     },
+                    error: function(xhr, status, error) {
+                        rdiv.text(`Error: ${error}`);
+                    }
+                });
+            });
+
+            function makeBookinge(emailId){
+                let url = "/staff/checkin/makeBooking/" + emailId;
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    dataType: "json",
+                    success: function (updatedRes) {
+                        alert('Booking Confirmation Successful');
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Booking Confirmation Failed');
+                    }
+                });
+            }
+
+            function checkIne(emailId){
+                let url = "/staff/checkin/putcheckIne/" + emailId;
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    dataType: "json",
+                    success: function (updatedRes) {
+                        alert('Checkin Successful');
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Checkin Failed');
+                    }
+                });
+            }
+        });
+    </script> --}}
+
+
+    <script>
+        jQuery(document).ready(function(){
+            $('#SearchByEmail').click(function(){
+                var email = $('#email_search').val();
+                var rdiv = $('#rdiv');
+                var url = "/staff/checkin/getbookingbyemail/" + email;
+
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (res) {
+                        rdiv.empty(); 
+                        if (res.length === 0){
+                            rdiv.text(`No Booking with that email ${email}`);
+                        } else {
+                            console.log(res);
+                            res.forEach(function(booking) {
+                                const bookingHtml = `
+                                    <div class="booking-detail">
+                                        <p>First Name: ${booking.firstName}</p>
+                                        <p>Last Name: ${booking.lastName}</p>
+                                        <p>Email Id: ${booking.emailId}</p>
+                                        <p>Phone Number: ${booking.contactNumber}</p>
+                                        <p>Checkin Date: ${booking.CheckinDate}</p>
+                                        <p>Checkout Date: ${booking.CheckOutDate}</p>
+                                        <p>Booking Status: ${booking.BookingStatus}</p>
+                                        <p>Cleaned Status: ${booking.cleanStatus}</p>
+                                    </div>
+                                `;
+                                rdiv.append(bookingHtml);
+                                if (!booking.BookingStatus) {
+                                    $('<button/>', {
+                                        text: 'Make Booking',
+                                        click: function() { makeBookinge(booking.emailId); }
+                                    }).appendTo(rdiv);
+                                } else {
+                                    $('<button/>', {
+                                        text: 'Check-In',
+                                        click: function() { checkIne(booking.emailId); }
+                                    }).appendTo(rdiv);
+                                }
+                            });
+                        }
+                    }, // Added comma here
                     error: function(xhr, status, error) {
                         rdiv.text(`Error: ${error}`);
                     }
