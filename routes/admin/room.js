@@ -146,10 +146,9 @@ router
     .get(async (req, res) => {
         try {
             const roomNumber = parseInt(req.params.roomNumber, 10);
-            console.log(roomNumber)
 
             await  room.cleanRoom(roomNumber);
-            console.log("Room cleaned successfully.");
+
             res.redirect('/admin/room?message=Room Cleaned');
         } catch (e) {
             res.status(500).render('error', {
@@ -159,6 +158,22 @@ router
         }
     })
 
+router
+    .route('/dirty/:roomNumber')
+    .get(async (req, res) => {
+        try {
+            const roomNumber = parseInt(req.params.roomNumber, 10);
+
+            await  room.dirtyRoom(roomNumber)
+
+            res.redirect('/admin/room?message=Room is dirty');
+        } catch (e) {
+            res.status(500).render('error', {
+                title: 'Error',
+                errorMessage: e.message
+            });
+        }
+    })
 
 router
     .get('/upload', async (req, res) => {

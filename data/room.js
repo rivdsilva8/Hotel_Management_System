@@ -178,6 +178,22 @@ export const cleanRoom = async (roomNumber) => {
 
 }
 
+export const dirtyRoom = async (roomNumber) => {
+    helpers.validateRoomNumber(roomNumber);
+    const roomCollection = await rooms();
+    let room = await roomCollection.findOne({ roomNumber: roomNumber});
+
+    if (!room) throw new Error(`This number: ${roomNumber} has no room`);
+    room.cleanStatus = false;
+
+    await roomCollection.updateOne(
+        { roomNumber: roomNumber},
+        { $set: { cleanStatus: false }}
+    );
+
+
+}
+
 export const roomNumberToId = async (roomNumber) => {
     helpers.validateRoomNumber(roomNumber);
     const roomCollection = await rooms();
@@ -274,16 +290,22 @@ export const runApp = async () => {
     // await db.dropDatabase;
     try {
 
-        const newRoom = await createRoom(
-            106,
-            'double',
-            157.00,
-            true,
-            'A spacious double room.',
-            true
-        );
+        const markRoom = await dirtyRoom(1001);
 
-        //console.log(newRoom)
+
+        // const newRoom = await createRoom(
+        //     106,
+        //     'double',
+        //     157.00,
+        //     true,
+        //     'A spacious double room.',
+        //     true
+        // );
+        //
+        // console.log(newRoom)
+
+        // console.log(newRoom)
+
 
         // const result = await averageRating("single");
         // console.log(result)
