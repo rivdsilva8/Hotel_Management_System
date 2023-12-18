@@ -109,7 +109,7 @@ router
 
 
   router
-  .route('./room')
+  .route('/room')
   .get(async (req, res) => {
     const roomDetails = await room.getAllRooms();
     console.log(roomDetails);
