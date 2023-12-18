@@ -69,8 +69,6 @@ export const createRoom = async (
     if (!addedNewRoom) throw new Error('No room id found');
 
     return addedNewRoom;
-
-
 }
 
 export const getAllRooms = async () => {
@@ -276,36 +274,35 @@ export const runApp = async () => {
     // await db.dropDatabase;
     try {
 
-        // const newRoom = await createRoom(
-        //     106,
-        //     'double',
-        //     157.00,
-        //     true,
-        //     ["https://firebasestorage.googleapis.com/v0/b/hotel-management-eceff.appspot.com/o/images%2Fmessaging.jpeg?alt=media&token=5e36cb50-cc8f-40ec-bb38-25b221c33ee9"],
-        //     'A spacious double room.',
-        //     true
-        // );
-        //
-        // console.log(newRoom)
+        const newRoom = await createRoom(
+            106,
+            'double',
+            157.00,
+            true,
+            'A spacious double room.',
+            true
+        );
+
+        console.log(newRoom)
 
         // const result = await averageRating("single");
         // console.log(result)
 
-        const photo1 = await createPhotos(
-            "single",
-            "https://firebasestorage.googleapis.com/v0/b/hotel-management-eceff.appspot.com/o/images%2Fsingle.jpg?alt=media&token=43ffeb30-7766-434e-8af0-b457d7c6f8aa"
-        );
-        const photo2 = await createPhotos(
-            "double",
-            "https://firebasestorage.googleapis.com/v0/b/hotel-management-eceff.appspot.com/o/images%2Fdouble.jpg?alt=media&token=c2a38310-dc60-4d21-9398-8fa53fee2373"
-        );
-        const photo3 = await createPhotos(
-            "suite",
-            ""
-        );
-        console.log(photo1)
-        console.log(photo2)
-        console.log(photo3)
+        // const photo1 = await createPhotos(
+        //     "single",
+        //     "https://firebasestorage.googleapis.com/v0/b/hotel-management-eceff.appspot.com/o/images%2Fsingle.jpg?alt=media&token=43ffeb30-7766-434e-8af0-b457d7c6f8aa"
+        // );
+        // const photo2 = await createPhotos(
+        //     "double",
+        //     "https://firebasestorage.googleapis.com/v0/b/hotel-management-eceff.appspot.com/o/images%2Fdouble.jpg?alt=media&token=c2a38310-dc60-4d21-9398-8fa53fee2373"
+        // );
+        // const photo3 = await createPhotos(
+        //     "suite",
+        //     ""
+        // );
+        // console.log(photo1)
+        // console.log(photo2)
+        // console.log(photo3)
 
 
     } catch (e) {
