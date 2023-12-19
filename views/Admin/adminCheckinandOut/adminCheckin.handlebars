@@ -24,7 +24,6 @@
                     if (res.length === 0){
                         rdiv.text(`No Booking with that email ${email}`);
                     } else {
-                        console.log(res);
                         res.forEach(function(booking) {
                             const bookingHtml = `
                                 <div class="booking-detail">
@@ -42,17 +41,17 @@
                             if (!booking.BookingStatus) {
                                 $('<button/>', {
                                     text: 'Confirm Booking',
-                                    click: function() { makeBookinge(booking.emailId); }
+                                    click: function() { makeBookinge(booking._id); }
                                 }).appendTo(rdiv);
                             } else if(!booking.cleanStatus) {
                                 $('<button/>', {
                                     text: 'Clean Room',
-                                    click: function() { cleanRoom(booking.emailId); }
+                                    click: function() { cleanRoom(booking._id); }
                                 }).appendTo(rdiv);
                             } else if(!booking.CheckedIn){
                                 $('<button/>', {
                                     text: 'Check-In',
-                                    click: function() { checkIne(booking.emailId); }
+                                    click: function() { checkIne(booking._id); }
                                 }).appendTo(rdiv);
                             } else {
                                 $('<p>', {

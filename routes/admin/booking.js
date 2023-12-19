@@ -129,7 +129,6 @@ router.route("/book/:id").put(async (req, res) => {
     const booking = BookingFunctions.getBookingByIdAndTrue(validatedBookingID);
     return res.json({ success: true });
   } catch (e) {
-    console.error(e); // Log the error
     res.status(500).send("Error occurred: " + e.message); // Send detailed error message
   }
 });
@@ -155,12 +154,14 @@ router
   console.log("in routs???")
   try{
     const validatedBookingID = await helpers.checkId(req.params.id, "booking id");
-    const booking = await BookingFunctions.getBookingById(validatedBookingID);
+    console.log("")
+    const booking = await BookingFunctions.getBookingByIdAndTrue(validatedBookingID);
     return res.render('./Admin/adminBooking/updateBooking', {booking: booking});
   }catch(e){
     return res.status(404).render('error',{title:'Error',error: e});
   }
 });
+
 
 router
   .route("/update")
@@ -175,7 +176,7 @@ router
       const firstAcctName = await helpers.validateString(AddBookingData.FirstNameInput,2,25,firstNameErr);
       const lastAcctName = await helpers.validateString(AddBookingData.LastNameInput,2,25,lastNameErr);
       const emailInputValidate = await helpers.validateEmail(AddBookingData.EmailIdInput);
-      const validatePhoneNumber = await helpers.validatePhoneNumber(AddBookingData.ContactNumberInput);
+      //const validatePhoneNumber = await helpers.validatePhoneNumber(AddBookingData.ContactNumberInput);
       const validateCheckInDate = await helpers.validateDates(AddBookingData.CheckinDateInput);
       const validateCheckOutDate = await helpers.validateDates(AddBookingData.CheckoutDateInput);
 
@@ -184,7 +185,7 @@ router
         FirstNameInput: xss(firstAcctName),
         LastNameInput: xss(lastAcctName),
         EmailIdInput: xss(emailInputValidate),
-        ContactNumberInput: xss(validatePhoneNumber),
+        ContactNumberInput: xss(AddBookingData.ContactNumberInput),
         CheckinDateInput: xss(validateCheckInDate),
         CheckoutDateInput: xss(validateCheckOutDate),
       };

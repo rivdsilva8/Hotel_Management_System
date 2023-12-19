@@ -1,7 +1,7 @@
 <main>
   <h1>Update Booking</h1>
   <p>Please update your booking details:</p>
-  <form action="/admin/booking/update" method="POST" id="BookingForm">
+  <form action="/admin/booking/update-booking/{{booking._id}}" method="POST" id="BookingForm">
     <h2>Guest Details</h2>
 
     <label for="bookingId"></label>
@@ -25,7 +25,7 @@
     <label for="CheckoutDateInput">Enter CheckOut Date</label>
     <input type="date" id="CheckoutDateInput" name="CheckoutDateInput" value="{{booking.CheckOutDate}}" min=""/>
     <br />
-    <button type="submit">Proced For Payment</button>
+    <button type="submit">Update Booking Details</button>
   </form>
   <div id="error-container" style="display: none;">{{#if
     error
@@ -48,4 +48,4 @@
 </footer>
 
 <script src="/public/js/main.js"></script>
-<script src="/public/js/client_side_validation.js"></script>
+{{!-- <script src="/public/js/client_side_validation.js"></script> --}}

@@ -24,7 +24,6 @@
                     if (res.length === 0){
                         rdiv.text(`No Booking with that email ${email}`);
                     } else {
-                        console.log(res);
                         res.forEach(function(booking) {
                             const bookingHtml = `
                                 <div class="booking-detail">

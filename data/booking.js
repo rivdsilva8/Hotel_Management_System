@@ -140,14 +140,14 @@ export const GetBooking = async (firstName, emailId) => {
 
 export const getBookingByIdAndTrue = async (bookingId) => {
   try {
-    bookingId = helpers.checkId(bookingId);
+    bookingId = await helpers.checkId(bookingId);
     let bookingCollection = await bookings();
     let UpdateEventData = {
-      $set: { BookingStatus: true },
+      BookingStatus: true,
     };
     const updatedBooking = await bookingCollection.findOneAndUpdate(
       { _id: new ObjectId(bookingId) },
-      UpdateEventData,
+      { $set: UpdateEventData},
       { returnDocument: "after" }
     );
     if (!updatedBooking) {

@@ -32,7 +32,7 @@
 <script>
     function book(bookingId) {
         // You can add additional data or parameters as needed
-        console.log(bookingId)
+
         fetch(`/admin/booking/book/${bookingId}`, {
             method: 'PUT',
         })
@@ -57,7 +57,6 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        console.log('heres')
                         const bookingElement = buttonElement.closest('.col');
                         if (bookingElement) {
                             bookingElement.remove();

@@ -349,13 +349,9 @@ document.addEventListener("DOMContentLoaded", function(){
 
     if (createFeedbackForm) {
         createFeedbackForm.addEventListener("submit", function (event) {
-          console.log("in createFeedbackForm CSV:");
           const roomType = document.getElementById("roomType").value;
           const rating = document.getElementById("rating").value;
           const comment = document.getElementById("comment").value;
-          console.log("roomType:", roomType);
-          console.log("rating:", rating);
-          console.log("comment:", comment);
     
           if (roomType == null) throw "Please select a Room Type";
           if (comment.length > 500)
@@ -369,13 +365,11 @@ document.addEventListener("DOMContentLoaded", function(){
 
   if (updateFeedbackForm) {
     updateFeedbackForm.addEventListener("submit", function (event) {
-      console.log("in updateFeedbackForm CSV:");
+
       const roomType = document.getElementById("roomType").value;
       const rating = document.getElementById("rating").value;
       const comment = document.getElementById("comment").value;
-      console.log("roomType:", roomType);
-      console.log("rating:", rating);
-      console.log("comment:", comment);
+
 
       if (roomType == null) throw "Please select a Room Type";
       if (comment.length > 500)

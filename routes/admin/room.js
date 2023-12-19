@@ -76,7 +76,7 @@ router
 
             let { roomType, roomDescription } = req.body;
 
-            console.log(roomType)
+        
 
 
             if (isNaN(roomNumber) || isNaN(roomPrice)) {
