@@ -5,6 +5,12 @@ body, html {
   min-width : 100%;
 }
 
+#error{
+background-color: red;
+color:white;
+padding-left: 20px;
+}
+
 .img-home{
   float: right; 
   max-width: 30%;
