@@ -13,7 +13,7 @@
     <li>Final Price: ${{bookingDetails.finalPrice}}</li>
   </ul>
 </form>
-{{/unless}}
+
  <div id="error-container" style="display: none;">{{#if
     error
     }}{{error}}{{/if}}</div>
@@ -76,23 +76,25 @@
       required
     />
   </div>
+  {{/unless}}
 
   {{#if paymentSuccess}}
-    <button type="submit" class="btn btn-primary" disabled>
-      Payment processed
-    </button>
-    <button type="button" id="downloadReport" onclick="nowdownloadReport()">
-      Download Report</button>
+    <form >
+      <h3>Payment Successful, Click to download Receipt</h3>
+ <button type="button" id="downloadReport" onclick="nowdownloadReport()">
+      Download Receipt</button>
+    </form>
+   
   {{else}}
     <button type="submit" class="btn btn-primary">Submit Payment</button>
-    <button type="button" id="downloadReport" disabled> Download Report</button>
+   
   {{/if}}
 </form>
 
 <footer>
   <a href="/guest/room">Back to Guest Rooms</a>
-  <br>
-  <a href="/guest">back to guest Homepage</a>
+ 
+ 
 </footer>
 
 <script src="/public/js/main.js"></script>
