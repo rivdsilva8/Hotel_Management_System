@@ -20,6 +20,10 @@
       errorDiv.show().html("Please enter for search criteria");
         return;
     }
+    if(!firstName || !email){
+      errorDiv.show().html("Please enter for search criteria");
+        return;
+    }
 
     if (firstName) {
       if (firstName.trim().length === 0) {
@@ -32,6 +36,14 @@
       if (email.trim().length === 0) {    
         errorDiv.show().html("Error: Email Can not contain empty spaces");
         return;
+      }
+      if(!validateEmail(email)){
+        errorDiv.show().html('Please enter a valid email address.');
+      }
+      const [prefix,domain]=email.split("@");
+      if(!/^([a-zA-Z0-9]+([_\.-]?[a-zA-Z0-9]+)*)$/.test(prefix) || !/^([a-zA-Z0-9-]+)+(\.[a-zA-Z]{2,})+$/.test(domain)) 
+      {
+        errorDiv.show().html(' Email Address given does not  have a valid prefix or domain'); 
       }
     }
 
@@ -64,3 +76,8 @@
     }
   });
 })(window.jQuery);
+
+function validateEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
