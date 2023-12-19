@@ -7,10 +7,11 @@
     <p>Room Price/day: ${{roomPrice}} </p>
   </form>
   <p style="padding-left: 390px">Please enter your details to confirm your booking:</p>
-   <div id="error-container" style="display: none;">{{#if
+   
+  <form action="/guest/booking/book/{{this.roomNumber}}" method="POST" id="BookingForm">
+  <div id="error-container" style="display: none; float:left;">{{#if
     error
     }}{{error}}{{/if}}</div>
-  <form action="/guest/booking/book/{{this.roomNumber}}" method="POST" id="BookingForm">
     <h2>Guest Details</h2>
 
     <label for="roomNumber"></label>
@@ -60,8 +61,8 @@
 
 <footer>
   <a href="/guest/room">Back to Guest Rooms</a>
-  <br>
-  <a href="/guest">Back to Guest Homepage</a>
+  
+ 
 </footer>
 <script src="/public/js/main.js"></script>
 <script src="/public/js/client_side_validation.js"></script>

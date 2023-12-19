@@ -173,7 +173,7 @@ button:hover {
   background-color: rgb(203, 201, 201);
 }
 
-form:not(#deletionForm) {
+form:not(#deletionForm ) {
   display: flex;
   flex-direction: column;
   max-width: 600px;
@@ -184,6 +184,22 @@ form:not(#deletionForm) {
   background-color: #f9f9f9;
   margin-bottom: 60px;
 }
+form:not(.guest-room-form) {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  margin-bottom: 60px;
+}
+
+.booking-button{
+width: max-content;
+}
+
 button[type="submit"] {
   background-color: #007bff;
   color: white;

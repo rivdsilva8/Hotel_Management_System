@@ -11,10 +11,12 @@ import xss from 'xss';
 
 router.get("/", async (req, res) => {
   try {
-    res.render("./Admin/adminAccount/adminAccountMainPage", {
+    return res.render("./Admin/adminAccount/adminAccountMainPage", {
       title: "admin account manipulation",
     });
-  } catch (e) {}
+  } catch (e) {
+     return res.status(404).render("error", { title: "Error", error: e });
+  }
 });
 
 router
@@ -119,8 +121,7 @@ router
       }
       
     }catch(e){
-      //const details = await getAll();
-      //return res.status(400).render('./Admin/adminAccount/adminEditAccount',{title:"Admin Edit Users Account",role:role,error:e.error,details:details});
+      
       return res.redirect(`/admin/account/edit?success=fail&error=${encodeURIComponent(e.error)}`);
     }
 

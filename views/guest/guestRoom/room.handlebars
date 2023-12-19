@@ -9,6 +9,7 @@
 
     {{#each rooms}}
     <div class="room-card">
+        <form >
         <h2>Room {{this.roomNumber}}</h2>
         <p>Type: {{this.roomType}}</p>
         <p>Price: ${{this.roomPrice}}</p>
@@ -21,8 +22,10 @@
             {{/each}}
         </div>
         {{/if}}
+        </form>
+       
 
-        <form action="/guest/room/booking/{{this.roomNumber}}" method="POST" id="guest-room-form">
+        <form action="/guest/room/booking/{{this.roomNumber}}" method="POST" class="guest-room-form">
         
             <label for="roomNumber"></label>
             <input id="roomNumber" name="roomNumber" value={{this.roomNumber}} type="hidden">
@@ -33,7 +36,7 @@
             <label for="roomPrice"></label>
             <input id="roomPrice" name="roomPrice" value={{this.roomPrice}} type="hidden">
 
-            <button type="submit">Book</button>
+            <button type="submit" >Book</button>
         </form>
     </div>
     {{/each}}
