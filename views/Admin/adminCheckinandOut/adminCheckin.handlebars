@@ -1,5 +1,4 @@
-
-    <p style="margin-left: 30px;">Search Booking:</p>
+<p style="margin-left: 30px;">Search Booking:</p>
     
     <form id="searchForm">
         <label for="FirstName">Enter First Name:</label>
@@ -42,13 +41,22 @@
                             rdiv.append(bookingHtml);
                             if (!booking.BookingStatus) {
                                 $('<button/>', {
-                                    text: 'Make Booking',
+                                    text: 'Confirm Booking',
                                     click: function() { makeBookinge(booking.emailId); }
                                 }).appendTo(rdiv);
-                            } else {
+                            } else if(!booking.cleanStatus) {
+                                $('<button/>', {
+                                    text: 'Clean Room',
+                                    click: function() { cleanRoom(booking.emailId); }
+                                }).appendTo(rdiv);
+                            } else if(!booking.CheckedIn){
                                 $('<button/>', {
                                     text: 'Check-In',
                                     click: function() { checkIne(booking.emailId); }
+                                }).appendTo(rdiv);
+                            } else {
+                                $('<p>', {
+                                    text: 'Checked In!'
                                 }).appendTo(rdiv);
                             }
                         });
@@ -86,6 +94,21 @@
                 },
                 error: function(xhr, status, error) {
                     alert('Checkin Failed');
+                }
+            });
+        }
+
+        function cleanRoom(emailId){
+            let url = "/admin/checkin/clean/" + emailId;
+            $.ajax({
+                url: url,
+                type: "POST",
+                dataType: "json",
+                success: function (updatedRes) {
+                    alert('Room Status changed to clean');
+                },
+                error: function(xhr, status, error) {
+                    alert('Failed to change the status please try again');
                 }
             });
         }

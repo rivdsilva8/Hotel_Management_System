@@ -110,9 +110,6 @@ export const CreateBooking = async (
     if (!AddBooking.acknowledged || !AddBooking.insertedId) {
       throw `Could not add data`;
     }
-    // const GetDataById = AddBooking.insertedId.toString();
-    // const CheckBookingById = await GetBooking(GetDataById);
-    // return CheckBookingById;
     return AddBooking;
   } catch (e) {
     throw `Error: ${e}`;

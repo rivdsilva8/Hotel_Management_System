@@ -14,6 +14,12 @@ router.route('/getbookingbyemail/:email').get(async (req,res)=>{
     return res.json(GetBookingEmail)
 })
 
+router.route('/clean/:emailId').post(async (req,res) =>{
+    let AddCheckInEmail = await checkInDetail.clean(req.params.emailId)
+    if (AddCheckInEmail === "-1") return res.json({})
+    return res.json(AddCheckInEmail)
+})
+
 router.route('/putCheckIne/:emailId').post(async (req,res) =>{
     let AddCheckInEmail = await checkInDetail.putCheckIne(req.params.emailId)
     if (AddCheckInEmail === "-1") return res.json({})

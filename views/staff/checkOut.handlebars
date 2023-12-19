@@ -10,8 +10,8 @@
 </form>
 
 <script>
-    jQuery(document).ready(function(){
-        $('#SearchByEmail').click(function() {
+    jQuery(document).ready(function () {
+        $('#SearchByEmail').click(function () {
             let email = $('#email_search').val();
             let rdiv = $('#rdiv');
             let url = "/staff/checkout/getbookingbyemail/" + email;
@@ -21,29 +21,77 @@
                 dataType: "json",
                 success: function (res) {
                     rdiv.empty();
-                    if (res.length === 0){
+                    if (res.length === 0) {
                         rdiv.text(`No Booking with that email ${email}`);
                     } else {
-                        const bookingHtml = `
-                            <p>First Name: ${res.firstName}</p>
-                            <p>Last Name: ${res.lastName}</p>
-                            <p>Email Id: ${res.emailId}</p>
-                            <p>Phone Number: ${res.contactNumber}</p>
-                            <p>Checkin Date: ${res.CheckinDate}</p>
-                            <p>Checkout Date: ${res.CheckOutDate}</p>
-                            <p>Booking Status: ${res.BookingStatus}</p>
-                            ${res.CheckedIn ? '<button onclick="checkOute(\'' + res.emailId + '\')">Check-out</button>' : ''}
-                        `;
-                        rdiv.html(bookingHtml);
+                        if (!checkCheckedInStatus(res)) {
+                            alert("The user is not checked in yet!");
+                        } else {
+                            res.forEach(function (booking) {
+                                if (booking.CheckedIn) {
+                                    const bookingHtml = `
+                                <div class="booking-detail">
+                                    <p>First Name: ${booking.firstName}</p>
+                                    <p>Last Name: ${booking.lastName}</p>
+                                    <p>Email Id: ${booking.emailId}</p>
+                                    <p>Phone Number: ${booking.contactNumber}</p>
+                                    <p>Checkin Date: ${booking.CheckinDate}</p>
+                                    <p>Checkout Date: ${booking.CheckOutDate}</p>
+                                    <p>Booking Status: ${booking.BookingStatus}</p>
+                                    <p>Cleaned Status: ${booking.cleanStatus}</p>
+                                </div>
+                            `;
+                                    rdiv.append(bookingHtml);
+                                    if (!booking.checkedOut) {
+                                        $('<button/>', {
+                                            text: 'Checkout',
+                                            click: function () { checkout(booking.emailId); }
+                                        }).appendTo(rdiv);
+                                    } else {
+                                        $('<p>', {
+                                            text: 'Checked Out!'
+                                        }).appendTo(rdiv);
+                                    }
+                                }
+                            });
+                        }
                     }
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     rdiv.text(`Error: ${error}`);
                 }
             });
         });
 
-        window.checkOute = function(emailId){
+        function checkCheckedInStatus(bookingsArray) {
+            let checkedInFound = false;
+
+            for (const booking of bookingsArray) {
+                if (booking.CheckedIn === true) {
+                    checkedInFound = true;
+                    break;
+                }
+            }
+
+            return checkedInFound;
+        }
+
+        function checkout(emailId) {
+            let url = "/staff/checkOut/checkout/" + emailId;
+            $.ajax({
+                url: url,
+                type: "POST",
+                dataType: "json",
+                success: function (updatedRes) {
+                    alert('Checkout Successful');
+                },
+                error: function (xhr, status, error) {
+                    alert('Checkout Failed');
+                }
+            });
+        }
+
+        window.checkOute = function (emailId) {
             let url = "/staff/checkOut/putcheckOute/" + emailId;
             $.ajax({
                 url: url,
@@ -52,14 +100,14 @@
                 success: function (updatedRes) {
                     console.log("Check-Out successful", updatedRes);
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error("Error in check-out: ", error);
                 }
             });
         };
     });
 </script>
-<footer>
 
-  <a href="/staff">back to Staff Dashboard</a>
+<footer>
+    <a href="/admin">back to Admin Dashboard</a>
 </footer>
