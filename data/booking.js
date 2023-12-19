@@ -123,8 +123,8 @@ export const CreateBooking = async (
 
 export const GetBooking = async (firstName, emailId) => {
   try {
-    firstName = helpers.stringValidation(firstName);
-    emailId = helpers.stringValidation(emailId);
+    helpers.stringValidation(firstName);
+    helpers.stringValidation(emailId);
     let GetBookingId = await bookings();
     let GetBookingDetails = await GetBookingId.findOne({
       firstName: firstName,
@@ -160,8 +160,8 @@ export const getBookingByIdAndTrue = async (bookingId) => {
 };
 export const GetAllBooking = async (firstName, emailId) => {
   try {
-    firstName = helpers.stringValidation(firstName);
-    emailId = helpers.stringValidation(emailId);
+    helpers.stringValidation(firstName);
+    helpers.stringValidation(emailId);
     let GetAllBookingId = await bookings();
     let GetAllBookingDetails = await GetAllBookingId.find({
       firstName: firstName,

@@ -19,7 +19,7 @@ export const uploadImageToFirebase = async (file) => {
 
 export const deleteImageFromFirebase = async (fileName) => {
     try {
-        fileName = helper.stringValidation(fileName);
+        helper.stringValidation(fileName);
         const storageRef = ref(storage, `images/${fileName}`);
         await deleteObject(storageRef);
     } catch (e) {
@@ -52,11 +52,9 @@ export const saveImageDetailsToMongoDB = async (roomDetails) => {
 
 export const deleteImageFromMongoDB = async (fileName) => {
     try {
-        fileName = helper.stringValidation(fileName);
+        helper.stringValidation(fileName);
         const GalleryData = await gallery();
-        console.log(fileName, 'in routes');
         let deletedImageData = await GalleryData.deleteOne({ filename: fileName });
-        console.log(deletedImageData, 'image data');
         if (deletedImageData.deletedCount === 0) {
             console.log(`No document found with filename '${fileName}'`);
             return { deleted: false, reason: "No document found with provided filename" };
