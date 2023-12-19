@@ -5,18 +5,22 @@
   </script>
 {{/if}}
 
+<form >
+
 <h2 style="color:red">This feedback is about to be deleted</h2>
 <ul>
 
-  <li>
+  <li class="feedback-card">
     <strong>{{guestName}}</strong>
     rating :
     {{rating}}/10
     <p>{{comment}}</p>
   </li>
 </ul>
-
 <button id="deleteButton" onclick="deleteFeedback()">Delete Feedback</button>
+</form>
+
+
 
 <script src="../../../public/js/main.js"></script>
 

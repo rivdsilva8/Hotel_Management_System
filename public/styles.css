@@ -2,8 +2,73 @@ body, html {
   margin: 0;
   padding: 0;
   min-height : 100%;
+  min-width : 100%;
 }
 
+.img-home{
+  float: right; 
+  max-width: 30%;
+  border-radius: 10px;
+  margin: 20px;
+}
+.home-para{
+  font-size: 18px;
+  margin-left: 10px;
+}
+
+.login-button{
+  background-color: #4caf50;
+  border-radius: 25px ;
+  color: #ffffff;
+  padding: 3px 10px;
+  border: 1px solid #ccc;
+  
+  
+}
+.login-button:hover {
+  background-color: #2f6d31;
+}
+
+
+
+.register-button{
+  color: white;
+  background-color: #38c7ff;
+  border-radius: 50px ;
+  color: #ffffff;
+  padding: 3px 10px
+}
+.register-button:hover {
+  background-color: #2686ac;
+}
+
+.logout-button {
+  color: white;
+  background-color: #ff0000;
+  border-radius: 50px ;
+  padding: 3px 10px
+}
+
+.logout-button:hover {
+  background-color: #c70202;
+}
+
+footer a {
+  float: left;
+  background-color: white;
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+  padding: 5px;
+  margin-left: 10px;
+  border-radius: 25px;
+}
+
+footer a:hover {
+  float: left;
+  padding: 5px;
+  color: rgb(167, 167, 167);
+  border-radius: 50px;
+}
 
 #feedbacks ul{
   padding-bottom: 20px;
@@ -11,7 +76,9 @@ body, html {
 .space-below{
   margin-bottom: 5rem;
 }
-
+.space-above{
+  margin-bottom: 2rem;
+}
 .feedback-card {
   background-color: #fff;
   border: 1px solid #ccc;
@@ -25,9 +92,6 @@ body, html {
   font-weight: bold;
 }
 
-nav ul li:last-child {
-  margin-bottom: 20px; /* Adjust the margin as needed */
-}
 
 .feedback-card p {
   margin-top: 10px;
@@ -48,32 +112,43 @@ h1 {
   padding-top: 2px;
   padding-left: 5px;
   padding-bottom: 6px;
+  
 }
 
+
+
 nav ul {
+  padding-top: 8px;
   display: flex;
-  padding: 20px;
+  justify-content: space-between;
   margin: auto;
   list-style-type: none;
+  
 }
-nav li {
-  margin-right: 80 px;
-}
-nav {
-  justify-content: center;
-  align-items: center;
+nav li a {
+ 
+ color: rgb(0, 0, 0);  
+ text-decoration: none;
  
 }
+nav {
+  padding-right: 15px;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(20px); 
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 10px 20px rgb(101, 101, 101);
+  padding-bottom: 8px;
+
+}
+
 
 ul {
   list-style-type: none; 
   
-  padding: 0; 
 }
 
-li {
-  padding: 10px;
-}
+
 
 .deleteFeedbackIds {
   float: right;
@@ -98,7 +173,7 @@ button:hover {
   background-color: rgb(203, 201, 201);
 }
 
-form {
+form:not(#deletionForm) {
   display: flex;
   flex-direction: column;
   max-width: 600px;
@@ -129,7 +204,7 @@ a:hover {
 ul a {
   color: #5953d4;
   text-align: center;
-  padding-left: 5px;
+  
 }
 .account-create {
   text-align: center;
@@ -145,6 +220,7 @@ header{
  
   background-color: #333;
   color: #fff;
+  
   
 }
 
@@ -162,21 +238,7 @@ footer {
   padding: 5px;
   padding: 10px 0; 
 }
-footer a {
-  float: left;
-  background-color: none;
-  text-decoration: none;
-  color: white;
-  padding: 5px;
-  border-radius: 50px;
-}
 
-footer a:hover {
-  float: left;
-  padding: 5px;
-  color: rgb(190, 190, 190);
-  border-radius: 50px;
-}
 .phone-container select,
 .phone-container input {
   flex: 1;
@@ -264,13 +326,9 @@ footer a:hover {
   color: black;
 }
 
-.logout-button {
-  color: red;
-}
 
-.logout-button:hover {
-  color: darkred;
-}
+
+
 .center-container {
   display: flex;
   justify-content: center;
