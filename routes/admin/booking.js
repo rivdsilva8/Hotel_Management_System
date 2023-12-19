@@ -4,6 +4,7 @@
 import { Router } from "express";
 import xss from "xss";
 import * as BookingFunctions from "../../data/booking.js";
+import * as helpers from "../../helpers.js";
 const router = Router();
 
 router.get("/", async (req, res) => {
@@ -29,13 +30,24 @@ router.route("/adminBooking").get(async (req, res) => {
 router.route("/adminBooking").post(async (req, res) => {
   try {
     const AddBookingData = req.body;
+    const firstNameErr = {empty:'First Name cannot be Empty', invalid:'First Name is invalid and cannot be less than 2 letters'};
+    const lastNameErr = {empty:'Last Name cannot be Empty', invalid:'Last Name is invalid and cannot be less than 2 letters'};
+    const firstAcctName = await helpers.validateString(req.body.FirstNameInput,2,25,firstNameErr);
+    const lastAcctName = await helpers.validateString(req.body.LastNameInput,2,25,lastNameErr);
+    const emailInputValidate = await helpers.validateEmail(req.body.EmailIdInput);
+    console.log(req.body.phone);
+    console.log(typeof(req.body.phone));
+    const validatePhoneNumber = await helpers.validatePhoneNumber(req.body.phone);
+    const validateCheckInDate = await helpers.validateDates(req.body.CheckinDateInput);
+    const validateCheckOutDate = await helpers.validateDates(req.body.CheckoutDateInput);
+
     const XSSData = {
-      FirstNameInput: xss(req.body.FirstNameInput),
-      LastNameInput: xss(req.body.LastNameInput),
-      EmailIdInput: xss(req.body.EmailIdInput),
-      ContactNumberInput: xss(req.body.ContactNumberInput),
-      CheckinDateInput: xss(req.body.CheckinDateInput),
-      CheckoutDateInput: xss(req.body.CheckoutDateInput),
+      FirstNameInput: xss(firstAcctName),
+      LastNameInput: xss(lastAcctName),
+      EmailIdInput: xss(emailInputValidate),
+      ContactNumberInput: xss(validatePhoneNumber),
+      CheckinDateInput: xss(validateCheckInDate),
+      CheckoutDateInput: xss(validateCheckOutDate),
     };
     const newBooking = await BookingFunctions.CreateBooking(
       XSSData.FirstNameInput,
@@ -69,9 +81,12 @@ router.route("/search.html").post(async (req, res) => {
   try {
     const AddBookingData = req.body;
     let newBooking = [];
+    const firstNameErr = {empty:'First Name cannot be Empty', invalid:'First Name is invalid and cannot be less than 2 letters'};
+    const firstAcctName = await helpers.validateString(req.body.firstName,2,25,firstNameErr);
+    const emailInputValidate = await helpers.validateEmail(req.body.email);
     const XSSData = {
-      firstName: xss(req.body.firstName),
-      email: xss(req.body.email),
+      firstName: xss(firstAcctName),
+      email: xss(emailInputValidate),
     };
     newBooking = await BookingFunctions.GetAllBooking(
       XSSData.firstName,
@@ -110,7 +125,8 @@ router.route("/AdminShowAllBooking").get(async (req, res) => {
 router.route("/book/:id").put(async (req, res) => {
   try {
     const bookingId = req.params.id;
-    const booking = BookingFunctions.getBookingByIdAndTrue(bookingId);
+    const validatedBookingID = await helpers.checkId(bookingId, "booking id");
+    const booking = BookingFunctions.getBookingByIdAndTrue(validatedBookingID);
     return res.json({ success: true });
   } catch (e) {
     console.error(e); // Log the error
@@ -119,9 +135,11 @@ router.route("/book/:id").put(async (req, res) => {
 });
 
 router.route("/deleteBooking/:id").delete(async (req, res) => {
+  const bookingId = req.params.id;
+  const validatedBookingID = await helpers.checkId(bookingId, "booking id");
   try {
     let deleteStatus = await BookingFunctions.DeleteBooking(
-      req.params.id
+      validatedBookingID
     );
     if (deleteStatus.deleted === true) {
       res.status(200).json({ success: true, message: "Booking deleted" });
@@ -136,7 +154,8 @@ router
 .get(async(req,res) => {
   console.log("in routs???")
   try{
-    const booking = await BookingFunctions.getBookingById(req.params.id);
+    const validatedBookingID = await helpers.checkId(req.params.id, "booking id");
+    const booking = await BookingFunctions.getBookingById(validatedBookingID);
     return res.render('./Admin/adminBooking/updateBooking', {booking: booking});
   }catch(e){
     return res.status(404).render('error',{title:'Error',error: e});
@@ -148,14 +167,36 @@ router
   .post(async (req, res) => {
     try {
       const AddBookingData = req.body;
+      //
+      const bookingId = AddBookingData.bookingId;
+      const validatedBookingID = await helpers.checkId(bookingId, "booking id");
+      const firstNameErr = {empty:'First Name cannot be Empty', invalid:'First Name is invalid and cannot be less than 2 letters'};
+      const lastNameErr = {empty:'Last Name cannot be Empty', invalid:'Last Name is invalid and cannot be less than 2 letters'};
+      const firstAcctName = await helpers.validateString(AddBookingData.FirstNameInput,2,25,firstNameErr);
+      const lastAcctName = await helpers.validateString(AddBookingData.LastNameInput,2,25,lastNameErr);
+      const emailInputValidate = await helpers.validateEmail(AddBookingData.EmailIdInput);
+      const validatePhoneNumber = await helpers.validatePhoneNumber(AddBookingData.ContactNumberInput);
+      const validateCheckInDate = await helpers.validateDates(AddBookingData.CheckinDateInput);
+      const validateCheckOutDate = await helpers.validateDates(AddBookingData.CheckoutDateInput);
+
+      //
+      const XSSData = {
+        FirstNameInput: xss(firstAcctName),
+        LastNameInput: xss(lastAcctName),
+        EmailIdInput: xss(emailInputValidate),
+        ContactNumberInput: xss(validatePhoneNumber),
+        CheckinDateInput: xss(validateCheckInDate),
+        CheckoutDateInput: xss(validateCheckOutDate),
+      };
+
       const newBooking = await BookingFunctions.UpdateBooking(
-        AddBookingData.bookingId,
-        AddBookingData.FirstNameInput,
-        AddBookingData.LastNameInput,
-        AddBookingData.EmailIdInput,
-        AddBookingData.ContactNumberInput,
-        AddBookingData.CheckinDateInput,
-        AddBookingData.CheckoutDateInput,
+        validatedBookingID,
+        XSSData.FirstNameInput,
+        XSSData.LastNameInput,
+        XSSData.EmailIdInput,
+        XSSData.ContactNumberInput,
+        XSSData.CheckinDateInput,
+        XSSData.CheckoutDateInput,
       );
       return res.redirect("/admin/booking/AdminShowAllBooking");
     } catch (e) {

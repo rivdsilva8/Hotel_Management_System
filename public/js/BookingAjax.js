@@ -3,33 +3,34 @@
     firstNameInput = $('#DisplayFirstName'),
     emailInput = $('#DisplayEmailId'),
     searchResults = $('#search-results'),
-    error = $('#error'),
+    errorDiv = $('#error'),
     empty = $('#empty');
 
   mySearchForm.submit(async (event) => {
     event.preventDefault();
     $('#noResults').hide();
-    error.hide();
+    errorDiv.hide();
+    empty.hide();
+    searchResults.hide();
 
-    let firstName = firstNameInput.val();
-    let email = emailInput.val();
+    let firstName = firstNameInput.val().trim();
+    let email = emailInput.val().trim();
+
+    if(!firstName && !email){
+      errorDiv.show().html("Please enter for search criteria");
+        return;
+    }
 
     if (firstName) {
       if (firstName.trim().length === 0) {
-        searchResults.hide();
-        empty.hide();
-        error.show();
-        error.html("Error: First Name Can not contain empty spaces");
+        errorDiv.show().html("Error: First Name Can not contain empty spaces");
         return;
       }
     }
 
     if (email) {
-      if (email.trim().length === 0) {
-        searchResults.hide();
-        empty.hide();
-        error.show();
-        error.html("Error: Email Can not contain empty spaces");
+      if (email.trim().length === 0) {    
+        errorDiv.show().html("Error: Email Can not contain empty spaces");
         return;
       }
     }
@@ -48,18 +49,14 @@
 
       $.ajax(requestConfig).then(function (responseMessage) {
         let newElement = $(responseMessage);
+        searchResults.show().empty();
         if (newElement.children().length === 0) {
-          empty.hide();
-          searchResults.show();
-          searchResults.empty();
-          $('#noResults').show();
-          $('#noResults').html("No results found. Please try again.");
-        }
+          $('#noResults').show().html("No results found. Please try again.");
+        }else{
+          searchResults.html(newElement);
 
-        empty.hide();
-        searchResults.show();
-        searchResults.empty();
-        searchResults.html(newElement);
+        }
+        
       });
     } else {
       empty.show();

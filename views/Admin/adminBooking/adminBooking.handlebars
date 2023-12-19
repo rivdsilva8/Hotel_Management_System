@@ -1,7 +1,10 @@
 
   {{!-- Booking Creating Admin Side --}}
   <div id="BookingFormDiv" >
-    <p>Please enter your details to confirm your booking:</p>
+    <p style="padding-left: 390px">Please enter your details to confirm your booking:</p>
+   <div id="error-container" style="display: none;">{{#if
+    error
+    }}{{error}}{{/if}}</div>
     <form action="/admin/booking/adminBooking" method="POST" id="BookingForm">
       <h2>Guest Details</h2>
       <label for="FirstNameInput">Enter First Name</label>
@@ -13,8 +16,8 @@
       <label for="EmailIdInput">Enter Email Address</label>
       <input type="email" placeholder="Enter Last Name" id="EmailIdInput" name="EmailIdInput">
       <br>
-      <label for="ContactNumberInput">Enter Contact Number:</label>
-      <input type="text" placeholder="Enter Contact Number" name="ContactNumberInput" id="ContactNumberInput">
+      <label for="phone">Enter Contact Number:</label>
+      <input type="tel"  placeholder="123-456-7890"  pattern="\d{3}-\d{3}-\d{4}" name="phone" id="phone" >
       <br>
       <label for="CheckinDateInput">Enter CheckIn Date</label>
       <input type="date" id="CheckinDateInput" name="CheckinDateInput">
@@ -29,3 +32,14 @@
 <footer>
   <a href="/admin/booking">back to Booking</a>
 </footer>
+<script>
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+  const formattedYesterday = yesterday.toISOString().split('T')[0];
+  document.getElementById('CheckinDateInput').setAttribute('min', formattedYesterday);
+  document.getElementById('CheckoutDateInput').setAttribute('min', formattedYesterday);
+</script>
+
+<script src="/public/js/main.js"></script>
+<script src="/public/js/client_side_validation.js"></script>
