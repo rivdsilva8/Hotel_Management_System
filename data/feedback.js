@@ -56,8 +56,6 @@ const exportedMethods = {
   },
 
   async delete(feedbackIds) {
-    console.log("in delete df");
-    console.log(feedbackIds);
 
     if (feedbackIds.length == 0)
       throw "Error: No feedbacks available, please add more";

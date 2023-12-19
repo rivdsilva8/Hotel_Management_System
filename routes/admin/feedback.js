@@ -27,9 +27,7 @@ router
   .delete(async (req, res) => {
     //code here for DELETE
     try {
-      console.log("In delete route");
       let delete_ids = req.body.deleteFeedbackIds;
-      console.log("delete_ids =" + delete_ids);
       if (delete_ids.length == 0) {
         throw "Error : No feedbacks selected";
       }

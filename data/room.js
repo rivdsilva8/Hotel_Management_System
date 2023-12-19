@@ -124,7 +124,8 @@ export const updateRoom = async (
         roomType,
         roomPrice,
         availability,
-        roomDescription
+        roomDescription,
+        cleanStatus
     });
 
     const photoCollection = await photos();
@@ -144,7 +145,8 @@ export const updateRoom = async (
         roomType,
         roomPrice,
         availability,
-        roomDescription
+        roomDescription,
+        cleanStatus
     };
 
     const updateResult = await roomCollection.updateOne(
@@ -330,7 +332,6 @@ export const runApp = async () => {
     } finally {
         //Finish connection
         await connection.closeConnection();
-        console.log('Done!');
     }
 
 }

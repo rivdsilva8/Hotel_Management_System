@@ -9,10 +9,8 @@ const router = express.Router();
 const upload = multer();
 
 router.get("/", async (req, res) => {
-  console.log("in gallery routes");
   try {
     let Adminimages = await GetAllFromMongoDB();
-    console.log(Adminimages);
     res.render("./Admin/adminGallery/adminGallery", {
       title: "admin gallery manipulation",AdminLink: Adminimages
     });
