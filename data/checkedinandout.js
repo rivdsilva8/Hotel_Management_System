@@ -4,37 +4,73 @@ import * as helpers from '../helpers.js'
 
 
 export const getBookingbyEmail = async (emailId) => {
-    emailId = await helpers.validateEmail(emailId)
-    let CheckBooking = await bookings();
-    let GetAllCheckin = await CheckBooking.find({ emailId:emailId }).toArray();
-    return GetAllCheckin;
+    try{
+        emailId = await helpers.validateEmail(emailId)
+        let CheckBooking = await bookings();
+        let GetAllCheckin = await CheckBooking.find({ emailId:emailId }).toArray();
+        if (GetAllCheckin === null){
+            throw `No Data Found For Checkin Please Try Again`;
+        }
+        return GetAllCheckin;
+    }catch(e){
+        throw `Error: ${e}`;
+    }
 };
 
 export const putCheckIne = async (emailId) => {
-    let b = await bookings();
-    let c = await b.findOne({ emailId: emailId });
-    if (c === null) return "-1";
-    await b.updateOne({ emailId: emailId }, { $set: { CheckedIn: true } });
-    return "Updated successfully";
+    try{
+        let AddCheckin = await bookings();
+        let GetCheckinData = await AddCheckin.findOne({ emailId: emailId });
+        if (GetCheckinData === null){
+            throw `No Data Found For Checkin Please Try Again`;
+        }
+        await AddCheckin.updateOne({ emailId: emailId }, { $set: { CheckedIn: true } });
+        return "Updated successfully";
+    }catch(e){
+        throw `Error: ${e}`;
+    }
 }
 
-export const putCheckOute = async (emailId) => {
-    let b = await bookings();
-    let c = await b.findOne({ emailId: emailId });
-    if (c === null) return "-1";
-    if(c.CheckedIn == true){
-        await b.updateOne({ emailId: emailId }, { $set: { CheckedOut: true } });
+export const clean = async (emailId) => {
+    try{
+        let GetCleanStatusData = await bookings();
+        let CleanedRoomData = await GetCleanStatusData.findOne({ emailId: emailId });
+        if (CleanedRoomData === null){
+            throw `No Data Found For Checkin Please Try Again`;
+        }
+        await GetCleanStatusData.updateOne({ emailId: emailId }, { $set: { cleanStatus: true } });
+    }catch(e){
+        throw `Error: ${e}`;
     }
-    return "Updated successfully";
+}
+
+export const checkout = async (emailId) => {
+    try{
+        let GetCheckoutData = await bookings();
+        let UpdateCheckOut = await GetCheckoutData.findOne({ emailId: emailId });
+        if (UpdateCheckOut === null){
+            throw `No Data Found For Checkin Please Try Again`;
+        }
+        if(c.CheckedIn == true){
+            await GetCheckoutData.updateOne({ emailId: emailId }, { $set: { CheckedOut: true, cleanStatus: false, CheckedIn: false } });
+        }
+        return "Updated successfully";
+    }catch(e){
+        throw `Error: ${e}`;
+    }
 }
 
 export const makeBooking = async (emailId) => {
-    emailId = await helpers.validateEmail(emailId)
-    let b = await bookings();
-    let res = await b.findOne({emailId:emailId});
-    if (res === null) {
-        return "-1";
+    try{
+        emailId = await helpers.validateEmail(emailId)
+        let ChangeBookingStatus = await bookings();
+        let UpdateBookingStatus = await ChangeBookingStatus.findOne({emailId:emailId});
+        if (UpdateBookingStatus === null) {
+            throw `No Data Found For Checkin Please Try Again`;
+        }
+        let UpdateBooking = await ChangeBookingStatus.updateOne({ emailId: emailId }, { $set: { BookingStatus: true } });
+        return UpdateBooking
+    }catch(e){
+        throw `Error: ${e}`;
     }
-    let makebooking = await b.updateOne({ emailId: emailId }, { $set: { BookingStatus: true } });
-    return makebooking
 }

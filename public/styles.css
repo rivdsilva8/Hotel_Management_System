@@ -336,3 +336,9 @@ footer {
   align-items: center;
   height: 80vh;
 }
+
+
+.booking-detail {
+  border: groove;
+  margin-top: 10px;
+}

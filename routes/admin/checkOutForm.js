@@ -12,8 +12,8 @@ router.route('/getbookingbyemail/:email').get(async (req,res)=>{
     return res.json(b)
 })
 
-router.route('/putCheckOute/:emailId').post(async (req,res) =>{
-    let b = await h.putCheckOute(req.params.emailId)
+router.route('/checkout/:emailId').post(async (req,res) =>{
+    let b = await h.checkout(req.params.emailId)
     if (b === "-1") return res.json({})
     return res.json(b)
 })
