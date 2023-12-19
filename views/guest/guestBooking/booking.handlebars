@@ -1,4 +1,4 @@
-  <h1>Room Booking</h1>
+  
   <p style="padding-left: 390px">Please check room details:</p>
   <form>
     <p>Room Number: {{roomNumber}}</p>
@@ -13,10 +13,10 @@
     }}{{error}}{{/if}}</div>
     <h2>Guest Details</h2>
 
-  <label for="roomType"></label>
+  {{!-- <label for="roomType"></label> --}}
   <input id="roomType" name="roomType" value={{this.roomType}} type="hidden">
 
-  <label for="roomPrice"></label>
+  {{!-- <label for="roomPrice"></label> --}}
   <input id="roomPrice" name="roomPrice" value={{this.roomPrice}} type="hidden">
 
   <label for="FirstNameInput">Enter First Name</label>
@@ -32,7 +32,7 @@
   <input type="tel" placeholder="123-456-7890" pattern="\d{3}-\d{3}-\d{4}" name="phone" id="phone" />
   <br />
   <label for="CheckinDateInput">Enter CheckIn Date</label>
-  <input type="date" id="CheckinDateInput" name="CheckinDateInput" min="" onchange="setMinCheckoutDate()" />
+  <input type="date" id="CheckinDateInput" name="CheckinDateInput"  onchange="setMinCheckoutDate()" />
   <br />
   <label for="CheckoutDateInput">Enter CheckOut Date</label>
   <input type="date" id="CheckoutDateInput" name="CheckoutDateInput" disabled />
