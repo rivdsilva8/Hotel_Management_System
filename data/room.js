@@ -124,8 +124,7 @@ export const updateRoom = async (
         roomType,
         roomPrice,
         availability,
-        roomDescription,
-        cleanStatus
+        roomDescription
     });
 
     const photoCollection = await photos();
@@ -145,8 +144,7 @@ export const updateRoom = async (
         roomType,
         roomPrice,
         availability,
-        roomDescription,
-        cleanStatus
+        roomDescription
     };
 
     const updateResult = await roomCollection.updateOne(

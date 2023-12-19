@@ -12,6 +12,6 @@ export const averageRating = async (roomType) => {
     const totalRating = feedback.reduce((acc, feedback) => acc + feedback.rating, 0);
     const averageRating = totalRating / feedback.length;
 
-    return averageRating;
+    return Number(averageRating.toFixed(2));
 
 }
