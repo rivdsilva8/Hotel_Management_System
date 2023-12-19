@@ -259,6 +259,7 @@ export const checkRoomPrice=async(roomPrice)=>{
   if(!roomPrice || typeof(roomPrice)!=='number' || isNaN(roomPrice)){
     throw{code:400,error:`Invalid Room Price expected a number`};
   }
+  return roomPrice;
 }
 
 export const checkRoomType=async(roomType)=>{

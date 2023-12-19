@@ -45,7 +45,6 @@ export const CreateBooking = async (
     )
       throw `Error: Please fill all the sections`;
     
-      console.log(CheckOutDate,roomNumber,roomPrice,roomType);
     const checkInDate = new Date(CheckinDate);
     const checkOutDate = new Date(CheckOutDate);
 

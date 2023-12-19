@@ -49,12 +49,9 @@ router.route("/book/:roomNumber").post(async (req, res) => {
     const validateCheckOutDate = await helpers.validateDates(checkOutDate);
     await helpers.checkCheckInAndOutDate(checkInDate,checkOutDate);
     //const checkInDate = await helpers.
-
-    console.log("req.params.roomNumber : " + req.params.roomNumber);
     let roomNumber = parseInt(req.params.roomNumber, 10);
     let bookedRoom = await getRoomByNumber(roomNumber);
 
-    console.log("bookedRoom.roomPrice :" + bookedRoom.roomPrice);
 
     const newBooking = await CreateBooking(
       validateFName,
@@ -75,9 +72,6 @@ router.route("/book/:roomNumber").post(async (req, res) => {
     bookingIdcheck = String(bookingIdcheck);
 
     let bookingDetails = await fetchBookindData(bookingIdcheck);
-    console.log(bookingDetails);
-
-    console.log("bookingDetails.roomPrice:" + bookingDetails.roomPrice);
     res.render("./guest/guestPayment/payment", {
       title: "Payment Page",
       bookingDetails: bookingDetails,
