@@ -41,10 +41,11 @@ export const CreateBooking = async (
       !emailId ||
       !contactNumber ||
       !CheckinDate ||
-      !CheckOutDate
+      !CheckOutDate || !roomNumber || !roomPrice || !roomType
     )
       throw `Error: Please fill all the sections`;
-
+    
+      console.log(CheckOutDate,roomNumber,roomPrice,roomType);
     const checkInDate = new Date(CheckinDate);
     const checkOutDate = new Date(CheckOutDate);
 
@@ -75,8 +76,13 @@ export const CreateBooking = async (
     lastName = lastName.trim();
     emailId = emailId.trim();
     contactNumber = contactNumber.trim();
+    const validatePhoneNumber = await helpers.validatePhone(contactNumber);
     CheckinDate = CheckinDate.trim();
     CheckOutDate = CheckOutDate.trim();
+    const validateRoomNumber= await helpers.checkRoomNumber(roomNumber);
+    const validateRoomPrice = await helpers.checkRoomPrice(roomPrice);
+    const validateRoomType = await helpers.checkRoomType(roomType);
+
 
     //firstName = firstName.toLowerCase();
     //lastName = lastName.toLowerCase();
@@ -91,15 +97,15 @@ export const CreateBooking = async (
       firstName: firstAcctName,
       lastName: lastAcctName,
       emailId: emailId,
-      contactNumber: contactNumber,
+      contactNumber: validatePhoneNumber,
       BookingDate: Final_BookDate,
       CheckinDate: checkIn_FinalDate,
       CheckOutDate: checkOut_FinalDate,
       BookingStatus: false,
       cleanStatus: false, // addede trial code
-      roomNumber: roomNumber,
-      roomType: roomType,
-      roomPrice: roomPrice,
+      roomNumber: validateRoomNumber,
+      roomType: validateRoomType,
+      roomPrice: validateRoomPrice,
       numberOfDays: numberOfDays,
       totalPrice: totalPrice,
       taxPrice: taxPrice,
@@ -108,7 +114,7 @@ export const CreateBooking = async (
     };
     const AddBooking = await AddBookingsDetails.insertOne(GuestBookingDetails);
     if (!AddBooking.acknowledged || !AddBooking.insertedId) {
-      throw `Could not add data`;
+      throw `Could not add Booking data`;
     }
     return AddBooking;
   } catch (e) {
@@ -126,7 +132,7 @@ export const GetBooking = async (firstName, emailId) => {
       emailId: emailId,
     });
     if (GetBookingDetails !== true) {
-      throw `The particular ID Does not exists`;
+      throw `The Booking ID Does not exists`;
     }
   } catch (e) {
     throw `Error: ${e}`;

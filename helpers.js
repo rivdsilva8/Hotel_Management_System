@@ -201,6 +201,79 @@ export const validateRole = async(roleInput)=>{
   }
   return roleInput;
 };
+export const validateDates = async(dateInput)=>{
+  if(!dateInput || typeof(dateInput)!== "string"){
+    throw{code:400,error:'Invalid Date Provided'};
+  }
+  const regex = /^\d{4}-\d{2}-\d{2}$/;
+  if(!regex.test(dateInput)){
+    throw{code:400,error:'Invalid Date format as the correct format is YYYY-MM-DD'};
+  }
+
+  const parts = dateInput.split("-");
+  const year = parseInt(parts[0], 10);
+  const month = parseInt(parts[1], 10)-1;
+  const day = parseInt(parts[2], 10);
+  const currentYear = new Date().getFullYear();
+  if(year<currentYear){
+    throw{code:400,error:`Year must be ${currentYear} or only Future year`};
+  }
+  if(month <0|| month>11){
+    throw{code:400,error:'Month must be between 1 to 12'};
+  }
+  const date = new Date(year,month,day);
+  if( date.getFullYear() === year && date.getMonth() === month && date.getDate() === day){
+    return dateInput;
+  } else{
+    throw{code:400,error:'Invalid date'};
+  }
+
+}
+
+export const checkCheckInAndOutDate=async(CheckinDate,CheckoutDate)=>{
+    let checkInDateValue = new Date(CheckinDate + 'T00:00:00Z');
+    let checkOutDateValue = new Date(CheckoutDate + 'T00:00:00Z');
+    let currentDate = new Date();
+    currentDate.setHours(0,0,0,0);//reset for hrs,min,sec and mls
+    let currentDateString = currentDate.toISOString().slice(0, 10);
+    let checkInDateString = checkInDateValue.toISOString().slice(0, 10);
+    let checkOutDateString = checkOutDateValue.toISOString().slice(0, 10);
+    if(checkInDateString < currentDateString){
+      throw{code:400,error:`Check in date must not be in the past`};
+    }else if(checkInDateString === checkOutDateString){
+      throw{code:400,error:`Check in date and Check out date cannot be same`};
+    }else if(checkOutDateValue < checkInDateValue){
+      throw{code:400,error:`Check in date must be before the Check out date`};
+
+    }
+}
+
+export const checkRoomNumber=async(roomNumber)=>{
+  if(!roomNumber || !Number.isInteger(roomNumber)){
+    throw{code:400,error:`Invalid Room Number expected an integer value`};
+  }
+  return roomNumber;
+}
+
+export const checkRoomPrice=async(roomPrice)=>{
+  if(!roomPrice || typeof(roomPrice)!=='number' || isNaN(roomPrice)){
+    throw{code:400,error:`Invalid Room Price expected a number`};
+  }
+}
+
+export const checkRoomType=async(roomType)=>{
+
+  if(!roomType || typeof(roomType)!== 'string'){
+    throw `Room Type not provided`;
+  }
+  const allowedTypes = ['single','double','suite'];
+  const trimmedRoomType = roomType.trim();
+  if(!allowedTypes.includes(trimmedRoomType)){
+    throw `Invalid Room Type: Expected any one of them - single, double or suite `;
+  }
+  return trimmedRoomType;
+
+}
 
 //rivaldo helpers
 // You can add and export any helper functions you want here - if you aren't using any, then you can just leave this file as is

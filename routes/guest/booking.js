@@ -29,6 +29,27 @@ router.route("/book/:roomNumber").post(async (req, res) => {
     const AddBookingData = req.body;
     //get roomdetails pass it here
     // let roomNumber = req.params
+    const firstName = AddBookingData.FirstNameInput;
+    const lastName =  AddBookingData.LastNameInput;
+    const emailInput = AddBookingData.EmailIdInput;
+    const phoneNum = AddBookingData.phone;
+    const checkInDate = AddBookingData.CheckinDateInput;
+    const checkOutDate = AddBookingData.CheckoutDateInput;
+    const firstNameErr = {empty:'First Name cannot be Empty', invalid:'First Name is invalid and cannot be less than 2 letters'};
+    const lastNameErr = {empty:'Last Name cannot be Empty', invalid:'Last Name is invalid and cannot be less than 2 letters'};
+    const firstAcctName = await helpers.validateString(firstName,2,25,firstNameErr);
+    const validateFName = xss(firstAcctName);
+    const lastAcctName = await helpers.validateString(lastName,2,25,lastNameErr);
+    const validateLName = xss(lastAcctName);
+    const emailInputValidate = await helpers.validateEmail(emailInput);
+    const  validateXSSEmail= xss(emailInputValidate);
+    const validatePhoneNumber = await helpers.validatePhoneNumber(phoneNum);
+    const  validateDPhone= xss(validatePhoneNumber);
+    const validateCheckInDate = await helpers.validateDates(checkInDate);
+    const validateCheckOutDate = await helpers.validateDates(checkOutDate);
+    await helpers.checkCheckInAndOutDate(checkInDate,checkOutDate);
+    //const checkInDate = await helpers.
+
     console.log("req.params.roomNumber : " + req.params.roomNumber);
     let roomNumber = parseInt(req.params.roomNumber, 10);
     let bookedRoom = await getRoomByNumber(roomNumber);
@@ -36,12 +57,12 @@ router.route("/book/:roomNumber").post(async (req, res) => {
     console.log("bookedRoom.roomPrice :" + bookedRoom.roomPrice);
 
     const newBooking = await CreateBooking(
-      AddBookingData.FirstNameInput,
-      AddBookingData.LastNameInput,
-      AddBookingData.EmailIdInput,
-      AddBookingData.phone,
-      AddBookingData.CheckinDateInput,
-      AddBookingData.CheckoutDateInput,
+      validateFName,
+      validateLName,
+      validateXSSEmail,
+      validateDPhone,
+      validateCheckInDate,
+      validateCheckOutDate,
       bookedRoom.roomNumber,
       bookedRoom.roomPrice,
       bookedRoom.roomType
@@ -54,6 +75,7 @@ router.route("/book/:roomNumber").post(async (req, res) => {
     bookingIdcheck = String(bookingIdcheck);
 
     let bookingDetails = await fetchBookindData(bookingIdcheck);
+    console.log(bookingDetails);
 
     console.log("bookingDetails.roomPrice:" + bookingDetails.roomPrice);
     res.render("./guest/guestPayment/payment", {
@@ -62,7 +84,9 @@ router.route("/book/:roomNumber").post(async (req, res) => {
     });
   } catch (e) {
     console.log(e);
-    return res.status(500).render("error", { title: "Error Page", error: e });
+    const roomNumberVal = parseInt(req.params.roomNumber, 10);
+    const roomId = await roomNumberToId(roomNumberVal);
+    res.render('./guest/guestBooking/booking', { error:e.error,room: roomId, roomNumber: req.body.roomNumber, roomType: req.body.roomType, roomPrice: req.body.roomPrice});
   }
 });
 
@@ -89,7 +113,8 @@ router.route("/payment").post(async (req, res) => {
       });
     }
   } catch (e) {
-    return res.status(500).render("error", { title: "Error Page", error: e });
+    //return res.status(500).render("error", { title: "Error Page", error: e });
+    es.render('./guest/guestPayment/payment', { error:e.error,title: "Payment Page",paymentSuccess: false});
   }
 });
 
