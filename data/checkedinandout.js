@@ -5,11 +5,9 @@ import * as helpers from '../helpers.js'
 
 export const getBookingbyEmail = async (emailId) => {
     emailId = await helpers.validateEmail(emailId)
-    let b = await bookings();
-    let c = await b.findOne({ emailId:emailId });
-    if (c === null) return "-1";
-    c._id = c._id.toString();
-    return c;
+    let CheckBooking = await bookings();
+    let GetAllCheckin = await CheckBooking.find({ emailId:emailId }).toArray();
+    return GetAllCheckin;
 };
 
 export const putCheckIne = async (emailId) => {

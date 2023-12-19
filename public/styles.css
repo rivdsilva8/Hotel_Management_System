@@ -301,8 +301,8 @@ footer {
 }
 
 .alert {
-  padding: 10px;
-  background-color: #4caf50;
+  padding: 20px;
+  background-color: green;
   color: white;
   margin-bottom: 15px;
   border-radius: 5px;
@@ -310,7 +310,7 @@ footer {
   position: relative;
 }
 
-/* 添加关闭按钮 */
+/* Close button */
 .alert .closebtn {
   margin-left: 15px;
   color: white;
@@ -322,6 +322,7 @@ footer {
   transition: 0.3s;
 }
 
+/* Change color on hover */
 .alert .closebtn:hover {
   color: black;
 }
