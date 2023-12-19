@@ -11,7 +11,7 @@
   <ul>
     {{#if feedback.length}}
       {{#each feedback}}
-        <li>
+        <li class="feedback-card" style="width: 50%;">
           <h2>Guest: {{guestName}}</h2>
           Room:
           {{roomType}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -24,12 +24,12 @@
             value="{{_id}}"
           /><span style="float: right;">Flag for deletion : </span>
           <p>{{comment}}</p>
-          <hr>
+          
         </li>
       {{/each}}
       </ul>
        <button
-    
+    type="submit"
     id="deleteButton"
     onclick="deleteFlaggedFeedback()"
   >Delete flagged feedback</button>
@@ -39,7 +39,7 @@
     {{/if}}
   
  
-</form>
+
 <div class="space-below">
 
 </div>
