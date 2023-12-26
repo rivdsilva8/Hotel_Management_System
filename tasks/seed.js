@@ -323,52 +323,52 @@ false
 
   console.log("Done seeding rooms");
 
-  await bookingData.CreateBooking(
-    "Frank",
-    "Miller",
-    "frank@example.com",
-    "1234567895",
-    "12/15/2023",
-    "12/17/2023",    
-  );
-  await bookingData.CreateBooking(
-    "Henry",
-    "Garcia",
-    "henry@example.com",
-    "1234567897",
-    "12/15/2023",
-    "12/17/2023",
+  // await bookingData.CreateBooking(
+  //   "Frank",
+  //   "Miller",
+  //   "frank@example.com",
+  //   "1234567895",
+  //   "12/15/2023",
+  //   "12/17/2023",    
+  // );
+  // await bookingData.CreateBooking(
+  //   "Henry",
+  //   "Garcia",
+  //   "henry@example.com",
+  //   "1234567897",
+  //   "12/15/2023",
+  //   "12/17/2023",
   
-  );
+  // );
 
-  await bookingData.CreateBooking(
-    "Isabel",
-    "Martinez",
-    "isabel@example.com",
-    "1234567898",
-    "12/15/2023",
-    "12/17/2023",
+  // await bookingData.CreateBooking(
+  //   "Isabel",
+  //   "Martinez",
+  //   "isabel@example.com",
+  //   "1234567898",
+  //   "12/15/2023",
+  //   "12/17/2023",
     
-  );
-  await bookingData.CreateBooking(
-    "Jack",
-    "Wilson",
-    "jack@example.com",
-    "1234567899",
-    "12/15/2023",
-    "12/17/2023"
+  // );
+  // await bookingData.CreateBooking(
+  //   "Jack",
+  //   "Wilson",
+  //   "jack@example.com",
+  //   "1234567899",
+  //   "12/15/2023",
+  //   "12/17/2023"
  
-  );
+  // );
 
-  await bookingData.CreateBooking(
-    "Eve",
-    "Jones",
-    "eve@example.com",
-    "1234567894",
-    "12/15/2023",
-    "12/17/2023"
+  // await bookingData.CreateBooking(
+  //   "Eve",
+  //   "Jones",
+  //   "eve@example.com",
+  //   "1234567894",
+  //   "12/15/2023",
+  //   "12/17/2023"
    
-  );
+  // );
 
   await saveImageDetailsToMongoDB({
     filename: 'hotel1',
