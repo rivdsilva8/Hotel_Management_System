@@ -29,6 +29,11 @@ Welcome to our Hotel Management System, your portal to effortless and streamline
 7.	Feedback and Reviews:
 •	Allow guests to leave feedback and reviews after their stay. Display average ratings and reviews for rooms and services.
 
+Extra Features:
+1.	Local Attraction and Recommendations:
+•	Include a section showcasing local attractions, restaurants, and activities near the hotel.
+2.	Notifications and Reminders:
+•	Send email or SMS notifications to guests for booking confirmations, reminders for upcoming reservations, and thank you messages after check-out.
 
 ## Prerequisites for Application
 Before starting with the project, ensure you have the following prerequisites installed and configured:
@@ -62,9 +67,10 @@ npm start
 Now if you didn't change any of the configurations mentioned above or the Port, the applications should be running on:
 - application will run on : `http://localhost:3000`
 
+  ## Using Application
 
-Extra Features:
-1.	Local Attraction and Recommendations:
-•	Include a section showcasing local attractions, restaurants, and activities near the hotel.
-2.	Notifications and Reminders:
-•	Send email or SMS notifications to guests for booking confirmations, reminders for upcoming reservations, and thank you messages after check-out.
+  via the seed.js file we have a few basic accounts setup for each role, Admin, Staff and Guest.
+  Here are the credentails for each
+  
+
+
