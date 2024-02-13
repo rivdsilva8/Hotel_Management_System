@@ -87,6 +87,25 @@ Password: UserF1*234
 
 ### Admin Role: 
 
+* Allowed to CRUD all accounts, rooms, gallery photos
+* Can change roles of all accounts
+* Delete feedbacks
+* Change room status from clean to dirty vice-versa etc.
+
+### Staff Role: 
+
+* Change room status from clean to dirty vice-versa etc.
+* 
+
+### Admin Role: 
+
 * Point 1
 * Point 2
 * Point 3
+
+### Admin Role: 
+
+* Point 1
+* Point 2
+* Point 3
+
