@@ -67,7 +67,7 @@ npm start
 Now if you didn't change any of the configurations mentioned above or the Port, the applications should be running on:
 - application will run on : `http://localhost:3000`
 
-  ## Using Application
+  ## Using the Application
 
   via the seed.js file we have a few basic accounts setup for each role, Admin, Staff and Guest.
   Here are the credentails for each
