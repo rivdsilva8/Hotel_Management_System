@@ -38,11 +38,7 @@ Extra Features:
 ## Prerequisites for Application
 Before starting with the project, ensure you have the following prerequisites installed and configured:
 
-MongoDB: MongoDB is a NoSQL database system that stores data in a flexible, JSON-like format. Make sure you have MongoDB installed on your system. You can download and install MongoDB from the official MongoDB website: MongoDB Download
-
-MongoDB Compass: MongoDB Compass is a graphical user interface (GUI) for MongoDB. It provides a convenient way to visualize and interact with your MongoDB data. You can download and install MongoDB Compass from the official MongoDB website: MongoDB Compass Download
-
-Node.js: Node.js is a JavaScript runtime environment that allows you to run JavaScript code outside of a web browser. Make sure you have Node.js installed on your system. You can download and install Node.js from the official Node.js website: Node.js Download
+MongoDB, Node.Js, MongoDB Compass
 
 By ensuring that MongoDB, MongoDB Compass, and Node.js are installed and properly configured on your system, you will be ready to start working on the project and interact with MongoDB databases using Node.js.
 
