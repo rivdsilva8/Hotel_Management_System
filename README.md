@@ -71,6 +71,18 @@ Now if you didn't change any of the configurations mentioned above or the Port, 
 
   via the seed.js file we have a few basic accounts setup for each role, Admin, Staff and Guest.
   Here are the credentails for each
-  
+```bash
+Admin:
+Username: alice@example.com
+Password: Pass123!
+
+Staff:
+Username: carol@example.com
+Password: StafF@456
+
+Guest:
+Username: frank@example.com
+Password: UserF1*234
+  ```
 
 
