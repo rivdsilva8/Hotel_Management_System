@@ -85,4 +85,8 @@ Username: frank@example.com
 Password: UserF1*234
   ```
 
+### Admin Role: 
 
+* Point 1
+* Point 2
+* Point 3
