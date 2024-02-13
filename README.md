@@ -1,5 +1,5 @@
 
-##Hotel Management Website
+## Hotel Management System
 
 Team Members:
 •	Mahesh Pisharody
@@ -8,11 +8,11 @@ Team Members:
 •	Sushmita Bahala
 •	Kaushik Parmar
 
-##Introduction:
+## Introduction
 
 Welcome to our Hotel Management System, your portal to effortless and streamlined hospitality management. With just a few clicks, manage rooms seamlessly add, update, or remove them with detailed information at your fingertips. Guests experience a swift and intuitive booking process, finding their perfect room based on preferences. Our Admin Dashboard offers real-time insights, ensuring efficient operations. Simplify check-ins and check-outs with digital forms and detailed invoices. Explore our Hotel Photo Gallery, read guest feedback, and immerse yourself in local recommendations. Join vibrant discussions within our secure platform and stay updated with automated notifications. Here, every feature is meticulously crafted for an exceptional guest experience. Welcome to a world where technology elevates hospitality, one click at a time.
 
-##Core Features:
+## Core Features
 
 1.	Room Management:
 •	Add, update, and delete rooms with details such as room number, type, price, and availability. Implement a room availability list type calendar for staff to manage bookings effectively.
