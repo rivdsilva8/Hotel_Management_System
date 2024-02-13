@@ -91,21 +91,20 @@ Password: UserF1*234
 * Can change roles of all accounts
 * Delete feedbacks
 * Change room status from clean to dirty vice-versa etc.
+* Admin dashboard for various statistics about the hotel rooms.
 
 ### Staff Role: 
 
 * Change room status from clean to dirty vice-versa etc.
-* 
 
-### Admin Role: 
+### Guest Role: 
 
-* Point 1
-* Point 2
-* Point 3
+* Guests can book rooms from start to end dates and also make simulated payments with complete validation in all fields
+* You can add feedback as well about your experience in our hotel rooms
+* view all rooms, gallery, images, feedbacks etc.
 
-### Admin Role: 
+### Unloggedin user Role: 
 
-* Point 1
-* Point 2
-* Point 3
+* view all rooms, gallery, images, feedbacks etc.
+* without logging in your abilites are limited, you can either use one of the provided credentials on top or register your own account, if you want any of the other roles, you will have to change it from the database or use an admin account to change the role of your account.
 
